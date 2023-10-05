@@ -1,6 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-# Create your views here.
+from .models import Employee
+#from django.contrib.auth.models import Group
+
+
+
+
 def home(request):
     users = User.objects.all()
     return render(request, 'index.html', {'users': users})
@@ -17,10 +22,11 @@ def signUp(request):
 
         # Validate the user data.
         if not username or not role or not country or not angaza_id or not password or not password2:
-            return render(request, 'sign_up.html', {'error': 'Please fill in all the required fields.'})
-
+            #return render(request, 'index.html', {'error': 'Please fill in all the required fields.'})
+            return redirect('/sign-up/?error=Please%20fill%20in%20all%20the%20required%20fields.')
         if password != password2:
-            return render(request, 'sign_up.html', {'error': 'Passwords do not match.'})
+            #return render(request, 'index.html', {'error': 'Passwords do not match.'})
+            return redirect('/sign-up/?error=Passwords%20do%20not%20match.')
 
         # Create a new User object.
         user = User.objects.create_user(username, password=password)

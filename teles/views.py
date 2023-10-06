@@ -11,12 +11,15 @@ def home(request):
     users = User.objects.all()
     return render(request, 'index.html', {'users': users})
 
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
 
 def signOut(request):
     if request.method == 'POST':
         logout(request)
         messages.success(request,f'You have been logged out.')
-        return redirect('/')   
+        return redirect('home')   
     
 def logIn(request):
     if request.method == 'POST':
@@ -27,7 +30,7 @@ def logIn(request):
             login(request, user)
             messages.success(request,f'Hi, welcome back!')
             print('Hi, welcome back!')
-            return redirect('/')
+            return redirect('home')
 
 
 def signUp(request):
@@ -43,10 +46,12 @@ def signUp(request):
         # Validate the user data.
         if not username or not role or not country or not angaza_id or not password or not password2:
             #return render(request, 'index.html', {'error': 'Please fill in all the required fields.'})
-            return redirect('/signup/')
+            messages.success(request,f'Please fill in all the required fields.')
+            return redirect('home')
         if password != password2:
             #return render(request, 'index.html', {'error': 'Passwords do not match.'})
-            return redirect('/signup/')
+            messages.success(request,f'Passwords do not match.')
+            return redirect('home')
 
         # Create a new User object.
         user = User.objects.create_user(username, password=password)

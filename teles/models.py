@@ -10,7 +10,7 @@ class User(AbstractUser):
 """
 
 
-class Employee(models.Model):
+class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     angaza_id = models.CharField(max_length=255, unique=True)
     country = models.CharField(max_length=255)

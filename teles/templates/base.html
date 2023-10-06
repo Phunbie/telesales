@@ -154,15 +154,33 @@ span.psw {
 <!-- nav bar -->
 <div class="topnav">
     <a class="active" href="#">Home</a>
-    <a href="#" onclick="document.getElementById('id01').style.display='block'">Login</a>
-    <a href="#" onclick="document.getElementById('id02').style.display='block'">Sign up</a>
-    <a href="#">Dashboard</a>
+  {%if request.user.is_authenticated %}
+  <a href="#" onclick="document.getElementById('id03').style.display='block'">Logout</a>
+  <a href="#">Dashboard</a>
+  {%else%}
+  <a href="#" onclick="document.getElementById('id01').style.display='block'">Login</a>
+  <a href="#" onclick="document.getElementById('id02').style.display='block'">Sign up</a> 
+  {%endif%}
+    
+ 
 </div>
+
+{% if messages %}
+<div class="messages">
+{% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+        {{ message }}
+    </div>
+{% endfor %}
+</div>
+{% endif %}
+
       
 <!-- pop up log in form -->
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="" method="post">
+  <form class="modal-content animate" action="login/" method="post">
+    {% csrf_token %}
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
     </div>
@@ -187,10 +205,29 @@ span.psw {
   </form>
 </div>
 
+
+<!-- pop up logout form -->
+<div id="id03" class="modal">
+  
+    <form class="modal-content animate" action="signout/" method="post">
+        {% csrf_token %}
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+  
+      <div class="container">
+        <p>Are you sure you want to logout</p>
+        <input type="hidden">
+          
+        <button type="submit">Yes</button>
+      </div>
+    </form>
+  </div>
+
 <!-- pop up sign up form -->
 <div id="id02" class="modal">
   
-    <form class="modal-content animate" action="sign-up/" method="post">
+    <form class="modal-content animate" action="signup/" method="post">
         {% csrf_token %}
       <div class="imgcontainer">
         <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -229,6 +266,7 @@ span.psw {
 // Get the modal
 var modal = document.getElementById('id01');
 var modal2 = document.getElementById('id02');
+var modal3 = document.getElementById('id03');
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -238,6 +276,12 @@ window.onclick = function(event) {
 }
 window.onclick = function(event) {
     if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == modal3) {
         modal2.style.display = "none";
     }
 }

@@ -31,6 +31,9 @@ def logIn(request):
             messages.success(request,f'Hi, welcome back!')
             print('Hi, welcome back!')
             return redirect('home')
+        messages.success(request,f'wrong password or name')
+        return redirect('home')
+        
 
 
 def signUp(request):

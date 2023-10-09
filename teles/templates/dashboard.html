@@ -1,23 +1,35 @@
 {% extends 'base.html' %}
 
+{% block dash %}
+<a class="active" href="{% url 'dashboard' %}">Dashboard</a>
+{% endblock %}
+
 {% block content %}
 <style>
     #bardiv {
         box-sizing: border-box;
-        width: 75%;
-        height: 50vh;
-        margin: auto;
+        width: 50%;
+        /* height: 100px; /* Adjust the height as desired */
+        border-style: outset;
+        margin: 0 6px;
+       
+        /*margin: auto;*/
+    }
+
+    #bardiv p {
+        margin: 9px auto;
+        font-size: 0.5em;
+        /*margin: auto;*/
     }
     
     .container {
-      width: 100%;
       background-color: #ddd;
     }
     
     .skills {
       text-align: right;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 1px;
+      padding-bottom: 1px;
       color: white;
     }
     
@@ -26,27 +38,27 @@
     .js {width: 65%; background-color: #f44336;}
     .php {width: 60%; background-color: #808080;}
     </style>
-<div id="bardiv">
-    <h2>KPIs</h2>
-
-    <p>Conversion Rate</p>
-    <div class="container">
-    <div class="skills html">90%</div>
+     <div id="bardiv">
+        <h2>KPIs</h2>
+    
+        <p>Conversion Rate</p>
+        <div class="container">
+        <div class="skills html">90%</div>
+        </div>
+    
+        <p>Unique Calls</p>
+        <div class="container">
+        <div class="skills css">80%</div>
+        </div>
+    
+        <p>Average Per Agent</p>
+        <div class="container">
+        <div class="skills js">65%</div>
+        </div>
+    
+        <p>Negotiation Rate</p>
+        <div class="container">
+        <div class="skills php">60%</div>
+        </div>
     </div>
-
-    <p>Unique Calls</p>
-    <div class="container">
-    <div class="skills css">80%</div>
-    </div>
-
-    <p>Average Per Agent</p>
-    <div class="container">
-    <div class="skills js">65%</div>
-    </div>
-
-    <p>Negotiation Rate</p>
-    <div class="container">
-    <div class="skills php">60%</div>
-    </div>
-</div>
 {% endblock %}

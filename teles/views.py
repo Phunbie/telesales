@@ -31,7 +31,7 @@ def logIn(request):
             messages.success(request,f'Hi, welcome back!')
             print('Hi, welcome back!')
             return redirect('home')
-        messages.success(request,f'wrong password or name')
+        messages.error(request,f'wrong password or name')
         return redirect('home')
         
 
@@ -45,20 +45,24 @@ def signUp(request):
         angaza_id = request.POST.get('angaza')
         password = request.POST.get('psw')
         password2 = request.POST.get('psw2')
-
+        validate_angaza = Agent.objects.get(angaza_id=angaza_id)
+        # Validate angaza id.
+        if validate_angaza:
+            messages.info(request,f'There is a user with the provided andaza id')
+            return redirect('home')
         # Validate the user data.
         if not username or not role or not country or not angaza_id or not password or not password2:
             #return render(request, 'index.html', {'error': 'Please fill in all the required fields.'})
-            messages.success(request,f'Please fill in all the required fields.')
+            messages.info(request,f'Please fill in all the required fields.')
             return redirect('home')
         if password != password2:
             #return render(request, 'index.html', {'error': 'Passwords do not match.'})
-            messages.success(request,f'Passwords do not match.')
+            messages.error(request,f'Passwords do not match.')
             return redirect('home')
 
         # Create a new User object.
         user = User.objects.create_user(username, password=password)
-
+   
 
         # Create a new Employee object.
         agent = Agent(

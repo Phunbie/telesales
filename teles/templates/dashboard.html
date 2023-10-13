@@ -8,21 +8,21 @@
 <style>
     #bardiv {
         box-sizing: border-box;
-        width: 50%;
+        width: 100%;
         /* height: 100px; /* Adjust the height as desired */
-        border-style: outset;
-        margin: 0 6px;
+        /*border-style: outset;*/
+        /*margin: 0 6px;*/
        
         /*margin: auto;*/
     }
 
     #bardiv p {
         margin: 9px auto;
-        font-size: 0.5em;
+        /*font-size: 0.5em;*/
         /*margin: auto;*/
     }
     
-    .container {
+    .container2 {
       background-color: #ddd;
     }
     
@@ -37,28 +37,312 @@
     .css {width: 80%; background-color: #2196F3;}
     .js {width: 65%; background-color: #f44336;}
     .php {width: 60%; background-color: #808080;}
-    </style>
-     <div id="bardiv">
-        <h2>KPIs</h2>
+
+
+.box {
+  background-color: yellow;
+  width: 100%;
+  line-height: 400px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.tt:hover{
+    font-size: 1.2em;
+}
+
+.tt{
+    border-radius: 20px;
+}
+
+.active1{
+    font-size: 1.2em;
+}
+
+
+</style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+  
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ['day', 'calls', 'negotiation'],
+            ['1',  100,      40],
+            ['2',  160,      60],
+            ['3',  200,       55],
+            ['4',  188,      54]
+          ]);
+  
+          var options = {
+            title: 'Agent Performance',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+          };
+  
+          var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+  
+          chart.draw(data, options);
+        }
+        </script>
+        <script type="text/javascript">
+
+        //pie chart
+       google.charts.load('current', {'packages':['corechart']});
+       google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Work',     11],
+            ['Eat',      2],
+            ['Commute',  2],
+            ['Watch TV', 2],
+            ['Sleep',    7]
+        ]);
+
+        var options = {
+            title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+        }
     
-        <p>Conversion Rate</p>
-        <div class="container">
-        <div class="skills html">90%</div>
+
+    //tab function
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function openCity2(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tt");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active1", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+</script>
+
+
+     <!--Sidenav-->
+     
+<div class="d-none d-lg-block d-md-block ">
+    <div id="mySidenav" class="sidenav tab">
+        <a  href="#" class="tablinks active text-black" id="about" onclick="openCity(event, 'tab1')">Tab1</a>
+        <a  href="#" class="tablinks" onclick="openCity(event, 'tab2')" id="blog">Tab2</a>
+        <a  href="#" class="tablinks text-black" onclick="openCity(event, 'tab3')" id="projects">Tab3</a>
+        <a  href="#" class="tablinks" onclick="openCity(event, 'tab4')" id="contact">Tab4</a>
+    </div>
+</div>
+
+ 
+<div class="container-fluid mt-3 ">
+    <div class="row d-md-none">
+      <div class="col p-3 text-black tt active1" onclick="openCity2(event, 'tab1')" style="background-color:yellow;">Tab1</div>
+      <div class="col p-3 text-white tt" onclick="openCity2(event, 'tab2')" style="background-color:#555;">Tab2</div>
+      <div class="col p-3 text-black tt" onclick="openCity2(event, 'tab3')" style="background-color:yellow;">Tab3</div>
+      <div class="col p-3 text-white tt" onclick="openCity2(event, 'tab4')" style="background-color:#555;">Tab4</div>
+  </div>
+
+
+
+<!--First container-->
+<div class="tab-content">
+    <div id="tab1" class="container tabcontent active" style="display: block;">
+        <div class="container" style="overflow: hidden;">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6"><div class="box"></div></div>
+                <div class="col-sm-12 col-lg-6"><div class="box"></div></div>
+            </div>
         </div>
-    
-        <p>Unique Calls</p>
+
         <div class="container">
-        <div class="skills css">80%</div>
-        </div>
-    
-        <p>Average Per Agent</p>
-        <div class="container">
-        <div class="skills js">65%</div>
-        </div>
-    
-        <p>Negotiation Rate</p>
-        <div class="container">
-        <div class="skills php">60%</div>
+            <div class="row">
+                <div id="bardiv">
+                    <h2>KPIs</h2>
+                
+                    <p>Conversion Rate</p>
+                    <div class="container2">
+                    <div class="skills html">90%</div>
+                    </div>
+                
+                    <p>Unique Calls</p>
+                    <div class="container2">
+                    <div class="skills css">80%</div>
+                    </div>
+                
+                    <p>Average Per Agent</p>
+                    <div class="container2">
+                    <div class="skills js">65%</div>
+                    </div>
+                
+                    <p>Negotiation Rate</p>
+                    <div class="container2">
+                    <div class="skills php">60%</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+        <!--2nd container-->
+        
+    
+        
+    <div id="tab2" class="container tabcontent" style="margin-top: 4px; display: none;">
+        <div class="row ">
+            <div class="col-sm-12 col-lg-6"><canvas id="lineChart" style="width:100%;max-width:600px"></canvas></div>
+            <div class="col-sm-12 col-lg-6"><canvas id="multilineChart" style="width:100%;max-width:600px;"></canvas></div>
+            <div class="col-sm-12 col-lg-6"><canvas id="myChart" style="width:100%;max-width:600px"></canvas></div>
+            <div class="col-sm-12 col-lg-6"><canvas id="pieChart" style="width:100%;max-width:600px"></canvas></div>
+        </div>
+    </div>
+        <!--3rd container-->
+    <div id="tab3" class="container tabcontent" style="margin-top: 4px; display: none;">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"></div>
+        </div>
+    </div>
+        <!--4th container-->
+    <div id="tab4" class="container tabcontent" style="margin-top: 4px; display: none;">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //first barchart
+    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = ["red", "green","blue","orange","brown"];
+    
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "World Wine Production 2018"
+        }
+      }
+    });
+  //pie chart
+
+const xValues1 = ["Italy", "France", "Spain", "USA", "Argentina"];
+const yValues1 = [55, 49, 44, 24, 15];
+const barColors1 = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+new Chart("pieChart", {
+  type: "pie",
+  data: {
+    labels: xValues1,
+    datasets: [{
+      backgroundColor: barColors1,
+      data: yValues1
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "World Wide Wine Production 2018"
+    }
+  }
+});
+
+//line chart
+
+const xValues2 = [50,60,70,80,90,100,110,120,130,140,150];
+const yValues2 = [7,8,8,9,9,9,10,11,14,14,15];
+
+new Chart("lineChart", {
+  type: "line",
+  data: {
+    labels: xValues2,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues2
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Daily calls"
+    },
+    scales: {
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+
+
+//multi line chart
+
+const xValues3 = [100,200,300,400,500,600,700,800,900,1000];
+
+new Chart("multilineChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{ 
+      data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+      borderColor: "red",
+      fill: false
+    }, { 
+      data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+      borderColor: "green",
+      fill: false
+    }, { 
+      data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+      borderColor: "blue",
+      fill: false
+    }]
+  },
+  options: {
+    legend: {display: false}
+  }
+});
+    </script>
 {% endblock %}

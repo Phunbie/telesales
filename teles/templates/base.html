@@ -4,13 +4,15 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{% static 'styles.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="{% static 'local.js' %}"></script>
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 </head>
 <body>
 <!-- header -->
-<div class="header">
+<div class="header" style="height: 120px;">
   <h2>Sunking</h2>
   <p>Powering access to brighter lives.</p>
 </div>
@@ -130,41 +132,7 @@
   </div>
   {% block content %}{% endblock %}
 <script>
-// Get the modal
-var modal = document.getElementById('id01');
-var modal2 = document.getElementById('id02');
-var modal3 = document.getElementById('id03');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-window.onclick = function(event) {
-    if (event.target == modal2) {
-        modal2.style.display = "none";
-    }
-}
-
-window.onclick = function(event) {
-    if (event.target == modal3) {
-        modal2.style.display = "none";
-    }
-}
-//scroll effect
-window.onscroll = function() {myFunction()};
-
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
 </script>
 
 </body>

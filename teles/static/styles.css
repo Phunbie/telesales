@@ -194,3 +194,108 @@ body {
     padding-top: 60px;
   }
   
+
+  /*sidenav for dashboard page*/
+
+/* Style the links inside the sidenav */
+#mySidenav a {
+  position: absolute; /* Position them relative to the browser window */
+  left: -80px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 100px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav .active {
+  left: 0px;
+}
+
+#mySidenav {
+  position: absolute;
+  top: 200px;
+}
+#mySidenav a:hover {
+  left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+#about {
+  top: 20px;
+  background-color: yellow;
+  color: black;
+}
+
+#blog {
+  top: 80px;
+  background-color: #555;
+}
+
+#projects {
+  top: 140px;
+  background-color: yellow; 
+  color: #000;
+}
+
+#contact {
+  top: 200px;
+  background-color: #555 /* Light Black */
+}
+
+/* Topnav for tabs */
+#mytopnav a {
+  position: absolute; /* Position them relative to the browser window */
+  /* left:800px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 100px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+#mytopnav {
+  position: absolute;
+  top: 240px;
+  
+
+/*display: inline;*/
+
+}
+#mytopnav a:hover {
+  width: 120px; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+#about1 {
+  top: 20px;
+  background-color: #2196F3;
+  color: #000;
+}
+
+#blog1 {
+  top: 20px;
+  background-color: #2196F3; 
+}
+
+#projects1 {
+  top: 20px;
+  background-color: #2196F3; 
+}
+
+#contact1 {
+  top: 20px;
+  background-color: #2196F3
+}
+
+.active1{
+  font-size: 1.2em;
+}
+
+div h4{
+  text-align: center;
+  color: yellow
+}

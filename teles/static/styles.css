@@ -30,7 +30,7 @@ body {
   }
   
   /* Full-width input fields */
-  input[type=text], input[type=password] {
+  input[type=text], input[type=password], input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -79,6 +79,11 @@ body {
   
   span.psw {
     float: right;
+    padding-top: 16px;
+  }
+
+  span.psw2 {
+    float: left;
     padding-top: 16px;
   }
   
@@ -154,32 +159,7 @@ body {
     padding: 30px;
     text-align: center;
   }
-  /*
-  #navbar {
-    overflow: hidden;
-    background-color: #333;
-  }
   
-  #navbar a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-  #navbar a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  #navbar a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
-  */
   .content {
     padding: 16px;
   }
@@ -198,53 +178,7 @@ body {
   /*sidenav for dashboard page*/
 
 /* Style the links inside the sidenav */
-#mySidenav a {
-  position: absolute; /* Position them relative to the browser window */
-  left: -80px; /* Position them outside of the screen */
-  transition: 0.3s; /* Add transition on hover */
-  padding: 15px; /* 15px padding */
-  width: 100px; /* Set a specific width */
-  text-decoration: none; /* Remove underline */
-  font-size: 20px; /* Increase font size */
-  color: white; /* White text color */
-  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
-}
-
-#mySidenav .active {
-  left: 0px;
-}
-
-#mySidenav {
-  position: absolute;
-  top: 200px;
-}
-#mySidenav a:hover {
-  left: 0; /* On mouse-over, make the elements appear as they should */
-}
-
-/* The about link: 20px from the top with a green background */
-#about {
-  top: 20px;
-  background-color: yellow;
-  color: black;
-}
-
-#blog {
-  top: 80px;
-  background-color: #555;
-}
-
-#projects {
-  top: 140px;
-  background-color: yellow; 
-  color: #000;
-}
-
-#contact {
-  top: 200px;
-  background-color: #555 /* Light Black */
-}
-
+/*
 /* Topnav for tabs */
 #mytopnav a {
   position: absolute; /* Position them relative to the browser window */
@@ -297,5 +231,19 @@ body {
 
 div h4{
   text-align: center;
-  color: yellow
 }
+
+/*
+#profile{
+   position:absolute;
+   top: 0;
+   right: 27px;
+}
+
+#leave{
+  position:absolute;
+  top: 0;
+  right: 2px;
+}
+
+*/

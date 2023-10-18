@@ -25,9 +25,13 @@ SECRET_KEY = "django-insecure-4^#iiz%-0&_1geh%fgvj=pw(4skp8l%cs_aunssw=8e_2edq^@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dc12-102-88-36-113.ngrok-free.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '1dfa-102-88-37-94.ngrok-free.app']
 
 
+
+import sys
+
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "teles",
     "bootstrap5",
+    #"fontawesome-free",
+    
 ]
 
 MIDDLEWARE = [

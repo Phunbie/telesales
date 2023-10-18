@@ -8,20 +8,37 @@ from django.contrib import messages
 
 
 def home(request):
-    users = User.objects.all()
-    return render(request, 'index.html', {'users': users})
+    #users = User.objects.all()
+    
+    if request.user.is_authenticated:
+        username = request.user.username
+        username = username.capitalize()
+        return render(request, 'index.html', {'username': username})
+    return redirect(logIn) 
+
+
+def profile(request):
+    #users = User.objects.all()
+    username = request.user.username
+    username = username.capitalize()
+    return render(request, 'profile.html', {'username': username})
+
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    username = request.user.username
+    username = username.capitalize()
+    return render(request, 'dashboard.html', {'username': username})
 
 
 def signOut(request):
     if request.method == 'POST':
         logout(request)
         messages.success(request,f'You have been logged out.')
-        return redirect('home')   
+        return redirect(logIn)   
     
 def logIn(request):
+    username = request.user.username
+    username = username.capitalize()
     if request.method == 'POST':
         username = request.POST.get('uname')
         password = request.POST.get('psw')
@@ -33,7 +50,7 @@ def logIn(request):
             return redirect('home')
         messages.error(request,f'wrong password or name')
         return redirect('home')
-        
+    return render(request, 'login.html', {'username': username})    
 
 
 def signUp(request):
@@ -41,6 +58,7 @@ def signUp(request):
         # Get the user data from the request.
         username = request.POST.get('uname')
         role = request.POST.get('role')
+        email = request.POST.get('email')
         country = request.POST.get('country')
         angaza_id = request.POST.get('angaza')
         password = request.POST.get('psw')
@@ -49,19 +67,19 @@ def signUp(request):
         # Validate angaza id.
         if validate_angaza:
             messages.info(request,f'There is a user with the provided andaza id')
-            return redirect('home')
+            return redirect(logIn)
         # Validate the user data.
         if not username or not role or not country or not angaza_id or not password or not password2:
             #return render(request, 'index.html', {'error': 'Please fill in all the required fields.'})
             messages.info(request,f'Please fill in all the required fields.')
-            return redirect('home')
+            return redirect(logIn)
         if password != password2:
             #return render(request, 'index.html', {'error': 'Passwords do not match.'})
             messages.error(request,f'Passwords do not match.')
-            return redirect('home')
+            return redirect(logIn)
 
         # Create a new User object.
-        user = User.objects.create_user(username, password=password)
+        user = User.objects.create_user(username, password=password, email=email)
    
 
         # Create a new Employee object.
@@ -82,3 +100,8 @@ def signUp(request):
 
         # Redirect the user to the home page.
         return redirect('/')
+   
+
+
+   def edidProfile(request):
+       pass

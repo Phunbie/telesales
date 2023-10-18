@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!--<div class="modal">id="id01"-->
+    
+    <form  action="{% url 'login' %}" method="post"><!--class="modal-content"-->
+      {% csrf_token %}
+      <div class="imgcontainer">
+      </div>
+
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+          
+        <button type="submit">Login</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <span class="psw">  Forgot <a href="#">password?</a></span>
+        <span class="psw1"> Not registered yet <a href="#" onclick="document.getElementById('id8').style.display='block'">Signup</a></span>
+      </div>
+    </form>
+  </div>
+
+
+   <!-- pop up sign up form -->
+   <div id="id8" class="modal">
+    
+    <form class="modal-content animate" action="{% url 'signup' %}" method="post">
+        {% csrf_token %}
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('id8').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+  
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <label for="angaz"><b>Role</b></label>
+        <input type="text" placeholder="Enter your role" name="role" required>
+
+        <label for="angaz"><b>E-mail</b></label>
+        <input type="email" placeholder="Enter your email" name="email" required>
+
+        <label for="angaz"><b>Country</b></label>
+        <input type="text" placeholder="Enter your country" name="country" required>
+        
+        <label for="angaz"><b>Angaza ID</b></label>
+        <input type="text" placeholder="Enter Angaza ID" name="angaza" required>
+  
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+
+        <label for="psw2"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password again" name="psw2" required>
+
+        <button type="submit">Sign up</button>
+      
+      </div>
+  
+    </form>
+  </div>
+{% endblock %}

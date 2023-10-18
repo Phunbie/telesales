@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% block dash %}
-<a class="active" href="{% url 'dashboard' %}">Dashboard</a>
-{% endblock %}
+{% block proile %}<i class="fa-regular fa-user"></i> Welcome {{ username }}{% endblock %}
+
+
+<!--<a class="active" href="{% url 'dashboard' %}">Dashboard</a>-->s
 
 {% block content %}
 <style>
@@ -43,8 +44,9 @@
   background-color: yellow;
   width: 100%;
   line-height: 400px;
+  height: 400px;
   text-align: center;
-  margin: 0 10px;
+  margin:auto;
 }
 
 .tt:hover{
@@ -59,60 +61,12 @@
     font-size: 1.2em;
 }
 
-
+h2 {
+  text-align:center;
+}
 </style>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-  
-        function drawChart() {
-          var data = google.visualization.arrayToDataTable([
-            ['day', 'calls', 'negotiation'],
-            ['1',  100,      40],
-            ['2',  160,      60],
-            ['3',  200,       55],
-            ['4',  188,      54]
-          ]);
-  
-          var options = {
-            title: 'Agent Performance',
-            curveType: 'function',
-            legend: { position: 'bottom' }
-          };
-  
-          var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-  
-          chart.draw(data, options);
-        }
-        </script>
-        <script type="text/javascript">
-
-        //pie chart
-       google.charts.load('current', {'packages':['corechart']});
-       google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Work',     11],
-            ['Eat',      2],
-            ['Commute',  2],
-            ['Watch TV', 2],
-            ['Sleep',    7]
-        ]);
-
-        var options = {
-            title: 'My Daily Activities'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-        }
-    
-
+       
     //tab function
 function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
@@ -145,20 +99,20 @@ function openCity(evt, cityName) {
 
 
      <!--Sidenav-->
-     
+ <!--    
 <div class="d-none d-lg-block d-md-block ">
     <div id="mySidenav" class="sidenav tab">
-        <a  href="#" class="tablinks active text-black" id="about" onclick="openCity(event, 'tab1')">Tab1</a>
+        <a  href="#" class="tablinks active text-black" id="about" onclick="openCity(event, 'tab1')">Summary</a>
         <a  href="#" class="tablinks" onclick="openCity(event, 'tab2')" id="blog">Tab2</a>
         <a  href="#" class="tablinks text-black" onclick="openCity(event, 'tab3')" id="projects">Tab3</a>
         <a  href="#" class="tablinks" onclick="openCity(event, 'tab4')" id="contact">Tab4</a>
     </div>
 </div>
-
- 
+-->
+ <!--d-md-none-->
 <div class="container-fluid mt-3 ">
-    <div class="row d-md-none">
-      <div class="col p-3 text-black tt active1" onclick="openCity2(event, 'tab1')" style="background-color:yellow;">Tab1</div>
+    <div class="row">
+      <div class="col p-3 text-black tt active1" onclick="openCity2(event, 'tab1')" style="background-color:yellow;">Summary</div>
       <div class="col p-3 text-white tt" onclick="openCity2(event, 'tab2')" style="background-color:#555;">Tab2</div>
       <div class="col p-3 text-black tt" onclick="openCity2(event, 'tab3')" style="background-color:yellow;">Tab3</div>
       <div class="col p-3 text-white tt" onclick="openCity2(event, 'tab4')" style="background-color:#555;">Tab4</div>
@@ -169,17 +123,18 @@ function openCity(evt, cityName) {
 <!--First container-->
 <div class="tab-content">
     <div id="tab1" class="container tabcontent active" style="display: block;">
-        <div class="container" style="overflow: hidden;">
+        <h2>Live performance summary</h2>
+        <div class="container d-none d-lg-block d-md-block" style="overflow: hidden;">
             <div class="row">
-                <div class="col-sm-12 col-lg-6"><div class="box"></div></div>
-                <div class="col-sm-12 col-lg-6"><div class="box"></div></div>
+                <div class="col-sm-12 col-lg-6"><div class="box" style="font-size:5em; border-style: outset; overflow:scroll;">70 calls</div></div>
+                <div class="col-sm-12 col-lg-6"><div class="box" style="font-size:5em; border-style: outset; overflow:scroll;">50% negotiation</div></div>
             </div>
         </div>
 
         <div class="container">
             <div class="row">
                 <div id="bardiv">
-                    <h2>KPIs</h2>
+                    <h3>KPIs</h3>
                 
                     <p>Conversion Rate</p>
                     <div class="container2">
@@ -219,7 +174,7 @@ function openCity(evt, cityName) {
         <!--3rd container-->
     <div id="tab3" class="container tabcontent" style="margin-top: 4px; display: none;">
         <div class="row">
-            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"><canvas id="myBar" style="width:100%;max-width:600px"></canvas></div>
             <div class="col-sm-12 col-lg-6"></div>
             <div class="col-sm-12 col-lg-6"></div>
             <div class="col-sm-12 col-lg-6"></div>
@@ -238,7 +193,7 @@ function openCity(evt, cityName) {
 
 <script>
     //first barchart
-    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    const xValues = ["Nigeria", "Kenya", "Tanzania", "India", "Cameroon"];
     const yValues = [55, 49, 44, 24, 15];
     const barColors = ["red", "green","blue","orange","brown"];
     
@@ -255,13 +210,13 @@ function openCity(evt, cityName) {
         legend: {display: false},
         title: {
           display: true,
-          text: "World Wine Production 2018"
+          text: "sales 2023"
         }
       }
     });
   //pie chart
 
-const xValues1 = ["Italy", "France", "Spain", "USA", "Argentina"];
+const xValues1 = ["Nigeria", "Kenya", "Tanzania", "India", "Cameroon"];
 const yValues1 = [55, 49, 44, 24, 15];
 const barColors1 = [
   "#b91d47",
@@ -283,15 +238,15 @@ new Chart("pieChart", {
   options: {
     title: {
       display: true,
-      text: "World Wide Wine Production 2018"
+      text: "World Wide sales 2023"
     }
   }
 });
 
 //line chart
 
-const xValues2 = [50,60,70,80,90,100,110,120,130,140,150];
-const yValues2 = [7,8,8,9,9,9,10,11,14,14,15];
+const xValues2 = [1,2,3,4,5,6,7,8,9,10,11];
+const yValues2 = [70,200,130,98,97,110,107,110,147,144,156];
 
 new Chart("lineChart", {
   type: "line",
@@ -309,10 +264,10 @@ new Chart("lineChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "Daily calls"
+      text: "Daily calls for this month"
     },
     scales: {
-      yAxes: [{ticks: {min: 6, max:16}}],
+      yAxes: [{ticks: {min: 1, max:500}}],
     }
   }
 });
@@ -320,12 +275,12 @@ new Chart("lineChart", {
 
 //multi line chart
 
-const xValues3 = [100,200,300,400,500,600,700,800,900,1000];
+const xValues3 = ["jan","feb","mar","apr","may","june","jul","aug","sep","oct"];
 
 new Chart("multilineChart", {
   type: "line",
   data: {
-    labels: xValues,
+    labels: xValues3,
     datasets: [{ 
       data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
       borderColor: "red",
@@ -344,5 +299,32 @@ new Chart("multilineChart", {
     legend: {display: false}
   }
 });
+
+
+   //second barchart
+    const xValues4 = ["CANCEL", "ANSWER", "BUSY"];
+    const yValues4 = [55, 49, 44];
+    const barColors4 = ["blue","orange","brown"];
+    
+    new Chart("myBar", {
+      type: "bar",
+      data: {
+        labels: xValues4,
+        datasets: [{
+          backgroundColor: barColors4,
+          data: yValues4
+        }]
+      },
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Dial Status"
+        },
+        scales: {
+      yAxes: [{ticks: {min: 1, max:200}}],
+    }
+      }
+    });
     </script>
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+   <style>
+   .tab{
+    position: relative;
+    top: 50px;
+    left: 70px;
+   }
+   </style>
+
+
+ <div class="tab" style="height: 100%;">
+    <h1 style="margin: auto;">User Detail</h1>
+        <table class="table table-borderless">
+           <!-- <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            -->
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>oluwafunbi.adeneye@sunking.com</td>
+            </tr>
+            <tr>
+                <td><strong>Username</strong></td>
+                <td>Funbi</td>
+            </tr>
+            <tr>
+                <td><strong>Country</strong></td>
+                <td>Nigeria</td>
+            <tr>
+                <td><strong>Role</strong></td>
+                <td>CLE</td>
+            </tr>
+        </table>
+    
+        <a href="#" style="color: #007BFF;">Edit Profile</a>
+
+    </div>
+
+ {% endblock %}

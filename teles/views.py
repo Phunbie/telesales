@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate, logout
 from .models import Agent
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 
-
+@login_required
 def home(request):
     #users = User.objects.all()
     
@@ -16,14 +17,14 @@ def home(request):
         return render(request, 'index.html', {'username': username})
     return redirect(logIn) 
 
-
+@login_required
 def profile(request):
     #users = User.objects.all()
     username = request.user.username
     username = username.capitalize()
     return render(request, 'profile.html', {'username': username})
 
-
+@login_required
 def dashboard(request):
     username = request.user.username
     username = username.capitalize()
@@ -102,6 +103,6 @@ def signUp(request):
         return redirect('/')
    
 
-
-   def edidProfile(request):
+@login_required
+def edidProfile(request):
        pass

@@ -31,11 +31,13 @@
 <div class="header" style="height: 100px;border-bottom: 1px solid;">
   <h2>Sun King</h2>
   <p>Powering access to brighter lives.</p>
+  {%if request.user.is_authenticated %}
   <P id="profile">{% block proile %}<i class="fa-regular fa-user"></i> Welcome{% endblock %}</P>
   <a id="leave" href="#"  onclick="document.getElementById('id03').style.display='block'">
     <i class="fa fa-sign-out" aria-hidden="true"></i>
     Sign Out
   </a>
+  {% endif %}
 </div>
 <!-- nav bar 
 <div class="topnav" id="navbar">
@@ -55,22 +57,14 @@
 -->
 
 
-{% if messages %}
-<div class="messages">
-{% for message in messages %}
-    <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
-        {{ message }}
-    </div>
-{% endfor %}
-</div>
-{% endif %}
+
 
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-2 col-lg-2" style="background-color: yellow;">
   <!-- Sidebar -->
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar"> 
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 mt-4">
         <a
@@ -187,6 +181,15 @@
     <!--Main layout-->
     <!--M<div class="container main">-->
     <div class="col-sm-10 col-lg-10">
+      {% if messages %}
+      <div class="messages">
+      {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+        {{ message }}
+        </div>
+      {% endfor %}
+      </div>
+      {% endif %}
       {% block content %}{% endblock %}
     </div>
     <!--Main layout-->

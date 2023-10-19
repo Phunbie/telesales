@@ -2,8 +2,20 @@
 
 
 {% block content %}
+
+<style>
+#formcontainer{
+    width: 60%;
+    height: 60vh;
+    border-style: double;
+    position: relative;
+    top: 80px;
+    left: 350px;
+}
+</style>
+
 <!--<div class="modal">id="id01"-->
-    
+<div id="formcontainer">  
     <form  action="{% url 'login' %}" method="post"><!--class="modal-content"-->
       {% csrf_token %}
       <div class="imgcontainer">
@@ -27,7 +39,7 @@
         <span class="psw1"> Not registered yet <a href="#" onclick="document.getElementById('id8').style.display='block'">Signup</a></span>
       </div>
     </form>
-  </div>
+</div>
 
 
    <!-- pop up sign up form -->

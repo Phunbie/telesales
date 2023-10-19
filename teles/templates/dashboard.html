@@ -175,15 +175,15 @@ function openCity(evt, cityName) {
     <div id="tab3" class="container tabcontent" style="margin-top: 4px; display: none;">
         <div class="row">
             <div class="col-sm-12 col-lg-6"><canvas id="myBar" style="width:100%;max-width:600px"></canvas></div>
-            <div class="col-sm-12 col-lg-6"></div>
-            <div class="col-sm-12 col-lg-6"></div>
-            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"><canvas id="scatterChart" style="width:100%;max-width:600px"></div>
+            <div class="col-sm-12 col-lg-6"><canvas id="doughnutChart" style="width:100%;max-width:600px"></div>
+            <div class="col-sm-12 col-lg-6"><div id="myPlot" style="width:100%;max-width:600px"></div></div>
         </div>
     </div>
         <!--4th container-->
     <div id="tab4" class="container tabcontent" style="margin-top: 4px; display: none;">
         <div class="row">
-            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"><div id="myPlot1" style="width:100%;max-width:600px"></div></div>
             <div class="col-sm-12 col-lg-6"></div>
             <div class="col-sm-12 col-lg-6"></div>
             <div class="col-sm-12 col-lg-6"></div>
@@ -326,5 +326,113 @@ new Chart("multilineChart", {
     }
       }
     });
+
+    // scatter plot
+
+  
+var xyValues = [
+  {x:50, y:7},
+  {x:60, y:8},
+  {x:70, y:8},
+  {x:80, y:9},
+  {x:90, y:9},
+  {x:100, y:9},
+  {x:110, y:10},
+  {x:120, y:11},
+  {x:130, y:14},
+  {x:140, y:14},
+  {x:150, y:15}
+];
+
+new Chart("scatterChart", {
+  type: "scatter",
+  data: {
+    datasets: [{
+      pointRadius: 4,
+      pointBackgroundColor: "rgb(0,0,255)",
+      data: xyValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      xAxes: [{ticks: {min: 40, max:160}}],
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+
+
+//dougnut chart
+
+var xValuesx = ["Uganda", "Tanzania", "India", "Nigeria", "Cameroon"];
+var yValuesy = [55, 49, 44, 24, 15];
+var barColors11 = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+new Chart("doughnutChart", {
+  type: "doughnut",
+  data: {
+    labels: xValuesx,
+    datasets: [{
+      backgroundColor: barColors11,
+      data: yValuesy
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "World Wide Home 200x sales 2023"
+    }
+  }
+});
+
+
+//bar horizontal chart
+
+const xArray = [55, 49, 44, 24, 15];
+const yArray = ["Uganda", "Tanzania", "India", "Nigeria", "Cameroon"];
+
+const data = [{
+  x:xArray,
+  y:yArray,
+  type:"bar",
+  orientation:"h",
+  marker: {color:"rgba(255,0,0,0.6)"}
+}];
+
+const layout = {title:"World  Production"};
+
+Plotly.newPlot("myPlot", data, layout);
+
+
+
+//plotly line
+
+const xArray1 = [50,60,70,80,90,100,110,120,130,140,150];
+const yArray1 = [7,8,8,9,9,9,10,11,14,14,15];
+
+// Define Data
+const data1 = [{
+  x: xArray1,
+  y: yArray1,
+  mode:"lines"
+}];
+
+// Define Layout
+const layout1 = {
+  xaxis: {range: [40, 160], title: "Square Meters"},
+  yaxis: {range: [5, 16], title: "Price"},  
+  title: "Prices vs. Size"
+};
+
+// Display using Plotly
+Plotly.newPlot("myPlot1", data1, layout1);
+
     </script>
 {% endblock %}

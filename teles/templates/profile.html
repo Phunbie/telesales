@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 
+{% block proile %}<i class="fa-regular fa-user"></i> Welcome {{ username }}{% endblock %}
+
 
 {% block content %}
    <style>
    .tab{
+    width: 30vw;
+    height: 50vh;
     position: relative;
-    top: 50px;
-    left: 70px;
+    top: 10vh;
+    left: 21vw;
+    border-style: double;
+    padding: 25px;
    }
    </style>
 
 
- <div class="tab" style="height: 100%;">
-    <h1 style="margin: auto;">User Detail</h1>
+ <div class="tab">
+    <h1 style="margin: auto;text-align: center;">User Detail</h1>
         <table class="table table-borderless">
            <!-- <tr>
                 <th>Field</th>
@@ -21,22 +27,26 @@
             -->
             <tr>
                 <td><strong>Email</strong></td>
-                <td>oluwafunbi.adeneye@sunking.com</td>
+                <td>{{ email }}</td>
             </tr>
             <tr>
-                <td><strong>Username</strong></td>
-                <td>Funbi</td>
+                <td><strong>Name</strong></td>
+                <td>{{ username }}</td>
             </tr>
             <tr>
                 <td><strong>Country</strong></td>
-                <td>Nigeria</td>
+                <td>{{ country }}</td>
             <tr>
                 <td><strong>Role</strong></td>
-                <td>CLE</td>
+                <td>{{ role }}</td>
+            </tr>
+            <tr>
+                <td><strong>Angaza Id</strong></td>
+                <td>{{ angaza_id }}</td>
             </tr>
         </table>
     
-        <a href="#" style="color: #007BFF;">Edit Profile</a>
+        <a href="{% url 'editprofile' %}" style="color: #007BFF;">Edit Profile</a>
 
     </div>
 

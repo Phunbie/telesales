@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 
 
 
-@login_required
 def home(request):
     #users = User.objects.all()
     
@@ -19,10 +18,15 @@ def home(request):
 
 @login_required
 def profile(request):
-    #users = User.objects.all()
+    user = request.user
+    agent= Agent.objects.get(user=user)
+    email = agent.user.email
+    angaza_id = agent.angaza_id
+    country = agent.country
+    role = agent.role
     username = request.user.username
     username = username.capitalize()
-    return render(request, 'profile.html', {'username': username})
+    return render(request, 'profile.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
 
 @login_required
 def dashboard(request):
@@ -64,10 +68,15 @@ def signUp(request):
         angaza_id = request.POST.get('angaza')
         password = request.POST.get('psw')
         password2 = request.POST.get('psw2')
-        validate_angaza = Agent.objects.get(angaza_id=angaza_id)
+        validate_angaza=""
+
+        try:
+            validate_angaza = Agent.objects.get(angaza_id=angaza_id)
+        except:
+            validate_angaza = False
         # Validate angaza id.
         if validate_angaza:
-            messages.info(request,f'There is a user with the provided andaza id')
+            messages.info(request,f'There is a user with the provided angaza id')
             return redirect(logIn)
         # Validate the user data.
         if not username or not role or not country or not angaza_id or not password or not password2:
@@ -96,13 +105,42 @@ def signUp(request):
         print("saved")
         # Log in the user.
         login(request, user)
-        messages.success(request,f'Hi, welcome!')
+        messages.success(request,f'Account created')
         print("logged in")
 
         # Redirect the user to the home page.
-        return redirect('/')
+        return redirect(logIn)
    
 
 @login_required
-def edidProfile(request):
-       pass
+def editProfile(request):
+    user = request.user
+    username = user.username
+    agent= Agent.objects.get(user=user)
+    email = agent.user.email
+    angaza_id = agent.angaza_id
+    country = agent.country
+    role = agent.role
+    if request.method == 'POST':
+        # Get the user data from the request.
+        username = request.POST.get('uname')
+        role = request.POST.get('role')
+        email = request.POST.get('email')
+        country = request.POST.get('country')
+        angaza_id = request.POST.get('angaz')
+
+        user.username = username
+        user.email = email
+        agent.role = role
+        agent.country = country
+        agent.angaza_id = angaza_id
+        user.save() 
+        agent.save()
+        messages.success(request,f'Account Updated')
+        return redirect(profile)
+
+
+    return render(request, 'editprof.html', {'username': username,'email':email,'angaza_id':angaza_id,'country':country,'role':role})
+
+
+

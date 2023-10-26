@@ -64,6 +64,11 @@
 h2 {
   text-align:center;
 }
+
+#tabs{
+   position:sticky;
+   top:80px;  
+}
 </style>
     <script type="text/javascript">
        
@@ -111,7 +116,7 @@ function openCity(evt, cityName) {
 -->
  <!--d-md-none-->
 <div class="container-fluid mt-3 ">
-    <div class="row">
+    <div class="row" id="tabs">
       <div class="col p-3 text-black tt active1" onclick="openCity2(event, 'tab1')" style="background-color:yellow;">Summary</div>
       <div class="col p-3 text-white tt" onclick="openCity2(event, 'tab2')" style="background-color:#555;">Tab2</div>
       <div class="col p-3 text-black tt" onclick="openCity2(event, 'tab3')" style="background-color:yellow;">Tab3</div>
@@ -184,8 +189,8 @@ function openCity(evt, cityName) {
     <div id="tab4" class="container tabcontent" style="margin-top: 4px; display: none;">
         <div class="row">
             <div class="col-sm-12 col-lg-6"><div id="myPlot1" style="width:100%;max-width:600px"></div></div>
-            <div class="col-sm-12 col-lg-6"></div>
-            <div class="col-sm-12 col-lg-6"></div>
+            <div class="col-sm-12 col-lg-6"><div id="barv" style="width:100%;max-width:600px"></div></div>
+            <div class="col-sm-12 col-lg-6"><div id="myDiv" style="width:100%;max-width:600px"></div></div>
             <div class="col-sm-12 col-lg-6"></div>
         </div>
     </div>
@@ -426,13 +431,67 @@ const data1 = [{
 
 // Define Layout
 const layout1 = {
-  xaxis: {range: [40, 160], title: "Square Meters"},
+  xaxis: {range: [40, 160], title: "Meters"},
   yaxis: {range: [5, 16], title: "Price"},  
   title: "Prices vs. Size"
 };
 
 // Display using Plotly
 Plotly.newPlot("myPlot1", data1, layout1);
+
+// bar chart vertical
+
+const xArr = ["Uganda", "Tanzania", "India", "Nigeria", "Cameroon"];
+const yArr = [55, 49, 44, 24, 15];
+
+const datac = [{
+  x:xArr,
+  y:yArr,
+  type:"bar",
+  orientation:"v",
+  marker: {color:"rgba(0,0,255,0.6)"}
+}];
+
+const layoutc = {title:"World Wide Distribution"};
+
+Plotly.newPlot("barv", datac, layoutc);
+
+//multiple barchart
+
+var trace1 = {
+  x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  y: [20, 14, 25, 16, 18, 22, 19, 15, 12, 16, 14, 17],
+  type: 'bar',
+  name: 'Primary Product',
+  marker: {
+    color: 'rgb(49,130,189)',
+    opacity: 0.7,
+  }
+};
+
+var trace2 = {
+  x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  y: [19, 14, 22, 14, 16, 19, 15, 14, 10, 12, 12, 16],
+  type: 'bar',
+  name: 'Secondary Product',
+  marker: {
+    color: 'rgb(204,204,204)',
+    opacity: 0.5
+  }
+};
+
+var datad = [trace1, trace2];
+
+var layoutd = {
+  title: '2013 Sales Report',
+  xaxis: {
+    tickangle: -45
+  },
+  barmode: 'group'
+};
+
+Plotly.newPlot('myDiv', datad, layoutd);
+
 
     </script>
 {% endblock %}

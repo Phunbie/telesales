@@ -2,19 +2,27 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate, logout
 from .models import Agent
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from . import vicidata
 
 
 def home(request):
     #users = User.objects.all()
-    
     if request.user.is_authenticated:
         username = request.user.username
         username = username.capitalize()
         return render(request, 'index.html', {'username': username})
     return redirect(logIn) 
+
+def dataapi(request):
+        ##trigger = request.GET.get('trigger')
+        stat = vicidata.status()
+        data = {'data':stat}
+        response = JsonResponse(data,status=200)
+        return response
+
 
 @login_required
 def profile(request):

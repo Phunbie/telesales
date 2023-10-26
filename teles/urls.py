@@ -10,5 +10,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
     path('editprofile/', views.editProfile, name='editprofile'),
+    path('dataapi/', views.dataapi, name='dataapi'),
 ]
 

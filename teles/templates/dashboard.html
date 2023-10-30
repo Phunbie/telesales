@@ -131,8 +131,8 @@ function openCity(evt, cityName) {
         <h2>Live performance summary</h2>
         <div class="container d-none d-lg-block d-md-block" style="overflow: hidden;">
             <div class="row">
-                <div class="col-sm-12 col-lg-6"><div class="box" style="font-size:5em; border-style: outset; overflow:scroll;">70 calls</div></div>
-                <div class="col-sm-12 col-lg-6"><div class="box" style="font-size:5em; border-style: outset; overflow:scroll;">50% negotiation</div></div>
+                <div class="col-sm-12 col-lg-6"><div id="calls" class="box" style="font-size:5em; border-style: outset; overflow:scroll;">70 calls</div></div>
+                <div class="col-sm-12 col-lg-6"><div id="statu" class="box" style="font-size:5em; border-style: outset; overflow:scroll;">50% negotiation</div></div>
             </div>
         </div>
 
@@ -164,6 +164,30 @@ function openCity(evt, cityName) {
             </div>
         </div>
     </div>
+
+    <script>
+       //ajax call
+ function statCall() {
+    $.get("{% url 'dataapi' %}", function(data, status){
+    $('#statu').text(data.data);
+    $('#calls').text(data.data);
+  });
+};
+
+
+setInterval(statCall, 6000);
+
+    </script>
+
+<script>
+     function callsCall() {
+      $.get("{% url 'callsapi' %}", function(data, status){
+      $('#calls').text(data.data);
+    });
+  };
+    
+  //setInterval(callsCall, 10000);
+</script>
         <!--2nd container-->
         
     
@@ -197,6 +221,8 @@ function openCity(evt, cityName) {
 </div>
 
 <script>
+
+
     //first barchart
     const xValues = ["Nigeria", "Kenya", "Tanzania", "India", "Cameroon"];
     const yValues = [55, 49, 44, 24, 15];

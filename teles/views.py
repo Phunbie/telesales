@@ -16,13 +16,25 @@ def home(request):
         return render(request, 'index.html', {'username': username})
     return redirect(logIn) 
 
+
 def dataapi(request):
-        ##trigger = request.GET.get('trigger')
         stat = vicidata.status()
         data = {'data':stat}
         response = JsonResponse(data,status=200)
         return response
 
+def agentlist(request):
+    list = vicidata.agent_list()
+    username = request.user.username
+    username = username.capitalize()
+    return render(request, 'agents.html', {'username': username,'list':list})
+
+
+def callsapi(request):
+        stat = vicidata.calls()
+        data = {'data':stat}
+        response = JsonResponse(data,status=200)
+        return response
 
 @login_required
 def profile(request):

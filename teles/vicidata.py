@@ -1,4 +1,9 @@
 import mysql.connector
+from datetime import datetime
+ 
+month = datetime.now().month
+year = datetime.now().year
+day = datetime.now().day
 
 mydb = mysql.connector.connect(
   host="192.168.0.13",
@@ -10,16 +15,35 @@ mydb = mysql.connector.connect(
 def status():
   mycursor = mydb.cursor(buffered=True)
 
-  mycursor.execute("SELECT status  FROM vicidial_log WHERE user=211580 AND EXTRACT(YEAR FROM call_date) = 2023  AND EXTRACT(MONTH FROM call_date) = 10 AND EXTRACT(DAY FROM call_date) = 25 ORDER BY call_date DESC")
+  mycursor.execute(f"""
+                   SELECT status FROM vicidial_log WHERE 
+                    EXTRACT(YEAR FROM call_date) = {year}  
+                    AND EXTRACT(MONTH FROM call_date) = {month} 
+                    AND EXTRACT(DAY FROM call_date) = {day} ORDER BY call_date DESC LIMIT 10
+                    """)
 
   myresult = mycursor.fetchone()
 
 
   return myresult[0]
 
-#mycursor.execute("SELECT * FROM vicidial_log LIMIT 10")
+def calls():
+  mycursor = mydb.cursor()
+  query = f"""
+  SELECT SUM(called_count) FROM vicidial_log 
+  WHERE user=211249 AND EXTRACT(YEAR FROM call_date) = {year} 
+  AND EXTRACT(MONTH FROM call_date) = {month} AND EXTRACT(DAY FROM call_date) = {day};
+  """
+  mycursor.execute(query)
+  myresult = mycursor.fetchone()
+  return myresult[0]
 
-#myresult = mycursor.fetchall()
 
-#for x in myresult:
-#  print(x[-2])
+def agent_list():
+  listQuewry = "SELECT `user`, full_name FROM vicidial_users"
+  mycursor = mydb.cursor(buffered=True)
+  mycursor.execute(listQuewry)
+  myresult = mycursor.fetchall()
+  return myresult
+
+

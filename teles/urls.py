@@ -11,5 +11,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('editprofile/', views.editProfile, name='editprofile'),
     path('dataapi/', views.dataapi, name='dataapi'),
+    path('callsapi/', views.callsapi, name='callsapi'),
+    path('agentlist/', views.agentlist, name='agentlist'),
 ]
 

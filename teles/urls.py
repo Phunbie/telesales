@@ -13,5 +13,6 @@ urlpatterns = [
     path('dataapi/', views.dataapi, name='dataapi'),
     path('callsapi/', views.callsapi, name='callsapi'),
     path('agentlist/', views.agentlist, name='agentlist'),
+    path ('agent_info/<str:id>/', views.agent_info, name='agent_info'),
 ]
 

@@ -48,11 +48,21 @@ def profile(request):
     username = username.capitalize()
     return render(request, 'profile.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
 
+
+
 @login_required
 def dashboard(request):
     username = request.user.username
     username = username.capitalize()
     return render(request, 'dashboard.html', {'username': username})
+
+
+
+def agent_info(request, id):
+    username = request.user.username
+    username = username.capitalize()
+    return render(request, 'agent.html', {'username': username})
+
 
 
 def signOut(request):

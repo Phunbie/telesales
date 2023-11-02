@@ -17,6 +17,7 @@ def home(request):
     return redirect(logIn) 
 
 
+
 def dataapi(request):
         stat = vicidata.status()
         data = {'data':stat}
@@ -31,10 +32,10 @@ def agentlist(request):
 
 
 def callsapi(request):
-        stat = vicidata.calls()
-        data = {'data':stat}
-        response = JsonResponse(data,status=200)
-        return response
+    stat = vicidata.calls()
+    data = {'data':stat}
+    response = JsonResponse(data,status=200)
+    return response
 
 @login_required
 def profile(request):
@@ -59,9 +60,10 @@ def dashboard(request):
 
 
 def agent_info(request, id):
+    data = vicidata.agentInfo(id)
     username = request.user.username
     username = username.capitalize()
-    return render(request, 'agent.html', {'username': username})
+    return render(request, 'agent.html', {'username': username, 'data':data})
 
 
 

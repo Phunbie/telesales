@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'test.html' %}
+{% block profile %}<i class="fa-regular fa-user"></i>{{ username }}{% endblock %}
+{% block profile2 %}<i class="fa-regular fa-user"></i>{{ username }}{% endblock %}
 
-{% block proile %}<i class="fa-regular fa-user"></i> Welcome {{ username }}{% endblock %}
 
 
 <!--<a class="active" href="{% url 'dashboard' %}">Dashboard</a>-->s
@@ -67,11 +68,21 @@ h2 {
 
 #tabs{
    position:sticky;
-   top:80px;  
+   top:50px;  
 }
 </style>
-    <script type="text/javascript">
-       
+ <script type="text/javascript">
+var home = document.getElementById("home")
+var monitor = document.getElementById("monitor")
+var report = document.getElementById("report")
+var view = document.getElementById("vie")
+var newsletter = document.getElementById("newsl")
+
+home.className = ""
+monitor.className = ""
+report.className = "active"
+view.className = ""
+newsletter.className = ""  
     //tab function
 function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
@@ -115,7 +126,7 @@ function openCity(evt, cityName) {
 </div>
 -->
  <!--d-md-none-->
-<div class="container-fluid mt-3 ">
+<div class="container-fluid mt-3" style="padding-bottom: 10px;">
     <div class="row" id="tabs">
       <div class="col p-3 text-black tt active1" onclick="openCity2(event, 'tab1')" style="background-color:yellow;">Summary</div>
       <div class="col p-3 text-white tt" onclick="openCity2(event, 'tab2')" style="background-color:#555;">Tab2</div>

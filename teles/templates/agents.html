@@ -1,5 +1,6 @@
-{% extends 'base.html' %}
-{% block proile %}<i class="fa-regular fa-user"></i> Welcome {{ username }}{% endblock %}
+{% extends 'test.html' %}
+{% block profile %}<i class="fa-regular fa-user"></i>{{ username }}{% endblock %}
+{% block profile2 %}<i class="fa-regular fa-user"></i>{{ username }}{% endblock %}
 
 
 
@@ -45,11 +46,24 @@
 
 <ul id="myUL">
   {% for x,y in list %}
-  <li><a href="#">{{ y }}</a></li>
+  <li><a href="{% url 'agent_info' x %}">{{ y }}</a></li>
   {% endfor %}
 </ul>
 
 <script>
+
+var home = document.getElementById("home")
+var monitor = document.getElementById("monitor")
+var report = document.getElementById("report")
+var view = document.getElementById("vie")
+var newsletter = document.getElementById("newsl")
+
+home.className = ""
+monitor.className = "active"
+report.className = ""
+view.className = ""
+newsletter.className = ""
+
     function myFunction() {
       // Declare variables
       var input, filter, ul, li, a, i, txtValue;

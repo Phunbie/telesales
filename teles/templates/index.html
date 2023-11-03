@@ -7,30 +7,30 @@
 <style>
   .first {
   width: 100%;
-  height: 200px;
+  height: 80px;
   border-radius: 20px;
 }
 
  .second {
-  height: 500px;
+  height: 320px;
   border-radius: 20px;
  }
 
  .third {
-  height: 300px;
+  height: 160px;
   border-radius: 20px;
  }
 
  .word1 {
     position: relative;
-    top: -3px;
-    left:0;
+    top: 5px;
+    left:2vw;
  }
 
  .num {
   position: relative;
-  top: 3px;
-  left: 0;
+  top: -25px;
+  left: 2vw;
   font-size: 3em;
  }
 
@@ -48,14 +48,19 @@
 }
 
 .leader-table{
-  font-weight: 600;
-  font-size: 1.5em;
+  font-weight: 500;
+  font-size: 1em;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-left: 15px;
 }
 
 
 /*Table style begin*/
 #table{
   box-sizing: border-box;
+  padding-top: 0;
+  margin-top: 0;
 }
 
 #myInput {
@@ -78,7 +83,7 @@
 
 #myTable th, #myTable td {
   text-align: left;
-  padding: 12px;
+  padding: 4px;
 }
 
 #myTable tr {
@@ -97,15 +102,16 @@
   background-color: yellow;
   color:black;
   position:relative;
-  top: 23px;
-  padding: 2px 5px;
+  top: 15px;
+  padding: 0 5px;
+  height:20px;
 }
 
 .flag{
   position: relative;
   border-radius: 50%;
   right:35px;
-  top:15px;
+  top:12px;
 }
 
 .pics{
@@ -134,10 +140,9 @@
 .Tpics{
   border-radius: 50%;
 }
+
 </style>
 
-<h2>Dashboard</h2>
-<p id="today"></p>
 
 <script>
 var home = document.getElementById("home")
@@ -154,48 +159,55 @@ newsletter.className = ""
 
 
 
-const d = new Date();
-document.getElementById("today").innerHTML = d.toDateString();
+const myInterval = setInterval(myTimer, 1000);
+
+function myTimer() {
+  const date = new Date();
+  document.getElementById("today").innerHTML = date;
+}
 </script>
 
 <div class="container-fluid overflow-hidden">
-  <div class="row gx-3 gy-3">
+  <h2 style="margin-top: 40px; font-size: 2em;">Dashboard</h2>
+  <p id="today" style="margin-top:0px; margin-bottom: 10px auto; font-size: 0.8em;"></p>
+
+  <div class="row gx-5 gy-3">
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-3 border bg-light"><p class="word1">Calls Counted</p><p class="num">200<i class="arrow fa fa-arrow-down"></i></p></div>
+      <div class="first p-1 border bg-light"><p class="word1">Calls Counted</p><p class="num">200<i class="arrow fa fa-arrow-down"></i></p></div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-3 border bg-light"><p class="word1">Agent Collection</p><p class="num">50<i class="arrow fa fa-arrow-up"></i></p></div>
+      <div class="first p-1 border bg-light"><p class="word1">Agent Collection</p><p class="num">50<i class="arrow fa fa-arrow-up"></i></p></div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-3 border bg-light"><p class="word1">QA Score</p><p class="num">25<i class="arrow fa fa-arrow-down"></i></p></div>
+      <div class="first p-1 border bg-light"><p class="word1">QA Score</p><p class="num">25<i class="arrow fa fa-arrow-down"></i></p></div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-3 border bg-light"><p class="word1">Negotiation Rate</p><p class="num">45%<i class="arrow fa fa-arrow-up"></i></p></div>
+      <div class="first p-1 border bg-light"><p class="word1">Negotiation Rate</p><p class="num">45%<i class="arrow fa fa-arrow-up"></i></p></div>
     </div>
     <div class="col-md-7">
-      <div id="table" class="second p-3 border bg-light" style="overflow-x:auto;overflow-y:auto;">
-        <p class="leader-table" style="margin-bottom: 0;">Leaderboard</p>
-        <form style="padding-top: 0;">
+      <div id="table" class="second p-0 border bg-light" style="overflow-x:auto;overflow-y:auto;">
+        <p class="leader-table">Leaderboard</p>
+        <form style="padding-top: 0;margin-top: 0;">
           <div class="container">
           <div class="row">
-           <div class="form-group col-md-4">
+           <div class="form-group col-md-4" style="font-size: 0.8em;">
                 <label class="drop" for="inputState">Country</label>
-                <select id="country" class="form-control">
+                <select id="country" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
                   <option selected>All</option>
                   <option>Nigeria</option>
                   <option>Kenya</option>
                   <option>Tanzania</option>
                 </select>
            </div>
-           <div class="form-group col-md-4">
+           <div class="form-group col-md-4" style="font-size: 0.8em;">
                 <label class="drop" for="inputState">Duration</label>
-                <select id="inputState" class="form-control">
+                <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
                   <option selected>MTD</option>
                   <option>WTD</option>
                 </select>
            </div>
            <div class="form-group col-md-4">
-            <button id="form-button" type="submit" class="btn btn-primary">Filter</button>
+            <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.8em;">Filter</button>
           </div>
          </div>
         </div>
@@ -257,16 +269,16 @@ document.getElementById("today").innerHTML = d.toDateString();
     </div>
     <div class="col-md-5">
       <div class="second p-3 border bg-light" style="text-align:center;">        
-        <h3>Current winner</h3>
-        <img src="../static/img_avatar.png" height="250px" width="250px" style="border-radius: 35px; display: block; margin-left: auto; margin-right: auto;">
+        <h3>&#127881; Current winner &#127881;</h3>
+        <img src="../static/img_avatar.png" height="150px" width="200px" style="border-radius: 35px; display: block; margin-left: auto; margin-right: auto;">
       <div><a href="#">View more detail..</a></div>
       </div>
     </div>
-    <h2 style="text-align: center;">Current MTD top performers</h2>
+    <h2 style="text-align: center; font-size: 1.3em;">Current MTD top performers</h2>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
-        <img class="pics" src="../static/img_avatar.png" height="70px" width="70px">
-        <img class="flag" src="../static/Flag-Mozambique.webp" height="20px" width="20px">
+        <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
+        <img class="flag" src="../static/Flag-Mozambique.webp" height="15px" width="15px">
         <span>Mozambique</span>
         <div class="current"></div>
         <div class="runner"></div>
@@ -274,8 +286,8 @@ document.getElementById("today").innerHTML = d.toDateString();
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
-        <img class="pics" src="../static/img_avatar.png" height="70px" width="70px">
-        <img class="flag" src="../static/Flag-Nigeria.webp" height="20px" width="20px">
+        <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
+        <img class="flag" src="../static/Flag-Nigeria.webp" height="15px" width="15px">
         <span>Nigeria</span>
         <div class="current"></div>
         <div class="runner"></div>
@@ -283,8 +295,8 @@ document.getElementById("today").innerHTML = d.toDateString();
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
-        <img class="pics" src="../static/img_avatar.png" height="70px" width="70px">
-        <img class="flag" src="../static/kenya.png" height="20px" width="20px">
+        <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
+        <img class="flag" src="../static/kenya.png" height="15px" width="15px">
         <span>Kenya</span>
         <div class="current"></div>
         <div class="runner"></div>
@@ -292,8 +304,8 @@ document.getElementById("today").innerHTML = d.toDateString();
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
-        <img class="pics" src="../static/img_avatar.png" height="70px" width="70px">
-        <img class="flag" src="../static/Flag_of_Tanzania.svg.png" height="20px" width="20px">
+        <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
+        <img class="flag" src="../static/Flag_of_Tanzania.svg.png" height="15px" width="15px">
         <span>Tanzania</span>
         <div class="current"></div>
         <div class="runner"></div>

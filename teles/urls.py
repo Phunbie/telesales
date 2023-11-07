@@ -14,5 +14,6 @@ urlpatterns = [
     path('callsapi/', views.callsapi, name='callsapi'),
     path('agentlist/', views.agentlist, name='agentlist'),
     path ('agent_info/<str:id>/', views.agent_info, name='agent_info'),
+    path ('monitor/', views.monitor, name='monitor'),
 ]
 

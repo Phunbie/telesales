@@ -37,6 +37,7 @@ def callsapi(request):
     response = JsonResponse(data,status=200)
     return response
 
+
 @login_required
 def profile(request):
     user = request.user
@@ -56,6 +57,13 @@ def dashboard(request):
     username = request.user.username
     username = username.capitalize()
     return render(request, 'dashboard.html', {'username': username})
+
+def monitor(request):
+    username = request.user.username
+    username = username.capitalize()
+    return render(request, 'monitor.html', {'username': username})
+
+
 
 
 

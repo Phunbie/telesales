@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong|Arbutus|Alumni Sans Pinstripe">
 <link rel="stylesheet" href="{% static 'styles.css' %}">
 <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -18,7 +19,7 @@
 <body>
 <style>
 #hed{
-    background-color: yellow;
+    background-color: #ffea00;
     height: 4vh; 
     border-bottom: 1px solid; 
     position: fixed; 
@@ -27,34 +28,36 @@
     width:100%
 }
 #hdd{
+    font-family: "Arbutus", sans-serif;
     font-size: 1.6em;
     position: relative;
-    top: 0px;
-    left:5vw;
+    top: -30px;
+    left:4.5vw;
     }
 #leave{
-    font-size: 0.7em;
+    font-size: 0.9em;
     position: absolute;
     top: 4px;
     right: 0;
 }
 #profile{
-    font-size: 0.7em;
+    font-size: 0.9em;
     position: absolute;
     top: 4px;
-    right: 7vw;
+    right: 3vw;
 }
 #bell{
-    font-size: 0.7em;
+    font-size: 0.9em;
     position: absolute;
     top: 4px;
-    right:14vw;
+    right:11vw;
 }
 #message{
-    font-size: 0.7em;
+    
+    font-size: 0.9em;
     position: absolute;
     top: 4px;
-    right:18vw;
+    right:15vw;
 }
 
 #message2{
@@ -66,7 +69,7 @@
 
 
 #hed2{
-    background-color: yellow;
+    background-color: #ffea00;
     height: 4vh; 
     border-bottom: 1px solid;  
     position: sticky;
@@ -109,7 +112,7 @@
 
 #sunk {
     text-align: center;
-    background-color: yellow;
+    background-color: #ffea00;
 }
 
 /*side bar*/
@@ -118,7 +121,7 @@
   margin: 0;
   padding: 0;
   width: 200px;
-  background-color: yellow;
+  background-color: #ffea00;
   top: 4vh ;
   position: fixed;
   height: 100%;
@@ -168,17 +171,19 @@ div.content {
 
 
 .hd1{
+    font-family: "Sofia", sans-serif;
     position: absolute;
-    font-size: 0.6em; 
+    font-size: 0.5em; 
     top:3px;
-    left:8.6vw;
+    left:9.5vw;
 }
 
 .hd2{
+    font-family: "Sofia", sans-serif;
     position: absolute;
-    font-size: 0.5em; 
+    font-size: 0.4em; 
     top: 12px;
-    left:8.61vw;
+    left:9.51vw;
 }
 
 
@@ -186,16 +191,16 @@ div.content {
 
 <!-- header -->
 <div id="hed" class="d-none d-md-block"> <!-- class="header"-->
+<img src="../static/Sunking.jpg" width="40px" height="30px" style="width: 4vw; height: 3.5vh;">
   <h2 id="hdd">TMT</h2>
-  <p class="hd1">Telecollection</p>
-  <p class="hd2">Monitoring Tool</p>
+  <p class="hd1 d-none d-lg-block">Telecollection</p>
+  <p class="hd2 d-none d-lg-block">Monitoring Tool</p>
   {%if request.user.is_authenticated %}
   <a href="#" id="message"><i class="fa-solid fa-envelope"></i></a>
   <a href="#" id="bell"><i class="fa-solid fa-bell"></i></a>
-  <P id="profile"><a href="{% url 'profile' %}">{% block profile2 %}<i class="fa-regular fa-user"></i>{% endblock %}</a></P>
+  <P id="profile"><a href="{% url 'profile' %}">{% block profile2 %}<i class="fa-regular fa-user"></i>{% endblock %} </a></P>
   <a id="leave" href="#"  onclick="document.getElementById('id03').style.display='block'">
     <i class="fa fa-sign-out" aria-hidden="true"></i>
-    Sign Out
   </a>
   {% endif %}
 </div>
@@ -224,7 +229,7 @@ div.content {
                 <p id="motto">powering acesss to brighter lives.</p>
            </div>
             <a id="home" class="" href="{% url 'home2' %}"><i class="fas fa-tachometer-alt fa-fw me-1"></i>Dashboard</a>
-            <a id="monitor" class="" href="{% url 'agentlist' %}"><i class="fa-brands fa-watchman-monitoring fa-fw me-1"></i>Monitoring</a>
+            <a id="monitor" class="" href="{% url 'monitor' %}"><i class="fa-brands fa-watchman-monitoring fa-fw me-1"></i>Monitoring</a>
             <a id="report" class="" href="{% url 'dashboard' %}"><i class="fas fa-line-chart fa-fw me-1"></i>Report</a>
             <a id="vie" class="" href="#"><i class="fa fa-desktop fa-fw me-1" ></i>View</a>
             <a id="newsl" class="" href="#"><i class="fa fa-envelope-open fa-fw me-1"></i>Newsletter</a>
@@ -315,45 +320,74 @@ div.content {
       </form>
     </div>
 
-  <!-- pop up sign up form -->
+  <!-- pop up sign up form  now profile-->
   <div id="id02" class="modal">
     
-      <form class="modal-content animate" action="{% url 'signup' %}" method="post">
-          {% csrf_token %}
         <div class="imgcontainer">
           <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
         </div>
     
         <div class="container">
-          <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" required>
-
-          <label for="angaz"><b>Role</b></label>
-          <input type="text" placeholder="Enter your role" name="role" required>
-
-          <label for="angaz"><b>E-mail</b></label>
-          <input type="email" placeholder="Enter your email" name="email" required>
-
-          <label for="angaz"><b>Country</b></label>
-          <input type="text" placeholder="Enter your country" name="country" required>
           
-          <label for="angaz"><b>Angaza ID</b></label>
-          <input type="text" placeholder="Enter Angaza ID" name="angaza" required>
-    
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
 
-          <label for="psw2"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password again" name="psw2" required>
-
-          <button type="submit">Sign up</button>
+          <style>
+            .tab{
+             width: 30vw;
+             height: 50vh;
+             position: relative;
+             top: 10vh;
+             left: 21vw;
+             border-style: double;
+             padding: 25px;
+            }
+            </style>
+            
+         
+             <div class="tab">
+                 <h1 style="margin: auto;text-align: center;">User Detail</h1>
+                 <table class="table table-borderless">
+                    <!-- <tr>
+                         <th>Field</th>
+                         <th>Value</th>
+                     </tr>
+                     -->
+                     <tr>
+                         <td><strong>Email</strong></td>
+                         <td>{{ email }}</td>
+                     </tr>
+                     <tr>
+                         <td><strong>Name</strong></td>
+                         <td>{{ username }}</td>
+                     </tr>
+                     <tr>
+                         <td><strong>Country</strong></td>
+                         <td>{{ country }}</td>
+                     <tr>
+                         <td><strong>Role</strong></td>
+                         <td>{{ role }}</td>
+                     </tr>
+                     <tr>
+                         <td><strong>Angaza Id</strong></td>
+                         <td>{{ angaza_id }}</td>
+                     </tr>
+                 </table>
+             
+                 <a href="{% url 'editprofile' %}" style="color: #007BFF;">Edit Profile</a>
+         
+             </div>
         
         </div>
     
         <div class="container" style="background-color:#f1f1f1">
-          <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+          <div class="row">
+            <div col-6>
+              <button>Sign out</button>
+            </div>
+            <div col-6>
+              <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+            </div>
+          </div>
         </div>
-      </form>
     </div>
     <!--Main layout-->
 </body>

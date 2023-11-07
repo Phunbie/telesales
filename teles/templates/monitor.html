@@ -1,0 +1,589 @@
+{% extends 'test.html' %}
+{% block profile %}<i class="fa-regular fa-user"></i> {{ username }}{% endblock %}
+{% block profile2 %}<i class="fa-regular fa-user"></i> {{ username }}{% endblock %}
+
+
+
+<!--<a class="active" href="{% url 'dashboard' %}">Dashboard</a>-->s
+
+{% block content %}
+
+<style>
+.first{
+    height: 15vh;
+    border-radius: 30px;
+}
+.second{
+    height: 33vh;
+    border-radius: 30px;
+}
+
+.tab-button{
+    width:100%;
+    height: 30%;
+}
+
+.butl{
+  height: 32%;
+  width:100%;
+  background-color: #ffea00;
+  border-radius: 20%;
+  border-style: outset;
+  text-align: center;
+}
+
+.butl:hover{
+  border-style: inset;
+}
+
+.bad{
+  color: red;
+}
+
+.good{
+  color: green;
+}
+
+.fa-arrow-down{
+  color: red;
+}
+
+.fa-arrow-up{
+  color: green;
+}
+
+.graph{
+  width:100%;
+  max-width:600px;
+  height:90%;
+  margin: 0;
+  padding: 0;
+}
+/*
+
+*/
+#form-button {
+  background-color: #ffea00;
+  color:black;
+  position:relative;
+  top: -3px;
+  left: -20px;
+  /*padding: 0 5px;*/
+  padding-top: 0;
+  padding-left: 2px;
+  height:20px;
+}
+
+#form-button:hover{
+  background-color: #555;
+  color: white;
+}
+
+
+table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+th, td {
+      text-align: left;
+      padding: 16px;
+    }
+    
+tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+#available{
+  font-size: 0.7em;
+  position:absolute;
+  top: 45px;
+  right: 40px;
+
+}
+
+
+.chip {
+  display: inline-block;
+  padding: 0 25px;
+  height: 50px;
+  font-size: 16px;
+  line-height: 50px;
+  border-radius: 25px;
+  background-color: #f1f1f1;
+}
+
+.chip img {
+  float: left;
+  margin: 0 10px 0 -25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+</style>
+
+
+
+<script>
+//this.element.id
+function changeColor(buttonId) {
+ // Get the button that was clicked
+ var clickedButton = document.getElementById(buttonId);
+
+ // Change the background color of the clicked button to red
+ clickedButton.style.borderStyle = "inset";
+
+ // Get all buttons
+ var buttons = document.getElementsByClassName('but');
+
+ // Loop through all buttons
+ for (var i = 0; i < buttons.length; i++) {
+   // If the button is not the one that was clicked, change its background color to yellow
+   if (buttons[i].id !== buttonId) {
+     buttons[i].style.borderStyle = "ouset";
+   }
+ }
+}
+
+
+
+const myInterval = setInterval(myTimer, 1000);
+
+function myTimer() {
+  const date = new Date();
+  document.getElementById("datetime").innerHTML = date;
+}
+
+function selectchart(cla,acla){
+ 
+  var elements = document.getElementsByClassName(acla);
+  var elements2 = document.getElementsByClassName(cla);
+  for(var i = 0; i < elements.length; i++){
+
+  var classn2= elements[i].className.replace(" d-none","");
+  elements[i].className = classn2;
+
+  var classn= elements[i].className;
+  elements[i].className = classn + " d-none";
+  }
+
+   for(var i = 0; i < elements2.length; i++){
+    var classn2= elements2[i].className.replace(" d-none","");
+    elements2[i].className = classn2;
+  }
+}
+
+
+var home = document.getElementById("home")
+var monitor = document.getElementById("monitor")
+var report = document.getElementById("report")
+var view = document.getElementById("vie")
+var newsletter = document.getElementById("newsl")
+
+home.className = ""
+monitor.className = "active"
+report.className = ""
+view.className = ""
+newsletter.className = ""  
+</script>
+
+<div style="margin-top: 3vh;" class="container overflow-hidden">
+    <div class="row gy-3 gx-3">
+      <div class="col-sm-12 col-lg-7 d-none d-lg-block">
+        <div class="first">
+          <div class="chip" style="font-family: Audiowide, sans-serif;">
+            <img src="../static/img_avatar.png" alt="Person" width="96" height="96">
+            Oluwafunbi Adeneye
+          </div>       
+          <h2 style="padding-top:0;">Monitoring Dashboard</h2>
+
+          <form style="padding: 0;margin: 0;">
+            <div class="container">
+            <div class="row">
+             <div class="form-group col-md-2" style="font-size: 0.8em;">
+                  <!--<label class="drop" for="inputState">Duration</label>-->
+                  <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
+                    <option selected>Today Status</option>
+                    <option>MTD Status</option>
+                    <option>WTD Status</option>
+                  </select>
+             </div>
+             <div class="form-group col-md-1 col-sm-2">
+              <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.7em;">Filter</button>
+            </div>
+           </div>
+          </div>
+          </form>
+
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-5">
+        <div class="first p-3 border bg-light">
+        
+              <div style="text-align: center;">
+                <p id="available" class="good" style="font-size: 1em;">Online</p>
+                <p style="font-size: 1.7em;">Nigeria</p>
+                <p id="datetime" style="font-size: 0.95em;"></p> 
+              </div>
+
+        </div>
+      </div>
+      <!--small-->
+      <div class="col-sm-12 col-lg-2 d-block d-lg-none">
+        <div class="p-3 border bg-light">
+          <span class="butsm"></span>
+          <span class="butsm"></span>
+          <span class="butsm"></span>
+        </div>
+      </div>
+      <!-- end small-->
+      <!--big-->
+      <div class="col-sm-12 col-lg-2 d-none d-lg-block">
+        <div class="second p-3 border bg-light">
+          <div class="but butl" style="margin-top: 0;margin-bottom: 5px;" onclick="selectchart('chart1','char')">
+            <P>Call</P>
+            <p>60 <i class="arrow fa fa-arrow-down"></i></p>
+          </div>
+          <div class=" but butl" style="margin-bottom: 5px;" onclick="selectchart('chart2','char')">
+            <p>Collection</p>
+            <p>120 USD <i class="arrow fa fa-arrow-up"></i></p>
+          </div>
+          <div class="but butl" style="margin-top: 0;margin-bottom:0;" onclick="selectchart('chart3','char')">
+            <p>System Status</p>
+            <p class="bad">Bad</p>
+          </div>
+        </div>
+      </div>
+      <!--end big-->
+      <!--charts-->
+      <div class="col-sm-12 col-lg-5">
+        <div class="second border bg-light">
+          <p style="margin-bottom: 0;padding-left: 20px;">Trend preview</p>
+          <div id="line1" class="graph char chart1"></div>
+          <div id="line2" class="graph char chart2"></div>
+          <div id="line3" class="graph char chart3"></div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-5">
+        <div class="second border bg-light">
+          <p style="margin-bottom: 0; padding-left: 20px">Target preview</p>
+          <div id="bar1" class="graph char chart1"></div>
+          <div id="bar2" class="graph char chart2"></div>
+          <div id="bar3" class="graph char chart3"></div>
+        </div>
+      </div>
+
+       <!--end charts-->
+       <h5 style="padding-bottom: 0;margin-bottom: 0;">Meet expectation: 4 out of 5</h5>
+       <div class="col-12">
+        <div class="third border bg-light">
+          <div class="" style="height: 10px; width: 100%; background-color: #ffea00;"></div>
+          <div class="" style="height: 10px; width: 80%; background-color: green;border-top-right-radius: 25px;border-bottom-right-radius: 25px;"></div>
+          <div class="" style="height: 10px; width: 100%; background-color: #ffea00;"></div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="fourth border bg-light">
+
+          <h2>KPI Description</h2>
+          <div class="table-responsive-sm">
+            <table class="table">
+              <tr>
+                <th>KPI</th>
+                <th>Status</th>
+                <th>Rate</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>Connected Calls</td>
+                <td class="bad">Bad</td>
+                <td>2.4</td>
+                <td>This is a bad trend. <a href="#">Learn more..</a></td>
+              </tr>
+              <tr>
+                <td>Collection</td>
+                <td class="good">Good</td>
+                <td>6.4</td>
+                <td>Good progress. <a href="#">Learn more..</a></td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script>
+     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //first multiline Chart
+    var multiline1_1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 15, 13, 17],
+      name: 'Goal',
+      type: 'scatter'
+    };
+
+    var multiline1_2 = {
+      x: [1, 2, 3, 4],
+      y: [16, 5, 11, 9],
+      name: 'Achieved',
+      type: 'scatter'
+    };
+
+    var multiline1_3 = {
+      x: [1, 2, 3, 4],
+      y: [13, 5, 8, 9],
+      name: 'Achieved2',
+      type: 'scatter'
+    };
+
+    var layout2 = {margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },};
+
+    var data2 = [multiline1_1, multiline1_2,multiline1_3];
+
+    Plotly.newPlot('line1', data2,layout2);
+
+
+    //first barchart
+    var barplot1_1 = {
+      x: ['metric1', 'metric2', 'metric3'],
+      y: [20, 14, 23],
+      name: 'Goal',
+      type: 'bar',
+      marker: {
+          color: 'rgb(158,20,125)',
+          opacity: 0.6,
+          line: {
+            color: 'rgb(8,48,107)',
+            width: 1.5
+          }
+        },
+      };
+
+    var barplot1_2 = {
+      x: ['metric1', 'metric2', 'metric3'],
+      y: [12, 18, 29],
+      name: 'Achieved',
+      type: 'bar',
+      marker: {
+          color: 'rgb(158,202,225)',
+          opacity: 0.6,
+          line: {
+            color: 'rgb(8,48,107)',
+            width: 1.5
+          }
+        },
+      };
+
+    var data1 = [barplot1_1, barplot1_2];
+
+    var layout1 = {barmode: 'overlay',margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },};
+
+    
+
+    Plotly.newPlot('bar1', data1, layout1);
+
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< second tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+    //first multiline Chart
+    var multiline2_1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 5, 11, 15],
+      name: 'Goal',
+      type: 'scatter'
+    };
+
+    var multiline2_2 = {
+      x: [1, 2, 3, 4],
+      y: [18, 15, 11, 19],
+      name: 'Achieved',
+      type: 'scatter'
+    };
+
+    var multiline2_3 = {
+      x: [1, 2, 3, 4],
+      y: [15, 5, 7, 10],
+      name: 'Achieved2',
+      type: 'scatter'
+    };
+
+    var layout3 = {margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },};
+
+    var data3 = [multiline2_1, multiline2_2,multiline2_3];
+
+    Plotly.newPlot('line2', data3,layout3);
+
+
+    //first barchart
+    var barplot2_1 = {
+      x: ['metric1', 'metric2', 'metric3'],
+      y: [20, 15, 24],
+      name: 'Goal',
+      type: 'bar',
+      marker: {
+          color: 'rgb(158,20,125)',
+          opacity: 0.6,
+          line: {
+            color: 'rgb(8,48,107)',
+            width: 1.5
+          }
+        },
+      };
+
+    var barplot2_2 = {
+      x: ['metric1', 'metric2', 'metric3'],
+      y: [17, 16, 30],
+      name: 'Achieved',
+      type: 'bar',
+      marker: {
+          color: 'rgb(158,202,225)',
+          opacity: 0.6,
+          line: {
+            color: 'rgb(8,48,107)',
+            width: 1.5
+          }
+        },
+      };
+
+    var data4 = [barplot2_1, barplot2_2];
+
+    var layout4 = {barmode: 'overlay',margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },};
+
+    Plotly.newPlot('bar2', data4, layout4);
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< third tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    
+//first multiline Chart
+var multiline3_1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 5, 11, 12],
+      name: 'Goal',
+      type: 'scatter'
+    };
+
+    var multiline3_2 = {
+      x: [1, 2, 3, 4],
+      y: [18, 19, 17, 16],
+      name: 'Achieved',
+      type: 'scatter'
+    };
+
+    var multiline3_3 = {
+      x: [1, 2, 3, 4],
+      y: [15, 17, 18, 10],
+      name: 'Achieved2',
+      type: 'scatter'
+    };
+
+    var layout5 = {margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },};
+
+    var data5 = [multiline3_1, multiline3_2,multiline3_3];
+
+    Plotly.newPlot('line3', data5,layout5);
+
+
+    //first barchart
+    var barplot3_1 = {
+      x: ['metric1', 'metric2', 'metric3'],
+      y: [25, 15, 24],
+      name: 'Goal',
+      type: 'bar',
+      marker: {
+          color: 'rgb(158,20,125)',
+          opacity: 0.6,
+          line: {
+            color: 'rgb(8,48,107)',
+            width: 1.5
+          }
+        },
+      };
+
+    var barplot3_2 = {
+      x: ['metric1', 'metric2', 'metric3'],
+      y: [17, 14, 31],
+      name: 'Achieved',
+      type: 'bar',
+      marker: {
+          color: 'rgb(158,202,225)',
+          opacity: 0.6,
+          line: {
+            color: 'rgb(8,48,107)',
+            width: 1.5
+          }
+        },
+      };
+
+    var data6 = [barplot3_1, barplot3_2];
+
+    var layout6 = {barmode: 'overlay',margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },};
+
+    Plotly.newPlot('bar3', data6, layout6);
+
+
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< end third tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+var elems = document.getElementsByClassName('char');
+  var elems2 = document.getElementsByClassName('chart1');
+  for(var i = 0; i < elems.length; i++){
+
+var classn= elems[i].className;
+  elems[i].className = classn + " d-none";
+  }
+
+   for(var i = 0; i < elems2.length; i++){
+    var classn2= elems2[i].className.replace(" d-none","");
+    elems2[i].className = classn2;
+  }
+  </script>
+
+{% endblock %}

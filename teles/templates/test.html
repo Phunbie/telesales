@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong|Arbutus|Alumni Sans Pinstripe">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong|Arbutus|Alumni Sans Pinstripe|Montserrat">
 <link rel="stylesheet" href="{% static 'styles.css' %}">
 <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
 <style>
 #hed{
     background-color: #ffea00;
-    height: 4vh; 
+    height: 4vh;
     border-bottom: 1px solid; 
     position: fixed; 
     top: 0;
@@ -28,36 +28,31 @@
     width:100%
 }
 #hdd{
-    font-family: "Arbutus", sans-serif;
-    font-size: 1.6em;
-    position: relative;
-    top: -30px;
+    font-family: "roboto";
+    font-size: 2vw;
+    position: absolute;
+    top: 0;
     left:4.5vw;
     }
-#leave{
-    font-size: 0.9em;
-    position: absolute;
-    top: 4px;
-    right: 0;
-}
+
 #profile{
-    font-size: 0.9em;
+    font-size: 0.9vw;
     position: absolute;
     top: 4px;
-    right: 3vw;
+    right: 1vw;
 }
 #bell{
-    font-size: 0.9em;
+    font-size: 0.9vw;
     position: absolute;
     top: 4px;
-    right:11vw;
+    right:8vw;
 }
 #message{
     
-    font-size: 0.9em;
+    font-size: 0.9vw;
     position: absolute;
     top: 4px;
-    right:15vw;
+    right:10vw;
 }
 
 #message2{
@@ -171,19 +166,19 @@ div.content {
 
 
 .hd1{
-    font-family: "Sofia", sans-serif;
+    font-family: "roboto";
     position: absolute;
-    font-size: 0.5em; 
-    top:3px;
-    left:9.5vw;
+    font-size: 0.66vw; 
+    top:0.4vh;
+    left:8.8vw;
 }
 
 .hd2{
-    font-family: "Sofia", sans-serif;
+    font-family: "roboto";
     position: absolute;
-    font-size: 0.4em; 
-    top: 12px;
-    left:9.51vw;
+    font-size: 0.56vw; 
+    top: 1.5vh;
+    left:8.81vw;
 }
 
 
@@ -198,10 +193,7 @@ div.content {
   {%if request.user.is_authenticated %}
   <a href="#" id="message"><i class="fa-solid fa-envelope"></i></a>
   <a href="#" id="bell"><i class="fa-solid fa-bell"></i></a>
-  <P id="profile"><a href="{% url 'profile' %}">{% block profile2 %}<i class="fa-regular fa-user"></i>{% endblock %} </a></P>
-  <a id="leave" href="#"  onclick="document.getElementById('id03').style.display='block'">
-    <i class="fa fa-sign-out" aria-hidden="true"></i>
-  </a>
+  <P id="profile"><a href="#"  onclick="document.getElementById('id02').style.display='block'">{% block profile2 %}<i class="fa-regular fa-user"></i>{% endblock %} </a></P>
   {% endif %}
 </div>
 
@@ -234,7 +226,7 @@ div.content {
             <a id="vie" class="" href="#"><i class="fa fa-desktop fa-fw me-1" ></i>View</a>
             <a id="newsl" class="" href="#"><i class="fa fa-envelope-open fa-fw me-1"></i>Newsletter</a>
             <!--copywrite-->
-            <div class="d-none d-md-block" style="margin-top: 60vh;text-align: center;">
+            <div class="d-none d-md-block" style="text-align: center; position: absolute;bottom: 5vh;left: 2.5vw;">
                 <p style="margin: 0;font-size: 0.8em;padding: 0;">Copyright <i class="fa-regular fa-copyright"></i> 2023</p>
                 <p style="margin: 0;font-size: 0.8em;padding: 0;"><a href="#">Sun King</a></p>
                 <P style="margin: 0;font-size: 0.8em;padding: 0;">All Rights Reserved</P>
@@ -245,7 +237,7 @@ div.content {
         <div class="content" style="height: 100%;">
  
             {% if messages %}
-            <div class="messages">
+            <div id="messa" class="messages" style="position: absolute; top:30px;z-index: 5;">
             {% for message in messages %}
                 <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
                 {{ message }}
@@ -322,30 +314,31 @@ div.content {
 
   <!-- pop up sign up form  now profile-->
   <div id="id02" class="modal">
-    
+    <div class="modal-content animate">
         <div class="imgcontainer">
           <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
         </div>
     
-        <div class="container">
+        <div class="container" style="background-color:#f1f1f1">
           
-
+<!--
           <style>
             .tab{
              width: 30vw;
-             height: 50vh;
-             position: relative;
-             top: 10vh;
-             left: 21vw;
+             height: 60vh;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             margin: 0;
              border-style: double;
-             padding: 25px;
+             padding: 45px;
             }
             </style>
             
-         
+  -->       
              <div class="tab">
                  <h1 style="margin: auto;text-align: center;">User Detail</h1>
-                 <table class="table table-borderless">
+                 <table class="table table-borderless" style="width:50%; display: block;margin-left: auto;margin-right: auto;text-align: center;">
                     <!-- <tr>
                          <th>Field</th>
                          <th>Value</th>
@@ -371,23 +364,18 @@ div.content {
                          <td>{{ angaza_id }}</td>
                      </tr>
                  </table>
-             
-                 <a href="{% url 'editprofile' %}" style="color: #007BFF;">Edit Profile</a>
-         
+                 <div style="width:50%; display: block; margin-left: auto; margin-right: auto;">
+                  <a href="{% url 'editprofile' %}" style="color: #007BFF;">Edit Profile</a>
+                  <a href="{% url 'signout' %}" style="color: #007BFF;">Sign out</a>
+                </div>
              </div>
         
         </div>
     
-        <div class="container" style="background-color:#f1f1f1">
-          <div class="row">
-            <div col-6>
-              <button>Sign out</button>
-            </div>
-            <div col-6>
               <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
-            </div>
           </div>
         </div>
+      </div>  
     </div>
     <!--Main layout-->
 </body>

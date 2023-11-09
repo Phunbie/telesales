@@ -10,11 +10,12 @@
 
 <style>
 .first{
-    height: 15vh;
+    height: 14vh;
     border-radius: 30px;
+    line-height: 3.5vh;
 }
 .second{
-    height: 33vh;
+    height: 31vh;
     border-radius: 30px;
 }
 
@@ -26,12 +27,19 @@
 .butl{
   height: 32%;
   width:100%;
+  font-size: 1vw;
   background-color: #ffea00;
   border-radius: 20%;
   border-style: outset;
   text-align: center;
+  box-shadow: 0 7px #999;
 }
 
+.butl:active {
+  background-color: #eaee13;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 .butl:hover{
   border-style: inset;
 }
@@ -66,12 +74,20 @@
   background-color: #ffea00;
   color:black;
   position:relative;
-  top: -3px;
-  left: -20px;
+  top: -1.9vw;
+  left: -7px;
   /*padding: 0 5px;*/
   padding-top: 0;
   padding-left: 2px;
-  height:20px;
+  padding-right: 2px;
+  height:1vw;
+}
+
+#inputState{
+  position:relative;
+  top: -1.6vw;
+  left: 7px;
+  height: 1.4vw; 
 }
 
 #form-button:hover{
@@ -84,14 +100,16 @@ table {
       border-collapse: collapse;
       border-spacing: 0;
       width: 100%;
+      height: 21vh;
       border: 1px solid #ddd;
     }
     
 th, td {
       text-align: left;
-      padding: 16px;
+      padding: 2px;
+      font-size: 0.8em;
     }
-    
+ 
 tr:nth-child(even) {
       background-color: #f2f2f2;
     }
@@ -122,6 +140,43 @@ tr:nth-child(even) {
   width: 50px;
   border-radius: 50%;
 }
+#goal{
+  translate: 50vw -13px;
+  font-size: 2em;
+  color:yellow;
+}
+
+#achieve{
+  translate: 70vw -60px;
+  font-size: 2em;
+  color:red;
+}
+
+/* hover popup */
+
+.toolti {
+  position: relative; 
+}
+
+.toolti .tooltitext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.toolti:hover .tooltitext {
+  visibility: visible;
+}
+
+/* end hover popup */
 
 </style>
 
@@ -198,21 +253,21 @@ newsletter.className = ""
             <img src="../static/img_avatar.png" alt="Person" width="96" height="96">
             Oluwafunbi Adeneye
           </div>       
-          <h2 style="padding-top:0;">Monitoring Dashboard</h2>
+          <h2 style="padding-top:0;font-size: 2.3vw;">Monitoring Dashboard</h2>
 
           <form style="padding: 0;margin: 0;">
             <div class="container">
             <div class="row">
              <div class="form-group col-md-2" style="font-size: 0.8em;">
                   <!--<label class="drop" for="inputState">Duration</label>-->
-                  <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
+                  <select id="inputState" class="form-control" style="padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
                     <option selected>Today Status</option>
                     <option>MTD Status</option>
                     <option>WTD Status</option>
                   </select>
              </div>
              <div class="form-group col-md-1 col-sm-2">
-              <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.7em;">Filter</button>
+              <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.7vw;">Filter</button>
             </div>
            </div>
           </div>
@@ -224,9 +279,9 @@ newsletter.className = ""
         <div class="first p-3 border bg-light">
         
               <div style="text-align: center;">
-                <p id="available" class="good" style="font-size: 1em;">Online</p>
-                <p style="font-size: 1.7em;">Nigeria</p>
-                <p id="datetime" style="font-size: 0.95em;"></p> 
+                <p id="available" class="good" style="font-size: 1vw;">Online</p>
+                <p style="font-size: 1.7vw;">Nigeria</p>
+                <p id="datetime" style="font-size: 0.95vw;"></p> 
               </div>
 
         </div>
@@ -244,16 +299,16 @@ newsletter.className = ""
       <div class="col-sm-12 col-lg-2 d-none d-lg-block">
         <div class="second p-3 border bg-light">
           <div class="but butl" style="margin-top: 0;margin-bottom: 5px;" onclick="selectchart('chart1','char')">
-            <P>Call</P>
-            <p>60 <i class="arrow fa fa-arrow-down"></i></p>
+            <P style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">Call</P>
+            <p style="padding-top: 0;">60 <i class="arrow fa fa-arrow-down"></i></p>
           </div>
           <div class=" but butl" style="margin-bottom: 5px;" onclick="selectchart('chart2','char')">
-            <p>Collection</p>
-            <p>120 USD <i class="arrow fa fa-arrow-up"></i></p>
+            <p style="padding-bottom: 0; margin-bottom: 1vh;margin-top: 0.6vh;">Collection</p>
+            <p style="padding-top: 0;">120 USD <i class="arrow fa fa-arrow-up"></i></p>
           </div>
           <div class="but butl" style="margin-top: 0;margin-bottom:0;" onclick="selectchart('chart3','char')">
-            <p>System Status</p>
-            <p class="bad">Bad</p>
+            <p style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">System Status</p>
+            <p style="padding-top: 0;" class="bad">Bad</p>
           </div>
         </div>
       </div>
@@ -277,18 +332,23 @@ newsletter.className = ""
       </div>
 
        <!--end charts-->
-       <h5 style="padding-bottom: 0;margin-bottom: 0;">Meet expectation: 4 out of 5</h5>
+       <h5 style="padding-bottom: 0;margin-bottom: 0;">Meet expectation: 4 out of 5 </h5>
        <div class="col-12">
         <div class="third border bg-light">
-          <div class="" style="height: 10px; width: 100%; background-color: #ffea00;"></div>
-          <div class="" style="height: 10px; width: 80%; background-color: green;border-top-right-radius: 25px;border-bottom-right-radius: 25px;"></div>
-          <div class="" style="height: 10px; width: 100%; background-color: #ffea00;"></div>
+          <div class="" style="height: 30px; width: 100%; background-color: rgb(192, 239, 192);">
+            <div id="goal" class="toolti">|
+              <span class="tooltitext" style="font-size: 0.5em;">goal</span>
+            </div>
+            <div id="achieve" class="toolti">|
+              <span class="tooltitext" style="font-size: 0.5em;">achieved</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-12">
         <div class="fourth border bg-light">
 
-          <h2>KPI Description</h2>
+          <h5>KPI Description</h5>
           <div class="table-responsive-sm">
             <table class="table">
               <tr>
@@ -305,6 +365,24 @@ newsletter.className = ""
               </tr>
               <tr>
                 <td>Collection</td>
+                <td class="good">Good</td>
+                <td>6.4</td>
+                <td>Good progress. <a href="#">Learn more..</a></td>
+              </tr>
+              <tr>
+                <td>Negotiation</td>
+                <td class="good">Good</td>
+                <td>6.4</td>
+                <td>Good progress. <a href="#">Learn more..</a></td>
+              </tr>
+              <tr>
+                <td>Quality Assuarance</td>
+                <td class="good">Good</td>
+                <td>6.4</td>
+                <td>Good progress. <a href="#">Learn more..</a></td>
+              </tr>
+              <tr>
+                <td>general performance</td>
                 <td class="good">Good</td>
                 <td>6.4</td>
                 <td>Good progress. <a href="#">Learn more..</a></td>
@@ -353,7 +431,10 @@ newsletter.className = ""
     b: 20,
     t: 30,
     pad: 1
-  },};
+  },
+  showlegend: true,
+  legend: {"orientation": "h"},
+  };
 
     var data2 = [multiline1_1, multiline1_2,multiline1_3];
 
@@ -399,7 +480,10 @@ newsletter.className = ""
     b: 20,
     t: 30,
     pad: 1
-  },};
+    },
+    showlegend: true,
+    legend: {"orientation": "h"},
+};
 
     
 
@@ -437,7 +521,10 @@ newsletter.className = ""
     b: 20,
     t: 30,
     pad: 1
-  },};
+    },
+    showlegend: true,
+    legend: {"orientation": "h"},
+};
 
     var data3 = [multiline2_1, multiline2_2,multiline2_3];
 
@@ -483,7 +570,10 @@ newsletter.className = ""
     b: 20,
     t: 30,
     pad: 1
-  },};
+    },
+    showlegend: true,
+    legend: {"orientation": "h"},
+};
 
     Plotly.newPlot('bar2', data4, layout4);
 
@@ -518,7 +608,10 @@ var multiline3_1 = {
     b: 20,
     t: 30,
     pad: 1
-  },};
+    },
+    showlegend: true,
+    legend: {"orientation": "h"},
+};
 
     var data5 = [multiline3_1, multiline3_2,multiline3_3];
 
@@ -564,7 +657,10 @@ var multiline3_1 = {
     b: 20,
     t: 30,
     pad: 1
-  },};
+    },
+    showlegend: true,
+    legend: {"orientation": "h"},
+};
 
     Plotly.newPlot('bar3', data6, layout6);
 

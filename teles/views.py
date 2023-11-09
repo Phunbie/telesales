@@ -11,9 +11,15 @@ from . import vicidata
 def home(request):
     #users = User.objects.all()
     if request.user.is_authenticated:
+        user = request.user
+        agent= Agent.objects.get(user=user)
+        email = agent.user.email
+        angaza_id = agent.angaza_id
+        country = agent.country
+        role = agent.role
         username = request.user.username
         username = username.capitalize()
-        return render(request, 'index.html', {'username': username})
+        return render(request, 'index.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
     return redirect(logIn) 
 
 
@@ -59,9 +65,15 @@ def dashboard(request):
     return render(request, 'dashboard.html', {'username': username})
 
 def monitor(request):
+    user = request.user
+    agent= Agent.objects.get(user=user)
+    email = agent.user.email
+    angaza_id = agent.angaza_id
+    country = agent.country
+    role = agent.role
     username = request.user.username
     username = username.capitalize()
-    return render(request, 'monitor.html', {'username': username})
+    return render(request, 'monitor.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
 
 
 
@@ -76,10 +88,10 @@ def agent_info(request, id):
 
 
 def signOut(request):
-    if request.method == 'POST':
-        logout(request)
-        messages.success(request,f'You have been logged out.')
-        return redirect(logIn)   
+    #if request.method == 'POST':
+    logout(request)
+    messages.success(request,f'You have been logged out.')
+    return redirect(logIn)   
     
 def logIn(request):
     username = request.user.username

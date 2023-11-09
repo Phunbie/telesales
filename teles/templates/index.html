@@ -25,21 +25,30 @@
     position: relative;
     top: 5px;
     left:2vw;
+    font-size: 1.2vw;
  }
 
  .num {
   position: relative;
   top: -25px;
   left: 2vw;
-  font-size: 3em;
+  font-size: 3vw;
  }
 
- .fa-arrow-down{
+ .fa-caret-down{
+  font-size: 1.2vw;
   color:red;
+  position: absolute;
+  top: -20px;
+  left: 7px;
  }
 
- .fa-arrow-up{
+ .fa-caret-up{
+  font-size: 1.2vw;
   color:green;
+  position: absolute;
+  top: -20px;
+  left: 7px;
 }
 
 .arrow {
@@ -141,6 +150,17 @@
   border-radius: 50%;
 }
 
+.trend {
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  top: -0.7vw;
+  left: 10vw;
+}
+
+.countr{
+  font-size: 1vw;
+}
 </style>
 
 
@@ -173,16 +193,24 @@ function myTimer() {
 
   <div class="row gx-5 gy-3">
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-1 border bg-light"><p class="word1">Calls Counted</p><p class="num">200<i class="arrow fa fa-arrow-down"></i></p></div>
+      <div class="first p-1 border bg-light">
+        <p class="word1">Calls Counted</p><p class="num">200<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
+      </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-1 border bg-light"><p class="word1">Agent Collection</p><p class="num">50<i class="arrow fa fa-arrow-up"></i></p></div>
+      <div class="first p-1 border bg-light">
+        <p class="word1">Agent Collection</p><p class="num">50<i class="arrow fa fa-caret-up"></i><img class="trend" src="../static/up.jpeg"></p>
+      </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-1 border bg-light"><p class="word1">QA Score</p><p class="num">25<i class="arrow fa fa-arrow-down"></i></p></div>
+      <div class="first p-1 border bg-light">
+        <p class="word1">QA Score</p><p class="num">25<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
+      </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-1 border bg-light"><p class="word1">Negotiation Rate</p><p class="num">45%<i class="arrow fa fa-arrow-up"></i></p></div>
+      <div class="first p-1 border bg-light">
+        <p class="word1">Negotiation Rate</p><p class="num">45%<i class="arrow fa fa-caret-up"></i> <img class="trend" src="../static/up.jpeg"></p>
+      </div>
     </div>
     <div class="col-md-7">
       <div id="table" class="second p-0 border bg-light" style="overflow-x:auto;overflow-y:auto;">
@@ -279,7 +307,7 @@ function myTimer() {
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/Flag-Mozambique.webp" height="15px" width="15px">
-        <span>Mozambique</span>
+        <span class="countr">Mozambique</span>
         <div class="current"></div>
         <div class="runner"></div>
       </div>
@@ -288,7 +316,7 @@ function myTimer() {
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/Flag-Nigeria.webp" height="15px" width="15px">
-        <span>Nigeria</span>
+        <span class="countr">Nigeria</span>
         <div class="current"></div>
         <div class="runner"></div>
       </div>
@@ -297,7 +325,7 @@ function myTimer() {
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/kenya.png" height="15px" width="15px">
-        <span>Kenya</span>
+        <span class="countr">Kenya</span>
         <div class="current"></div>
         <div class="runner"></div>
       </div>
@@ -306,7 +334,7 @@ function myTimer() {
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/Flag_of_Tanzania.svg.png" height="15px" width="15px">
-        <span>Tanzania</span>
+        <span class="countr">Tanzania</span>
         <div class="current"></div>
         <div class="runner"></div>
       </div>
@@ -327,6 +355,46 @@ function myTimer() {
   }
 
   addSN()
+
+
+  //plotly line
+
+const xArray1 = [1,2,3,4,5];
+const yArray1 = [30,70,200,180,230,];
+
+// Define Data
+const data1 = [{
+  x: xArray1,
+  y: yArray1,
+  mode:"lines"
+}];
+
+// Define Layout
+const layout1 = {
+  font: {
+    autosize: false,
+    width: 5000,
+    height: 5000,
+    margin: {
+    l: 0,
+    r: 0,
+    b: 0,
+    t: 0,
+    pad: 0
+  },
+    family: 'Courier New, monospace',
+    //size: 5,
+    //color: '#7f7f7f'
+  },
+  xaxis: {range: [1, 5]},
+  yaxis: {range: [1, 300]},  
+};
+
+// Display using Plotly
+Plotly.newPlot("plot1", data1, layout1);
+
+
+
   </script>
   
 {% endblock %}

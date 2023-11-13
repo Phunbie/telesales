@@ -161,7 +161,7 @@ def signUp(request):
         print("logged in")
 
         # Redirect the user to the home page.
-        return redirect(logIn)
+   return render(request, 'register.html')
    
 
 @login_required

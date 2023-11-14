@@ -54,7 +54,7 @@ def profile(request):
     role = agent.role
     username = request.user.username
     username = username.capitalize()
-    return render(request, 'profile.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
+    return render(request, '2ndProfile.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
 
 
 
@@ -159,6 +159,8 @@ def signUp(request):
         login(request, user)
         messages.success(request,f'Account created')
         print("logged in")
+        return redirect(logIn)
+
 
         # Redirect the user to the home page.
    return render(request, 'register.html')
@@ -196,3 +198,5 @@ def editProfile(request):
 
 
 
+def password(request):
+    return render(request, 'password.html')

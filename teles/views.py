@@ -90,7 +90,7 @@ def agent_info(request, id):
 def signOut(request):
     #if request.method == 'POST':
     logout(request)
-    messages.success(request,f'You have been logged out.')
+    #messages.success(request,f'You have been logged out.')
     return redirect(logIn)   
     
 def logIn(request):

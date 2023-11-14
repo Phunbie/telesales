@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "teles",
+    "authentication",
+    "dashview",
+    "monitoring",
+    "newsletter",
+    "report",
     "bootstrap5",
     #"fontawesome-free",
     

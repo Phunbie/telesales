@@ -1,10 +1,11 @@
 {% extends 'new_base.html' %}
+{% load static %}
 {% block profile %}<i class="fa-regular fa-user"></i> {{ username }}{% endblock %}
 {% block profile2 %}<i class="fa-regular fa-user"></i> {{ username }}{% endblock %}
 
 
 
-<!--<a class="active" href="{% url 'dashboard' %}">Dashboard</a>-->s
+<!--<a class="active" href="{% url 'dashboard' %}">Dashboard</a>-->
 
 {% block content %}
 
@@ -254,7 +255,7 @@ newsletter.className = ""
       <div class="col-sm-12 col-lg-7 d-none d-lg-block">
         <div class="first">
           <div class="chip" style="font-family: Audiowide, sans-serif;">
-            <img src="../static/img_avatar.png" alt="Person" width="96" height="96">
+            <img src="{% static 'img_avatar.png' %}" alt="Person" width="96" height="96">
             Oluwafunbi Adeneye
           </div>       
           <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
@@ -336,6 +337,7 @@ newsletter.className = ""
       </div>
 
        <!--end charts-->
+       <!--
        <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">Meet expectation: 4 out of 5 </h5>
        <div class="col-12">
         <div class="third border bg-light">
@@ -351,6 +353,7 @@ newsletter.className = ""
       </div>
       <div class="col-12">
         <div class="fourth border bg-light">
+      -->
 
           <h5>KPI Description</h5>
           <div class="table-responsive-sm">

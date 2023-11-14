@@ -1,0 +1,65 @@
+{% extends 'new_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+    .first{
+        height: 5vh;
+        border-radius: 20px;
+        background-color:#ffea00;
+        border-style: outset;
+        text-align: center;
+        box-shadow: 0 7px #999;
+    }
+
+    .first:hover {
+        border-style: inset;
+    }
+
+    .first:active {
+    background-color: #eaee13;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+     }
+
+    .second{
+        height: 35vh;
+    }
+
+    .third{
+        height: 35vh;
+    }
+</style>
+
+<div class="container overflow-hidden" style="padding-top: 10px;">
+    <div class="row gy-3">
+      <div class="col-3">
+        <div class="p-3 border first">Custom column padding</div>
+      </div>
+      <div class="col-3">
+        <div class="p-3 border first">Custom column padding</div>
+      </div>
+      <div class="col-3">
+        <div class="p-3 border first">Custom column padding</div>
+      </div>
+      <div class="col-3">
+        <div class="p-3 border first">Custom column padding</div>
+      </div>
+      <div class="col-6">
+        <div class="p-3 border bg-light second">Custom column padding</div>
+      </div>
+      <div class="col-6">
+        <div class="p-3 border bg-light second">Custom column padding</div>
+      </div>
+      <div class="col-6">
+        <div class="p-3 border bg-light third">Custom column padding</div>
+      </div>
+      <div class="col-6">
+        <div class="p-3 border bg-light third">Custom column padding</div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

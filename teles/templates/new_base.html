@@ -8,6 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Dashboard</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong|Arbutus">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -15,10 +16,16 @@
     </head>
    
     <body class="sb-nav-fixed">
+        <style>
+            .sideb:hover {
+                background-color: #cbc5c5;
+                color: white;
+            }
+        </style>
         <!--bg-dark navbar-dark-->
         <nav class="sb-topnav navbar navbar-expand " style="background-color: #ffea00;color:black">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html"><img src="../static/SUNKING.png" style="width: 13vw;height: 3.5vw;"></a>
+            <a class="navbar-brand ps-3" href="#"><img src="../static/SUNKING.png" style="width: 13vw;height: 3.5vw;"></a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i style="color:black" class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -52,15 +59,15 @@
                         <div class="nav">
                             <!---->
                             <div class="sb-sidenav-menu-heading">Welcome {{ username }}</div>
-                            <a class="nav-link" href="{% url 'home' %}" style="color:black">
+                            <a class="nav-link sideb" href="{% url 'home' %}" style="color:black">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href="{% url 'monitor' %}" style="color:black">
+                            <a class="nav-link sideb" href="{% url 'monitor' %}" style="color:black">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Monitoring
                             </a>
-                            <a class="nav-link" href="{% url 'report' %}" style="color:black">
+                            <a class="nav-link sideb" href="{% url 'report' %}" style="color:black">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Report
                             </a>
@@ -94,11 +101,11 @@
                             </div>
                         -->
                             <div class="sb-sidenav-menu-heading">Utilities</div>
-                            <a style="color:black" class="nav-link" href="charts.html">
+                            <a style="color:black" class="nav-link  sideb" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Views
                             </a>
-                            <a style="color:black" class="nav-link" href="tables.html">
+                            <a style="color:black" class="nav-link sideb" href="tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Newsletter
                             </a>

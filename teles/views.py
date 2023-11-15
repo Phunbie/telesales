@@ -118,7 +118,7 @@ def editProfile(request):
         return redirect(profile)
 
 
-    return render(request, 'editprof.html', {'username': username,'email':email,'angaza_id':angaza_id,'country':country,'role':role})
+    return render(request, 'profile_edit.html', {'username': username,'email':email,'angaza_id':angaza_id,'country':country,'role':role})
 
 
 

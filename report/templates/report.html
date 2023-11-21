@@ -6,22 +6,28 @@
 
 <style>
     .first{
-        height: 5vh;
+        height: 0.6vh;
+        font-size:80%;
+       
+    }
+
+    .filtr{
         border-radius: 20px;
         background-color:#ffea00;
         border-style: outset;
         text-align: center;
-        box-shadow: 0 7px #999;
+        /*box-shadow: 0 7px #999; */
+        line-height: 0.4vh;
     }
 
-    .first:hover {
+    .filtr:hover {
         border-style: inset;
     }
 
-    .first:active {
+    .filtr:active {
     background-color: #eaee13;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+    /*box-shadow: 0 5px #666;
+    transform: translateY(4px);*/
      }
 
     .second{
@@ -31,35 +37,336 @@
     .third{
         height: 35vh;
     }
+
+    .tog{
+        height: 25vh;
+        line-height: 1.8vh;
+    }
 </style>
+
+<script>
+
+
+function toggleFunction() {
+  var x = document.getElementById("tog");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function selectchart(cla,acla){
+ 
+ var elements = document.getElementsByClassName(acla);
+ var elements2 = document.getElementsByClassName(cla);
+ for(var i = 0; i < elements.length; i++){
+
+ var classn2= elements[i].className.replace(" d-none","");
+ elements[i].className = classn2;
+
+ var classn= elements[i].className;
+ elements[i].className = classn + " d-none";
+ }
+
+  for(var i = 0; i < elements2.length; i++){
+   var classn2= elements2[i].className.replace(" d-none","");
+   elements2[i].className = classn2;
+ }
+}
+</script>
 
 <div class="container overflow-hidden" style="padding-top: 10px;">
     <div class="row gy-3">
-      <div class="col-3">
-        <div class="p-3 border first"></div>
+      <div class="col-3 col-md-1">
+        <div class="p-3 border first filtr" onclick="toggleFunction()">Filters</div>
       </div>
-      <div class="col-3">
-        <div class="p-3 border first"></div>
+      <div class="col-6 col-md-3">
+        <div class="p-3 first"></div>
       </div>
-      <div class="col-3">
-        <div class="p-3 border first"></div>
+      <div class="col-6 col-md-3">
+        <div class="p-3 first"></div>
       </div>
-      <div class="col-3">
-        <div class="p-3 border first"></div>
+      <div class="col-6 col-md-3">
+        <div class="p-3 first"></div>
+      </div>
+      <div class="col-12" id="tog" style="display:none;">
+        <div class="p-3 border bg-light tog">
+
+            <form class="row g-3">
+ 
+                <div class="col-3">
+                    <label for="date" class="">Date compare From</label>
+                    <input type="date" name="from"  class="form-control" id="datefrom">
+                </div>
+                <div class="col-3">
+                    <label for="date" class="">Date compare To</label>
+                    <input type="date" name="to"  class="form-control" id="dateto">
+                </div>
+                <div class="col-3">
+                  <label for="sel" class="">KPI</label>
+                  <select class="form-select" id="sel">
+                    <option value="1" selected>Connected calls</option>
+                    <option value="2">Collection</option>
+                    <option value="3">Negotiation</option>
+                    <option value="4">Unique calls</option>
+                    <option value="5">Conversion rate</option>
+                    <option value="6">Average talk time</option>
+                    <option value="7">Calls per Agent</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                    <label for="sel2" class="">Compare with</label>
+                    <select class="form-select" id="sel2">
+                      <option value="1">Oluwafunbi</option>
+                      <option value="2" selected>Abisola</option>
+                      <option value="3">Sophia</option>
+                      <option value="4">Dennis</option>
+                      <option value="5">Kenya</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                   <!-- <p style="margin-bottom: 0;">Features</p> -->
+                    <input type="checkbox" id="coc" name="coc" value="report" checked>
+                    <label for="coc">Download Report</label>
+                    <!--
+                    <input type="checkbox" id="coll" name="coll" value="Car" checked>
+                    <label for="coll">Collection</label>
+                    <input type="checkbox" id="nego" name="nego" value="Boat" checked>
+                    <label for="nego">Negotiation</label>
+                    <input type="checkbox" id="att" name="att" value="att" checked>
+                    <label for="att">Average talk time</label>
+                    <input type="checkbox" id="unca" name="unca" value="unca" checked>
+                    <label for="unca">Unique calls</label>
+                    <input type="checkbox" id="conra" name="conra" value="conra" checked>
+                    <label for="conra">Conversion rate</label>
+                    -->
+                    <br>
+                </div>
+
+                <div class="col-auto">
+                  <button type="submit" id="submitx" class="btn btn-primary btn-sm mb-3">Apply Filter</button>
+                </div>
+              </form>
+
+        </div>
       </div>
       <div class="col-6">
-        <div class="p-3 border bg-light second"></div>
+        <div class="p-3 border bg-light second">
+            <div id="bar1" class="graph char chart1" style="height: 100%;width: 100%;"></div>
+        </div>
       </div>
       <div class="col-6">
-        <div class="p-3 border bg-light second"></div>
+        <div class="p-3 border bg-light second">
+            <div id="line1" class="graph char chart2" style="height: 100%;width: 100%;"></div>
+        </div>
       </div>
-      <div class="col-6">
-        <div class="p-3 border bg-light third">Custom column padding</div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 border bg-light third">Custom column padding</div>
+      <div class="col-12">
+        <div class="p-3 border bg-light third">
+            <div id="line2" class="graph char chart3" style="height: 100%;width: 100%;"></div>
+        </div>
       </div>
     </div>
   </div>
+
+
+  <script>
+
+   document.getElementById("datefrom").defaultValue = "2023-10-09";
+   document.getElementById("dateto").defaultValue = "2023-11-09";
+
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+   //first multiline Chart
+   var multiline1_1 = {
+     x: [1, 2, 3, 4],
+     y: [10, 15, 13, 17],
+     name: 'Goal',
+     type: 'scatter'
+   };
+
+   var multiline1_2 = {
+     x: [1, 2, 3, 4],
+     y: [16, 5, 11, 9],
+     name: 'Achieved',
+     type: 'scatter'
+   };
+
+   var multiline1_3 = {
+     x: [1, 2, 3, 4],
+     y: [13, 5, 8, 9],
+     name: 'Achieved2',
+     type: 'scatter'
+   };
+
+   var layout2 = {margin: {
+   l: 20,
+   r: 20,
+   b: 20,
+   t: 30,
+   pad: 1
+ },
+ showlegend: true,
+ legend: {"orientation": "h"},
+ };
+
+   var data2 = [multiline1_1, multiline1_2,multiline1_3];
+
+   Plotly.newPlot('line1', data2,layout2);
+
+
+   //first barchart
+   var barplot1_1 = {
+     x: ['metric1', 'metric2', 'metric3'],
+     y: [20, 14, 23],
+     name: 'Goal',
+     type: 'bar',
+     marker: {
+         color: 'rgb(158,20,125)',
+         opacity: 0.6,
+         line: {
+           color: 'rgb(8,48,107)',
+           width: 1.5
+         }
+       },
+     };
+
+   var barplot1_2 = {
+     x: ['metric1', 'metric2', 'metric3'],
+     y: [12, 18, 29],
+     name: 'Achieved',
+     type: 'bar',
+     marker: {
+         color: 'rgb(158,202,225)',
+         opacity: 0.6,
+         line: {
+           color: 'rgb(8,48,107)',
+           width: 1.5
+         }
+       },
+     };
+
+   var data1 = [barplot1_1, barplot1_2];
+
+   var layout1 = {barmode: 'overlay',margin: {
+   l: 20,
+   r: 20,
+   b: 20,
+   t: 30,
+   pad: 1
+   },
+   showlegend: true,
+   legend: {"orientation": "h"},
+};
+
+   
+
+   Plotly.newPlot('bar1', data1, layout1);
+
+
+   // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< second tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+   //first multiline Chart
+   var multiline2_1 = {
+     x: [1, 2, 3, 4],
+     y: [10, 5, 11, 15],
+     name: 'Goal',
+     type: 'scatter'
+   };
+
+   var multiline2_2 = {
+     x: [1, 2, 3, 4],
+     y: [18, 15, 11, 19],
+     name: 'Achieved',
+     type: 'scatter'
+   };
+
+   var multiline2_3 = {
+     x: [1, 2, 3, 4],
+     y: [15, 5, 7, 10],
+     name: 'Achieved2',
+     type: 'scatter'
+   };
+
+   var layout3 = {margin: {
+   l: 20,
+   r: 20,
+   b: 20,
+   t: 30,
+   pad: 1
+   },
+   showlegend: true,
+   legend: {"orientation": "h"},
+};
+
+   var data3 = [multiline2_1, multiline2_2,multiline2_3];
+
+   Plotly.newPlot('line2', data3,layout3);
+
+
+   //first barchart
+   var barplot2_1 = {
+     x: ['metric1', 'metric2', 'metric3'],
+     y: [20, 15, 24],
+     name: 'Goal',
+     type: 'bar',
+     marker: {
+         color: 'rgb(158,20,125)',
+         opacity: 0.6,
+         line: {
+           color: 'rgb(8,48,107)',
+           width: 1.5
+         }
+       },
+     };
+
+   var barplot2_2 = {
+     x: ['metric1', 'metric2', 'metric3'],
+     y: [17, 16, 30],
+     name: 'Achieved',
+     type: 'bar',
+     marker: {
+         color: 'rgb(158,202,225)',
+         opacity: 0.6,
+         line: {
+           color: 'rgb(8,48,107)',
+           width: 1.5
+         }
+       },
+     };
+
+   var data4 = [barplot2_1, barplot2_2];
+
+   var layout4 = {barmode: 'overlay',margin: {
+   l: 20,
+   r: 20,
+   b: 20,
+   t: 30,
+   pad: 1
+   },
+   showlegend: true,
+   legend: {"orientation": "h"},
+};
+
+   Plotly.newPlot('bar_2', data4, layout4);
+
+   
+/*
+var elems = document.getElementsByClassName('char');
+ var elems2 = document.getElementsByClassName('chart1');
+ for(var i = 0; i < elems.length; i++){
+
+var classn= elems[i].className;
+ elems[i].className = classn + " d-none";
+ }
+
+  for(var i = 0; i < elems2.length; i++){
+   var classn2= elems2[i].className.replace(" d-none","");
+   elems2[i].className = classn2;
+ }
+ */
+ </script>
 
 {% endblock %}

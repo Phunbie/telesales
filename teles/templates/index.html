@@ -164,28 +164,7 @@
 </style>
 
 
-<script>
-var home = document.getElementById("home")
-var monitor = document.getElementById("monitor")
-var report = document.getElementById("report")
-var view = document.getElementById("vie")
-var newsletter = document.getElementById("newsl")
 
-home.className = "active"
-monitor.className = ""
-report.className = ""
-view.className = ""
-newsletter.className = ""
-
-
-
-const myInterval = setInterval(myTimer, 1000);
-
-function myTimer() {
-  const date = new Date();
-  document.getElementById("today").innerHTML = date;
-}
-</script>
 
 <div class="container-fluid overflow-hidden">
   <h2 style="margin-top: 9vh; font-size: 3vh;">Dashboard</h2>
@@ -345,6 +324,7 @@ function myTimer() {
 
 <script>
 
+
   function addSN(){
     var table = document.getElementById("myTable");
     var rows = table.rows;
@@ -395,6 +375,12 @@ Plotly.newPlot("plot1", data1, layout1);
 
 
 
+const theInterval = setInterval(myTimer, 1000);
+
+function myTimer() {
+  const date = new Date();
+  document.getElementById("today").innerHTML = date;
+}
   </script>
   
 {% endblock %}

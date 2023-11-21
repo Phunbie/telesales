@@ -1,0 +1,507 @@
+{% extends 'new_base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+<style>
+    .first{
+        height:5vh; 
+        margin-top: 2vh;
+        border-radius: 20px;
+        line-height: 1vh;
+        font-size: 85%;
+        text-align: center;
+        background-color: #ffea00;
+
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    .second{
+        height:45vh; 
+    }
+
+    .recom{
+        height:25vh; 
+    }
+
+    .third{
+        height:35vh; 
+    }
+
+/*<<<<<<<<<<<<<<<<<start carousel >>>>>>>>>>>>>>>>>>>>>  */
+    
+    /* Slideshow container   position: relative; */
+.slideshow-container {
+ 
+  background: #f1f1f1f1;
+  
+}
+
+/* Slides */
+.mySlides {
+  display: none;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+ 
+  user-select: none;
+  width: auto;
+  cursor: pointer;
+  position: absolute;
+  /*
+  top: 60%;
+  margin-top: -30px;
+*/
+  padding: 16px;
+  color: #888;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+ 
+}
+
+/* Position the "next button" to the right */
+.next {
+  position: absolute;
+  top: 60%;
+  right: 4vw;
+  border-radius: 3px 0 0 3px;
+}
+
+ /* Position the "previous button" to the right  */
+.prev {
+  position: absolute;
+  top: 60%;
+}
+
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}
+
+/* The dot/bullet/indicator container */
+.dot-container {
+    text-align: center;
+    padding: 20px;
+    background: #ddd;
+    width: 100%;
+    position: relative;
+    bottom: 1px;
+    z-index: 3;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+/* Add a background color to the active dot/circle */
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Add an italic font style to all quotes */
+q {font-style: italic;}
+
+/* Add a blue color to the author */
+.author {color: cornflowerblue;}
+
+/*<<<<<<<<<<<<<<<<<end carousel >>>>>>>>>>>>>>>>>>>>>  */
+
+/*Table style begin*/
+#table{
+  box-sizing: border-box;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 4px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+.leader-table{
+  font-weight: 500;
+  font-size: 1em;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-left: 15px;
+}
+
+/*Table style end   font-size: 0.7em */
+.filter-button {
+    position: relative;
+    top: 1.6vh;
+}
+
+.kpiButtton{
+    background-color: #ffea00; 
+    height: 15%;
+    margin-bottom: 5px; 
+    border-radius: 20px;
+}
+
+
+/* feedback */
+.container1 {
+  border: 2px solid #ffea00;
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px 0
+}
+
+.container1::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container1 span {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+@media (max-width: 500px) {
+  .container1 {
+      text-align: center;
+  }
+  .container1 img {
+      margin: auto;
+      float: none;
+      display: block;
+  }
+}
+/* feedback end */
+
+</style>
+
+<script>
+
+</script>
+
+<div class="container">
+    <div class="row gy-4">   
+      <div class="col-6 col-md-3">
+        <div class="p-3 border first button" id="but1" onclick="selectsection('but1','pa1', 'page')">Overview</div>
+      </div>
+      <div class="col-6 col-md-3 ">
+        <div class="p-3 border first button" id="but2" onclick="selectsection('but2','pa2', 'page')">Prediction & Analysis</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="p-3 border first button" id="but3" onclick="selectsection('but3','pa3', 'page')"> Insights & Recommendations</div>
+      </div>
+      <div class="col-6 col-md-3 ">
+        <div class="p-3 border first button" id="but4" onclick="selectsection('but4','pa4', 'page')">Feedback & Collaboration</div>
+      </div>
+      <!--page 1-->
+      <div class="col-12 page pa1" id="pag1">
+        <div class="p-1 border bg-light third" style="overflow-x:auto;overflow-y:auto;">
+
+            <p class="leader-table" style="text-align: center;">Top Performing Countries</p>
+            <form style="padding-top: 0;margin-top: 0;">
+              <div class="container">
+              <div class="row">
+                <!--
+               <div class="form-group col-md-4" style="font-size: 0.8em;">
+                    <label class="drop" for="inputState">Country</label>
+                    <select id="country" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
+                      <option selected>All</option>
+                      <option>Nigeria</option>
+                      <option>Kenya</option>
+                      <option>Tanzania</option>
+                    </select>
+               </div>
+                 -->
+               <div class="form-group col-md-2" style="font-size: 0.8em;">
+                    <label class="drop" for="inputState">Duration</label>
+                    <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;margin-bottom: 1vh;">
+                      <option selected>MTD</option>
+                      <option>WTD</option>
+                    </select>
+               </div>
+               <div class="form-group col-md-4">
+                <button id="form-button" type="submit" class="btn filter-button" style="font-size: 0.8em; padding: 2px;background-color: #ffea00;">Filter</button>
+              </div>
+             </div>
+            </div>
+            </form>
+    
+    <table id="myTable">
+      <tr class="header" style="background-color: #ffea00;">
+        <th style="width:5%;">Pos</th>
+        <th style="width:10%;">Country</th>
+        <th style="width:10%;">Calls</th>
+        <th style="width:10%;">Collection</th>
+        <th style="width:10%;">QA</th>
+        <th style="width:10%;">Negotiation</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td> Kenya</td>
+        <td>170</td>
+        <td>140</td>
+        <td>170</td>
+        <td>170</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td> Tanzania</td>
+        <td>169</td>
+        <td>140</td>
+        <td>170</td>
+        <td>170</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Nigeria</td>
+        <td>140</td>
+        <td>140</td>
+        <td>170</td>
+        <td>170</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Cameroon</td>
+        <td>120</td>
+        <td>140</td>
+        <td>170</td>
+        <td>170</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Mozambique</td>
+        <td>100</td>
+        <td>140</td>
+        <td>170</td>
+        <td>170</td>
+      </tr>
+    </table>
+        
+        </div>
+      </div>
+      <div class="col-12 page pa1" id="pag2">
+        <div class="p-3 border bg-light second">
+         
+          <div class="slideshow-container" style="height: 80%;">
+             <h5 style="text-align: center;"> Success Stories</h5>
+            <div class="mySlides">
+              <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</q>
+              <p class="author">- Kenya</p>
+            </div>
+            
+            <div class="mySlides">
+              <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend.</q>
+              <p class="author">- Tanzania</p>
+            </div>
+            
+            <div class="mySlides">
+              <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend.</q>
+              <p class="author">- Nigeria</p>
+            </div>
+            
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+            
+          </div>
+            
+            <div class="dot-container" style="height: 20%;">
+              <span class="dot" onclick="currentSlide(1)"></span> 
+              <span class="dot" onclick="currentSlide(2)"></span> 
+              <span class="dot" onclick="currentSlide(3)"></span> 
+            </div>
+             
+
+        </div>
+      </div>
+       <!--page 2-->
+      <div class="col-6 page pa2" id="pag3">
+        <div class="p-3 border bg-light third">Custom column padding2</div>
+      </div>
+
+      <div class="col-6 page pa2" id="pag4">
+        <div class="p-3 border bg-light third">Custom column padding</div>
+      </div>
+       <!--page 3-->
+ <!--     
+      <div class="col-12 page pa3">
+        <div class="p-3 border bg-light second">
+            <div id="bar1" style="height: 100%; width: 100%;"></div>
+        </div>
+      </div>
+-->
+      <div class="col-12 page pa3">
+        <div class="p-3 border bg-light second">
+            <div id="line" style="height: 100%; width: 100%;background-color: #717171;"></div>
+        </div>
+      </div>
+
+
+      <div class="col-12 page pa3" id="pag6">
+        <div class="p-3 border bg-light recom">
+            <h5 style="text-align: center;">Insights & Recommendations</h5>
+            <p style="text-align: center;">lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</p>
+        </div>
+      </div>
+      <!--page 4-->
+      <div class="col-12 page pa4" id="pag7">
+        <div class="p-3 border bg-light" style="height: 20vh;">Add feedback form</div>
+      </div>
+      <div class="col-12 page pa4" id="pag8">
+        <h5 style="text-align: center;">Feedbacks</h5>
+        <div class="p-3 border bg-light overflow-auto" style="height: 70vh;">
+          <div class="container1">
+            <p><span>Oluwafunbi Adeneye</span></p>
+            <p>John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.</p>
+          </div>
+          
+          <div class="container1">
+            <p><span>John Doe</span></p>
+            <p>No one is better than John Doe.</p>
+          </div>
+
+          <div class="container1">
+            <p><span>Chris Fox</span></p>
+            <p>John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.</p>
+          </div>
+          
+          <div class="container1">
+            <p><span>Rebecca Flex</span></p>
+            <p>No one is better than John Doe.</p>
+          </div>
+                    
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+
+<script>
+    function selectsection(thibutton,cla,acla){
+        var thisbutton = document.getElementById(thibutton)
+        var elements = document.getElementsByClassName(acla);
+        var elements2 = document.getElementsByClassName(cla);
+        var buttons = document.getElementsByClassName('button');
+        for(var i = 0; i < elements.length; i++){
+
+        var classn2= elements[i].className.replace(" d-none","");
+        elements[i].className = classn2;
+
+        var classn= elements[i].className;
+        elements[i].className = classn + " d-none";
+        }
+
+        for(var i = 0; i < elements2.length; i++){
+        var classn2= elements2[i].className.replace(" d-none","");
+        elements2[i].className = classn2;
+        }
+
+        for(var i = 0; i < buttons.length; i++){
+
+            var buttonName= buttons[i].className.replace(" bg-warning","");
+            buttons[i].className = buttonName;
+            }
+
+        var buttonName2= thisbutton.className;
+        thisbutton.className = buttonName2 + " bg-warning";
+    }
+
+   var initialButton=document.getElementById("but1");
+   var intialClassName = initialButton.className;
+   initialButton.className = intialClassName + " bg-warning";
+
+    var elems = document.getElementsByClassName('page');
+    var elems2 = document.getElementsByClassName('pa1');
+    for(var i = 0; i < elems.length; i++){
+
+    var classn= elems[i].className;
+    elems[i].className = classn + " d-none";
+    }
+
+   for(var i = 0; i < elems2.length; i++){
+    var classn2= elems2[i].className.replace(" d-none","");
+    elems2[i].className = classn2;
+    }
+
+
+//carousel
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+//end corousel
+
+//charts
+
+
+
+</script>
+
+{% endblock %}

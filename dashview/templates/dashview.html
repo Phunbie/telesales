@@ -186,36 +186,144 @@ q {font-style: italic;}
 
 
 /* feedback */
-.container1 {
-  border: 2px solid #ffea00;
-  background-color: #eee;
-  border-radius: 10px;
-  padding: 16px;
-  margin: 16px 0
+
+  
+/* feedback 0 */
+
+.content-item {
+  padding-top:30px;
+  padding-left: 100px;
+  padding-right: auto;
+  margin-right: 0;
+	background-color:#FFFFFF;
+ 
 }
 
-.container1::after {
-  content: "";
-  clear: both;
-  display: table;
+.content-item.grey {
+	background-color:#F0F0F0;
+	padding:50px 0;
+	height:100%;
+  margin-right: 0;
 }
 
-.container1 span {
-  font-size: 20px;
-  margin-right: 15px;
+.content-item h2 {
+	font-weight:700;
+	font-size:35px;
+	line-height:45px;
+	text-transform:uppercase;
+	margin:20px 0;
 }
 
-@media (max-width: 500px) {
-  .container1 {
-      text-align: center;
-  }
-  .container1 img {
-      margin: auto;
-      float: none;
-      display: block;
-  }
+.content-item h3 {
+	font-weight:400;
+	font-size:20px;
+	color:#555555;
+	margin:10px 0 15px;
+	padding:0;
 }
-/* feedback end */
+
+.content-headline {
+	height:1px;
+	text-align:center;
+	margin:20px 0 70px;
+}
+
+.content-headline h2 {
+	background-color:#FFFFFF;
+	display:inline-block;
+	margin:-20px auto 0;
+	padding:0 20px;
+}
+
+.grey .content-headline h2 {
+	background-color:#F0F0F0;
+}
+
+.content-headline h3 {
+	font-size:14px;
+	color:#AAAAAA;
+	display:block;
+}
+
+
+#comments {
+    box-shadow: 0 -1px 6px 1px rgba(0,0,0,0.1);
+	background-color:#FFFFFF;
+}
+
+#comments form {
+	margin-bottom:40px;
+}
+
+#comments .btn {
+	margin-top:7px;
+}
+
+#comments form fieldset {
+	clear:both;
+}
+
+#comments form textarea {
+	height:100px;
+}
+
+#comments .media {
+	border-top:1px dashed #DDDDDD;
+	padding:20px 0;
+	margin:0;
+}
+
+#comments .media > .pull-left {
+    margin-right:20px;
+}
+
+#comments .media img {
+	max-width:100px;
+}
+
+#comments .media h4 {
+	margin:0 0 10px;
+}
+
+#comments .media h4 span {
+	font-size:14px;
+	float:right;
+	color:#999999;
+}
+
+#comments .media p {
+	margin-bottom:15px;
+	text-align:justify;
+}
+
+#comments .media-detail {
+	margin:0;
+}
+
+#comments .media-detail li {
+	color:#AAAAAA;
+	font-size:12px;
+	padding-right: 10px;
+	font-weight:600;
+  display: inline;
+}
+
+#comments .media-detail a:hover {
+	text-decoration:underline;
+}
+
+#comments .media-detail li:last-child {
+	padding-right:0;
+}
+
+#comments .media-detail li i {
+	color:#666666;
+	font-size:15px;
+	margin-right:10px;
+}
+
+
+/* feedback 0 */
 
 </style>
 
@@ -224,7 +332,7 @@ q {font-style: italic;}
 </script>
 
 <div class="container">
-    <div class="row gy-4">   
+    <div class="row gy-4">
       <div class="col-6 col-md-3">
         <div class="p-3 border first button" id="but1" onclick="selectsection('but1','pa1', 'page')">Overview</div>
       </div>
@@ -366,16 +474,10 @@ q {font-style: italic;}
         <div class="p-3 border bg-light third">Custom column padding</div>
       </div>
        <!--page 3-->
- <!--     
       <div class="col-12 page pa3">
         <div class="p-3 border bg-light second">
-            <div id="bar1" style="height: 100%; width: 100%;"></div>
-        </div>
-      </div>
--->
-      <div class="col-12 page pa3">
-        <div class="p-3 border bg-light second">
-            <div id="line" style="height: 100%; width: 100%;background-color: #717171;"></div>
+            <!-- <div id="line1" style="height: 100%; width:50%;background-color: #f7f4f4;"></div>-->
+           <canvas id="scatt" style="height: 100%; width:100%;max-height:43vh ;max-width:1200px ;"></canvas>
         </div>
       </div>
 
@@ -387,34 +489,113 @@ q {font-style: italic;}
         </div>
       </div>
       <!--page 4-->
-      <div class="col-12 page pa4" id="pag7">
-        <div class="p-3 border bg-light" style="height: 20vh;">Add feedback form</div>
-      </div>
-      <div class="col-12 page pa4" id="pag8">
-        <h5 style="text-align: center;">Feedbacks</h5>
+      
+   <!--feedback 0-->
+      <div class="col-12 page pa4" id="popu">
         <div class="p-3 border bg-light overflow-auto" style="height: 70vh;">
-          <div class="container1">
-            <p><span>Oluwafunbi Adeneye</span></p>
-            <p>John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.</p>
-          </div>
-          
-          <div class="container1">
-            <p><span>John Doe</span></p>
-            <p>No one is better than John Doe.</p>
-          </div>
 
-          <div class="container1">
-            <p><span>Chris Fox</span></p>
-            <p>John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.John Doe saved us from a web disaster.</p>
-          </div>
-          
-          <div class="container1">
-            <p><span>Rebecca Flex</span></p>
-            <p>No one is better than John Doe.</p>
-          </div>
-                    
+          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<section class="content-item" id="comments">
+<div class="container">
+<div class="row">
+<div class="col-sm-10">
+<form>
+<h3 class="pull-lef" style="text-align: center;">Add Feedback</h3>
+
+<fieldset>
+<div class="row">
+<div class="col-sm-3 col-lg-2 hidden-xs">
+<!--<img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" >-->
+</div>
+<div class="form-group col-xs-12 col-sm-9 col-lg-10">
+<textarea class="form-control" id="message" placeholder="Your feedback" required></textarea>
+</div>
+</div>
+</fieldset>
+<button type="submit" class="btn btn-primary btn-sm pull-right">Submit</button>
+</form>
+<h3>Feedbacks</h3>
+
+<div class="media">
+<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
+<div class="media-body">
+<h4 class="media-heading">John Doe</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<ul class="list-unstyled list-inline media-detail pull-left">
+<li><i class="fa fa-calendar"></i>27/02/2014</li>
+<li><i class="fa fa-thumbs-up"></i>13</li>
+</ul>
+<ul class="list-unstyled list-inline media-detail pull-right">
+<li class><a href>Like</a></li>
+<li class><a href>Reply</a></li>
+</ul>
+</div>
+</div>
+
+
+<div class="media">
+<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
+<div class="media-body">
+<h4 class="media-heading">John Doe</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<ul class="list-unstyled list-inline media-detail pull-left">
+<li><i class="fa fa-calendar"></i>27/02/2014</li>
+<li><i class="fa fa-thumbs-up"></i>13</li>
+</ul>
+<ul class="list-unstyled list-inline media-detail pull-right">
+<li class><a href>Like</a></li>
+<li class><a href>Reply</a></li>
+</ul>
+</div>
+</div>
+
+
+<div class="media">
+<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
+<div class="media-body">
+<h4 class="media-heading">John Doe</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<ul class="list-unstyled list-inline media-detail pull-left">
+<li><i class="fa fa-calendar"></i>27/02/2014</li>
+<li><i class="fa fa-thumbs-up"></i>13</li>
+</ul>
+<ul class="list-unstyled list-inline media-detail pull-right">
+<li class><a href>Like</a></li>
+<li class><a href>Reply</a></li>
+</ul>
+</div>
+</div>
+
+
+<div class="media">
+<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
+<div class="media-body">
+<h4 class="media-heading">John Doe</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<ul class="list-unstyled list-inline media-detail pull-left">
+<li><i class="fa fa-calendar"></i>27/02/2014</li>
+<li><i class="fa fa-thumbs-up"></i>13</li>
+</ul>
+<ul class="list-unstyled list-inline media-detail pull-right">
+<li class><a href>Like</a></li>
+<li class><a href>Reply</a></li>
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">	</script>
+ 
         </div>
-      </div>
+      </div>  
+
+   <!--end feedback 0-->   
+
       
     </div>
 </div>
@@ -496,11 +677,55 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
 }
-//end corousel
+
+setInterval(plusSlides,3000,1);
+//end carousel
 
 //charts
 
+var xyValues = [
+  {x:50, y:7},
+  {x:60, y:8},
+  {x:70, y:8},
+  {x:80, y:9},
+  {x:90, y:9},
+  {x:100, y:9},
+  {x:110, y:10},
+  {x:120, y:11},
+  {x:130, y:14},
+  {x:140, y:14},
+  {x:150, y:15}
+];
 
+new Chart("scatt", {
+  type: "scatter",
+  data: {
+    datasets: [{
+      pointRadius: 4,
+      pointBackgroundColor: "rgb(0,0,255)",
+      data: xyValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      xAxes: [{ticks: {min: 40, max:160}}],
+      yAxes: [{ticks: {min: 6, max:16}}],
+    }
+  }
+});
+
+
+
+
+function toggle2Function() {
+  var x = document.getElementById("pag7");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
 
 </script>
 

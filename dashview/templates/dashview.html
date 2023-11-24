@@ -537,7 +537,7 @@ q {font-style: italic;}
 <li><i class="fa fa-thumbs-up"></i>{{ vote.feedback.totalvote }}</li>
 </ul>
 <ul class="list-unstyled list-inline media-detail pull-right">
-<li class="{{ vote.value }} lik"><a href="{% url 'upvote' vote.id %}">Like</a></li>
+<li class="{{ vote.value }} lik"><a href="{% url 'upvote' vote.id %}">upvote</a></li>
 <li class><a href>Reply</a></li>
 </ul>
 </div>
@@ -772,7 +772,7 @@ $(document).ready(function() {
 					setInterval("alert('Hello Ninjas');", 3000);
 				});
 			});
-*/
+
 $(document).ready(function() {
 
 $(".lik").click( 
@@ -784,7 +784,16 @@ function(){
 
 })
 
+*/
 
+
+$(document).ready(function() {
+ $(document).on('click', '.lik', function() {
+   setTimeout(function() {
+     $('#feedbackcontain').load(location.href + ' #feedbackcontain');
+   }, 2000);
+ });
+});
 </script>
 
 {% endblock %}

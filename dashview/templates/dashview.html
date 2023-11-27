@@ -473,12 +473,17 @@ q {font-style: italic;}
         </div>
       </div>
        <!--page 2-->
-      <div class="col-6 page pa2" id="pag3">
-        <div class="p-3 border bg-light third">Custom column padding2</div>
+      <div class="col-12 page pa2" id="pag3">
+        <div class="p-3 border bg-light third">
+          <div id="liner" style="height: 100%; width:100%;max-height:30vh ;max-width:1160px ;"></div>
+        </div>
       </div>
 
-      <div class="col-6 page pa2" id="pag4">
-        <div class="p-3 border bg-light third">Custom column padding</div>
+      <div class="col-12 page pa2" id="pag4">
+        <div class="p-3 border bg-light third">
+          <h5 style="text-align: center;">Prediction & Analysis</h5>
+            <p style="text-align: center;">lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</p>
+        </div>
       </div>
        <!--page 3-->
       <div class="col-12 page pa3">
@@ -696,6 +701,7 @@ setInterval(plusSlides,3000,1);
 
 //charts
 
+//chartsjs
 var xyValues = [
   {x:50, y:7},
   {x:60, y:8},
@@ -727,6 +733,42 @@ new Chart("scatt", {
     }
   }
 });
+
+//plotly
+
+var multiline1_1 = {
+      x: [1, 2, 3, 4, 5, 6, 7, 8],
+      y: [10, 15, 13, 17,16],
+      name: 'Goal',
+      type: 'achieve'
+    };
+
+    var multiline1_2 = {
+      x: [5, 6, 7, 8],
+      y: [16, 5, 11, 9],
+      name: 'projected',
+      type: 'scatter'
+    };
+
+    
+
+    var layout2 = {margin: {
+    l: 20,
+    r: 20,
+    b: 20,
+    t: 30,
+    pad: 1
+  },
+  showlegend: true,
+  legend: {"orientation": "h"},
+  };
+
+    var data2 = [multiline1_1, multiline1_2];
+
+    Plotly.newPlot('liner', data2,layout2);
+
+
+//end plotly
 
 
 

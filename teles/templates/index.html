@@ -173,22 +173,22 @@
   <div class="row gx-5 gy-3">
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Calls Counted</p><p class="num">{{total_paid_sum}}<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
+        <p class="word1">Calls Counted</p><p class="num">{{total_calls}}<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Agent Collection</p><p class="num">50<i class="arrow fa fa-caret-up"></i><img class="trend" src="../static/up.jpeg"></p>
+        <p class="word1">Agent Collection</p><p class="num">{{total_paid_sum}}<i class="arrow fa fa-caret-up"></i><img class="trend" src="../static/up.jpeg"></p>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">QA Score</p><p class="num">25<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
+        <p class="word1">Contact Rate</p><p class="num">{{contact}}<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Negotiation Rate</p><p class="num">45%<i class="arrow fa fa-caret-up"></i> <img class="trend" src="../static/up.jpeg"></p>
+        <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}%<i class="arrow fa fa-caret-up"></i> <img class="trend" src="../static/up.jpeg"></p>
       </div>
     </div>
     <div class="col-md-7">
@@ -226,49 +226,20 @@
     <th style="width:10%;">Name</th>
     <th style="width:10%;">Calls</th>
     <th style="width:10%;">Collection</th>
-    <th style="width:10%;">QA</th>
+    <th style="width:10%;">Contact</th>
     <th style="width:10%;">Negotiation</th>
   </tr>
+  {% for item in combined_list %}
   <tr>
     <td></td>
-    <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px"> Oluwafunbi Adeneye</td>
-    <td>170</td>
-    <td>140</td>
-    <td>170</td>
-    <td>170</td>
+    <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px">{{ item.0 }}</td>
+    <td>{{ item.1 }}</td>
+    <td>{{ item.2 }}</td>
+    <td>{{ item.3 }}</td>
+    <td>{{ item.4 }}</td>
   </tr>
-  <tr>
-    <td></td>
-    <td> <img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px"> Berglunds snabbkop</td>
-    <td>169</td>
-    <td>140</td>
-    <td>170</td>
-    <td>170</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px"> Island Trading</td>
-    <td>140</td>
-    <td>140</td>
-    <td>170</td>
-    <td>170</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px"> Koniglich Essen</td>
-    <td>120</td>
-    <td>140</td>
-    <td>170</td>
-    <td>170</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px"> Laughing Bacchus Winecellars</td>
-    <td>100</td>
-    <td>140</td>
-    <td>170</td>
-    <td>170</td>
-  </tr>
+  {% endfor %}
+ 
 </table>
 
 

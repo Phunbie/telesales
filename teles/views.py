@@ -12,6 +12,25 @@ import json
 import pandas as pd
 
 
+def bucket3(folder):
+    s3 = boto3.resource(
+                's3',
+                aws_access_key_id='AKIAXTPIUFRUHESZIQNU',
+                aws_secret_access_key='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',
+            )
+    bucket = s3.Bucket('telecollection-app')
+
+    folder_prefix = folder
+
+    #Get the latest object (file) in the "public" folder
+    latest_object = max(bucket.objects.filter(Prefix=folder_prefix),
+                        key=lambda obj: obj.last_modified)
+    body = latest_object.get()['Body'].read().decode('utf-8')
+    data = json.loads(body)
+    data = pd.DataFrame(data)
+    return data
+
+
 def home(request):
     #users = User.objects.all()
     if request.user.is_authenticated:
@@ -23,26 +42,75 @@ def home(request):
         role = agent.role
         username = request.user.username
         username = username.capitalize()
+        first_name = agent.first_name
+        last_name =  agent.last_name
 
-        """s3 = boto3.resource(
-                    's3',
-                    aws_access_key_id='AKIAXTPIUFRUHESZIQNU',
-                    aws_secret_access_key='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',
-                )
-        bucket = s3.Bucket('telecollection-app')
+        collection = bucket3('amount-collected-per-agent/')
+        calls = bucket3('calls-per-agent/')
+        contact_rate = bucket3('contact-rate-per-agent/')
+        Negotiation = bucket3('negotiation-rate-individual/')
+        user_list= collection['User Name'].unique().tolist()
 
-        folder_prefix = 'amount-collected-per-agent/'
 
-        # Get the latest object (file) in the "public" folder
-        latest_object = max(bucket.objects.filter(Prefix=folder_prefix),
-                            key=lambda obj: obj.last_modified)
-        body = latest_object.get()['Body'].read().decode('utf-8')
-        data = json.loads(body)
-        data = pd.DataFrame(data)
+        combined_list = ""
+        list_name = []
+        list_collection =[]
+        list_call = []
+        list_contact = []
+        list_negotiation =[]
+        for i, user_name in enumerate(user_list):
+            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).sum()
+            #calls
+            calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+            total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
+            #contact_rate
+            contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+            contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).sum()
+            contact = round(contact, 2)
+            #Negotiation
+            Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+            Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).sum()
+            Negotiation_r = round(Negotiation_r, 2)
+            
+            list_name.append(user_name)
+            
+            list_collection.append(total_paid_sum)
+            
+            list_call.append(total_calls)
+            
+            list_contact.append(contact)
+            
+            list_negotiation.append(Negotiation_r)
+            if i == 4:
+                combined_list = list(zip(list_name, list_collection, list_call, list_contact, list_negotiation))
+                break
 
-        user_name = "Wilson Mukobeza"
-        total_paid_sum = data[data["User Name"] == user_name]["Sum Total Paid"].sum()
-        print(f"The sum total paid for {user_name} is: {total_paid_sum}") """
+
+        #print(f"user list:{combined_list}")
+
+        
+        #user_name = first_name + " " + last_name 
+        #user_name = "Wilson Mukobeza"
+        user_name = "Adeola Adebayo"
+        #collection
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).sum()
+        #print(f"The sum total paid for {user_name} is: {total_paid_sum}")
+        #calls
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
+        #contact_rate
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).sum()
+        contact = round(contact, 2)
+        #Negotiation
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).sum()
+        Negotiation_r = round(Negotiation_r, 2)
+        #print(f"The sum total rate for {user_name} is: {Negotiation_r}")
+        
+
 
         context = {'username': username,
                    'email':email,
@@ -50,7 +118,11 @@ def home(request):
                    'angaza_id':angaza_id,
                    'country':country,
                    'role':role,
-                  # "total_paid_sum": total_paid_sum
+                   "total_paid_sum": total_paid_sum,
+                   "total_calls":total_calls,
+                   "contact":contact,
+                   "negotiation_r":Negotiation_r,
+                   "combined_list": combined_list
                    }
         
         return render(request, 'index.html',context )

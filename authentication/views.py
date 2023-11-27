@@ -61,6 +61,11 @@ def signUp(request):
             #return render(request, 'index.html', {'error': 'Passwords do not match.'})
             messages.error(request,f'Passwords do not match.')
             return redirect(logIn)
+        if User.objects.filter(username=username).exists():
+            messages.error(request,f'Username already exists.')
+            return redirect(signUp)
+
+        
 
         # Create a new User object.
         user = User.objects.create_user(username, password=password, email=email)

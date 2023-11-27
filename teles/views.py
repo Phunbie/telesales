@@ -24,7 +24,7 @@ def home(request):
         username = request.user.username
         username = username.capitalize()
 
-        s3 = boto3.resource(
+        """s3 = boto3.resource(
                     's3',
                     aws_access_key_id='AKIAXTPIUFRUHESZIQNU',
                     aws_secret_access_key='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',
@@ -42,7 +42,7 @@ def home(request):
 
         user_name = "Wilson Mukobeza"
         total_paid_sum = data[data["User Name"] == user_name]["Sum Total Paid"].sum()
-        print(f"The sum total paid for {user_name} is: {total_paid_sum}")
+        print(f"The sum total paid for {user_name} is: {total_paid_sum}") """
 
         context = {'username': username,
                    'email':email,
@@ -50,7 +50,8 @@ def home(request):
                    'angaza_id':angaza_id,
                    'country':country,
                    'role':role,
-                   "total_paid_sum": total_paid_sum}
+                  # "total_paid_sum": total_paid_sum
+                   }
         
         return render(request, 'index.html',context )
     return redirect(logIn) 

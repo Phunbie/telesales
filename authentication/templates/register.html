@@ -17,6 +17,17 @@
                 <main>
                     <div class="container">
                         <div class="row justify-content-center">
+                            
+                            {% if messages %}
+                            <div id="messa" class="messages" style="position: absolute; top:30px;z-index: 5;">
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+                                {{ message }}
+                                </div>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+
                             <div class="col-lg-7">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>

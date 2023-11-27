@@ -35,6 +35,8 @@ def signUp(request):
         # Get the user data from the request.
         username = request.POST.get('uname')
         role = request.POST.get('role')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         country = request.POST.get('country')
         angaza_id = request.POST.get('angaza')
@@ -70,6 +72,8 @@ def signUp(request):
             role=role,
             angaza_id=angaza_id,
             country=country,
+            first_name = first_name,
+            last_name = last_name
         )
 
         # Save the employee object to the database.

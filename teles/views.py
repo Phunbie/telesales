@@ -7,6 +7,9 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from . import vicidata
+import boto3
+import json
+import pandas as pd
 
 
 def home(request):
@@ -20,7 +23,36 @@ def home(request):
         role = agent.role
         username = request.user.username
         username = username.capitalize()
-        return render(request, 'index.html', {'username': username,'email':email,'agent':agent,'angaza_id':angaza_id,'country':country,'role':role})
+
+        s3 = boto3.resource(
+                    's3',
+                    aws_access_key_id='AKIAXTPIUFRUHESZIQNU',
+                    aws_secret_access_key='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',
+                )
+        bucket = s3.Bucket('telecollection-app')
+
+        folder_prefix = 'amount-collected-per-agent/'
+
+        # Get the latest object (file) in the "public" folder
+        latest_object = max(bucket.objects.filter(Prefix=folder_prefix),
+                            key=lambda obj: obj.last_modified)
+        body = latest_object.get()['Body'].read().decode('utf-8')
+        data = json.loads(body)
+        data = pd.DataFrame(data)
+
+        user_name = "Wilson Mukobeza"
+        total_paid_sum = data[data["User Name"] == user_name]["Sum Total Paid"].sum()
+        print(f"The sum total paid for {user_name} is: {total_paid_sum}")
+
+        context = {'username': username,
+                   'email':email,
+                   'agent':agent,
+                   'angaza_id':angaza_id,
+                   'country':country,
+                   'role':role,
+                   "total_paid_sum": total_paid_sum}
+        
+        return render(request, 'index.html',context )
     return redirect(logIn) 
 
 

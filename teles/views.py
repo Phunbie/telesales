@@ -66,11 +66,15 @@ def home(request):
             total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
             #contact_rate
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-            contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).sum()
+            contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float)
+            length = len(contact)
+            contact=contact.sum()/length 
             contact = round(contact, 2)
             #Negotiation
             Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-            Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).sum()
+            Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float)
+            length1 = len(Negotiation_r)
+            Negotiation_r =  Negotiation_r.sum()/length1 
             Negotiation_r = round(Negotiation_r, 2)
             
             list_name.append(user_name)
@@ -102,11 +106,15 @@ def home(request):
         total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
         #contact_rate
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).sum()
+        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float)
+        length = len(contact)
+        contact=contact.sum()/length 
         contact = round(contact, 2)
         #Negotiation
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).sum()
+        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float)
+        length1 = len(Negotiation_r)
+        Negotiation_r =  Negotiation_r.sum()/length1 
         Negotiation_r = round(Negotiation_r, 2)
         #print(f"The sum total rate for {user_name} is: {Negotiation_r}")
         

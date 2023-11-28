@@ -12,7 +12,7 @@
 }
 
  .second {
-  height: 40vh;
+  height: 35vh;
   border-radius: 20px;
  }
 
@@ -188,7 +188,7 @@
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}%<i class="arrow fa fa-caret-up"></i> <img class="trend" src="../static/up.jpeg"></p>
+        <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}<i class="arrow fa fa-caret-up"></i> <img class="trend" src="../static/up.jpeg"></p>
       </div>
     </div>
     <div class="col-md-7">
@@ -233,8 +233,8 @@
   <tr>
     <td></td>
     <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px">{{ item.0 }}</td>
-    <td>{{ item.1 }}</td>
     <td>{{ item.2 }}</td>
+    <td>{{ item.1 }}</td>
     <td>{{ item.3 }}</td>
     <td>{{ item.4 }}</td>
   </tr>
@@ -248,8 +248,8 @@
     <div class="col-md-5">
       <div class="second p-3 border bg-light" style="text-align:center;">        
         <h3>&#127881; Current winner &#127881;</h3>
-        <img src="../static/img_avatar.png" height="150px" width="200px" style="border-radius: 35px; display: block; margin-left: auto; margin-right: auto;">
-      <div><a href="#">View more detail..</a></div>
+        <img src="../static/img_avatar.png" height="120px" width="160px" style="border-radius: 35px; display: block; margin-left: auto; margin-right: auto;">
+      <div>Congratulations {{ combined_list.0.0 }} on your outstanding achievement leading the pack. Your determination is admirable! <a href="#">View more detail..</a></div>
       </div>
     </div>
     <h2 style="text-align: center; font-size: 2.5vh;">Current MTD top performers</h2>

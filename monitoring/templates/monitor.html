@@ -249,15 +249,17 @@ report.className = ""
 view.className = ""
 newsletter.className = ""  
 </script>
-
+<div id="testing"></div> 
 <div style="margin-top: 3vh;" class="container overflow-hidden">
     <div class="row gy-3 gx-3">
       <div class="col-sm-12 col-lg-7 d-none d-lg-block">
         <div class="first">
           <div class="chip" style="font-family: Audiowide, sans-serif;">
             <img src="{% static 'img_avatar.png' %}" alt="Person" width="96" height="96">
-            Oluwafunbi Adeneye
-          </div>       
+            {{ input_list.first_name }}  {{ input_list.last_name }}
+          </div> 
+
+
           <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
 
           <form style="padding: 0;margin: 0;">
@@ -305,23 +307,25 @@ newsletter.className = ""
         <div class="second p-3 border bg-light">
           <div class="but butl" style="margin-top: 0;margin-bottom: 5px;" onclick="selectchart('chart1','char')">
             <P style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">Call</P>
-            <p style="padding-top: 0;">60 <i class="arrow fa fa-arrow-down"></i></p>
+            <p style="padding-top: 0;">{{ input_list.latest_call }}<i class="arrow fa fa-arrow-down"></i></p>
           </div>
           <div class=" but butl" style="margin-bottom: 5px;" onclick="selectchart('chart2','char')">
-            <p style="padding-bottom: 0; margin-bottom: 1vh;margin-top: 0.6vh;">Collection</p>
-            <p style="padding-top: 0;">120 USD <i class="arrow fa fa-arrow-up"></i></p>
+            <p style="padding-bottom: 0; margin-bottom: 1vh;margin-top: 0.6vh;">Negotiation</p>
+            <p style="padding-top: 0;">{{ input_list.latest_negotiation }} <i class="arrow fa fa-arrow-up"></i></p>
           </div>
           <div class="but butl" style="margin-top: 0;margin-bottom:0;" onclick="selectchart('chart3','char')">
-            <p style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">System Status</p>
-            <p style="padding-top: 0;" class="bad">Bad</p>
+            <p style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">Collection</p>
+            <p style="padding-top: 0;" class="bad">{{ input_list.latest_paid }}</p>
           </div>
         </div>
       </div>
       <!--end big-->
       <!--charts-->
-      <div class="col-sm-12 col-lg-5">
+      <div class="col-sm-12 col-lg-5" id="s3charts">
         <div class="second border bg-light">
-          <p style="margin-bottom: 0;padding-left: 20px;">Trend preview</p>
+          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart1">Call trend preview</p>
+          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart2">Negotiation trend preview</p>
+          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart3">Collection trend preview</p>
           <div id="line1" class="graph char chart1"></div>
           <div id="line2" class="graph char chart2"></div>
           <div id="line3" class="graph char chart3"></div>
@@ -329,7 +333,9 @@ newsletter.className = ""
       </div>
       <div class="col-sm-12 col-lg-5">
         <div class="second border bg-light">
-          <p style="margin-bottom: 0; padding-left: 20px">Target preview</p>
+          <p style="margin-bottom: 0; padding-left: 20px" class="char chart1">Call target preview</p>
+          <p style="margin-bottom: 0; padding-left: 20px" class="char chart2">Negotiation target preview</p>
+          <p style="margin-bottom: 0; padding-left: 20px" class="char chart3">Collection target preview</p>
           <div id="bar1" class="graph char chart1"></div>
           <div id="bar2" class="graph char chart2"></div>
           <div id="bar3" class="graph char chart3"></div>
@@ -408,32 +414,52 @@ newsletter.className = ""
 
 
   <script>
+  /*  var linec1 = [];
+    var barc1 = [];
+    var linec2 = [];
+    var barc2 = [];
+    var linec3 = [];
+    var barc3 = [];
+      //ajax call   
+    $.get("{% url 'monitorapi' %}", function(data, status){
+         barc1 = data.calls;
+         //$('#s3charts').load(location.href + ' #s3charts');
+         //alert(barc1);
+      }); */
+     var calls = "{{ input_list.total_calls }}";
+     calls = JSON.parse(calls);
+     var Negotiation = "{{ input_list.Negotiation }}";
+     Negotiation = JSON.parse(Negotiation);
+     var collection = "{{ input_list.total_paid_sum }}";
+     collection = JSON.parse(collection);
+     //alert(obj);
      // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     //first multiline Chart
     var multiline1_1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      name: 'Goal',
+      x: [1, 2, 3,4, 5, 6, 7],
+      //y: [10, 15, 13, 17, 5, 8, 9],
+      y: calls,
+      name: 'calls',
       type: 'scatter'
     };
-
+    /*
     var multiline1_2 = {
-      x: [1, 2, 3, 4],
-      y: [16, 5, 11, 9],
+      x: [1, 2, 3, 4, 5, 6, 7],
+      y: [16, 5, 11, 9, 5, 7, 7],
       name: 'Achieved',
       type: 'scatter'
     };
 
     var multiline1_3 = {
-      x: [1, 2, 3, 4],
-      y: [13, 5, 8, 9],
+      x: [1, 2, 3, 4, 5, 6, 7],
+      y: [13, 5, 8, 9, 5, 9, 8],
       name: 'Achieved2',
       type: 'scatter'
     };
-
+    */
     var layout2 = {margin: {
-    l: 20,
+    l: 30,
     r: 20,
     b: 20,
     t: 30,
@@ -443,15 +469,17 @@ newsletter.className = ""
   legend: {"orientation": "h"},
   };
 
-    var data2 = [multiline1_1, multiline1_2,multiline1_3];
+    var data2 = [multiline1_1
+    //, multiline1_2,multiline1_3
+    ];
 
     Plotly.newPlot('line1', data2,layout2);
 
 
     //first barchart
     var barplot1_1 = {
-      x: ['metric1', 'metric2', 'metric3'],
-      y: [20, 14, 23],
+      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      y: [150, 150, 150,150, 150, 150,150],
       name: 'Goal',
       type: 'bar',
       marker: {
@@ -465,8 +493,9 @@ newsletter.className = ""
       };
 
     var barplot1_2 = {
-      x: ['metric1', 'metric2', 'metric3'],
-      y: [12, 18, 29],
+      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      //y: [12, 18, 29, 12, 18, 29,30],
+      y: calls,
       name: 'Achieved',
       type: 'bar',
       marker: {
@@ -482,7 +511,7 @@ newsletter.className = ""
     var data1 = [barplot1_1, barplot1_2];
 
     var layout1 = {barmode: 'overlay',margin: {
-    l: 20,
+    l: 30,
     r: 20,
     b: 20,
     t: 30,
@@ -502,12 +531,13 @@ newsletter.className = ""
 
     //first multiline Chart
     var multiline2_1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 5, 11, 15],
-      name: 'Goal',
+      x: [1, 2, 3, 4, 5, 6, 7 ],
+      //y: [10, 5, 11, 15],
+      y:  Negotiation,
+      name: 'Negotiation',
       type: 'scatter'
     };
-
+/*
     var multiline2_2 = {
       x: [1, 2, 3, 4],
       y: [18, 15, 11, 19],
@@ -521,9 +551,9 @@ newsletter.className = ""
       name: 'Achieved2',
       type: 'scatter'
     };
-
+*/
     var layout3 = {margin: {
-    l: 20,
+    l: 30,
     r: 20,
     b: 20,
     t: 30,
@@ -533,15 +563,17 @@ newsletter.className = ""
     legend: {"orientation": "h"},
 };
 
-    var data3 = [multiline2_1, multiline2_2,multiline2_3];
+    var data3 = [multiline2_1
+   // , multiline2_2,multiline2_3
+  ];
 
     Plotly.newPlot('line2', data3,layout3);
 
 
     //first barchart
     var barplot2_1 = {
-      x: ['metric1', 'metric2', 'metric3'],
-      y: [20, 15, 24],
+      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      y:  [30,30,30,30,30,30,30],
       name: 'Goal',
       type: 'bar',
       marker: {
@@ -555,8 +587,8 @@ newsletter.className = ""
       };
 
     var barplot2_2 = {
-      x: ['metric1', 'metric2', 'metric3'],
-      y: [17, 16, 30],
+      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      y: Negotiation,
       name: 'Achieved',
       type: 'bar',
       marker: {
@@ -572,7 +604,7 @@ newsletter.className = ""
     var data4 = [barplot2_1, barplot2_2];
 
     var layout4 = {barmode: 'overlay',margin: {
-    l: 20,
+    l: 30,
     r: 20,
     b: 20,
     t: 30,
@@ -589,12 +621,12 @@ newsletter.className = ""
     
 //first multiline Chart
 var multiline3_1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 5, 11, 12],
-      name: 'Goal',
+      x: [1, 2, 3, 4, 5, 6, 7],
+      y: collection,
+      name: 'collection',
       type: 'scatter'
     };
-
+/*
     var multiline3_2 = {
       x: [1, 2, 3, 4],
       y: [18, 19, 17, 16],
@@ -608,9 +640,9 @@ var multiline3_1 = {
       name: 'Achieved2',
       type: 'scatter'
     };
-
+*/
     var layout5 = {margin: {
-    l: 20,
+    l: 30,
     r: 20,
     b: 20,
     t: 30,
@@ -620,15 +652,17 @@ var multiline3_1 = {
     legend: {"orientation": "h"},
 };
 
-    var data5 = [multiline3_1, multiline3_2,multiline3_3];
+    var data5 = [multiline3_1
+    //, multiline3_2,multiline3_3
+  ];
 
     Plotly.newPlot('line3', data5,layout5);
 
 
     //first barchart
     var barplot3_1 = {
-      x: ['metric1', 'metric2', 'metric3'],
-      y: [25, 15, 24],
+      x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
+      y: [100000, 100000, 100000, 100000, 100000, 100000, 100000,],
       name: 'Goal',
       type: 'bar',
       marker: {
@@ -642,8 +676,8 @@ var multiline3_1 = {
       };
 
     var barplot3_2 = {
-      x: ['metric1', 'metric2', 'metric3'],
-      y: [17, 14, 31],
+      x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
+      y: collection,
       name: 'Achieved',
       type: 'bar',
       marker: {
@@ -659,7 +693,7 @@ var multiline3_1 = {
     var data6 = [barplot3_1, barplot3_2];
 
     var layout6 = {barmode: 'overlay',margin: {
-    l: 20,
+    l: 30,
     r: 20,
     b: 20,
     t: 30,

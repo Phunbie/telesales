@@ -45,9 +45,13 @@ def monitor(request):
     contact_rate = contact_rate.sort_values(by='Call Date')
     Negotiation = bucket3('negotiation-rate-individual/')
     Negotiation = Negotiation.sort_values(by='Call Date')
+    user_list= collection['User Name'].unique().tolist()
 
 
     user_name = first_name.strip() + " " + last_name.strip()
+    if  user_name not in user_list:
+        user_name = "Wilson Mukobeza"
+        #user_name = "Adeola Adebayo"
     print(user_name) 
     #user_name = "Wilson Mukobeza"
     #user_name = "Adeola Adebayo"

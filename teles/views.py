@@ -99,8 +99,9 @@ def home(request):
 
         
         user_name = first_name.strip() + " " + last_name.strip() 
-        #user_name = "Wilson Mukobeza"
-       # user_name = "Adeola Adebayo"
+        if  user_name not in user_list:
+            user_name = "Wilson Mukobeza"
+            #user_name = "Adeola Adebayo"
         #collection
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
         total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()

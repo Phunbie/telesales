@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login,authenticate, logout
+#from django.contrib.auth import login,authenticate, logout
 from .models import Agent
 from authentication.views import logIn
 from django.http import JsonResponse
@@ -46,9 +46,13 @@ def home(request):
         last_name =  agent.last_name
 
         collection = bucket3('amount-collected-per-agent/')
+        collection = collection.sort_values(by='Call Date')
         calls = bucket3('calls-per-agent/')
+        calls = calls.sort_values(by='Call Date')
         contact_rate = bucket3('contact-rate-per-agent/')
+        contact_rate = contact_rate.sort_values(by='Call Date')
         Negotiation = bucket3('negotiation-rate-individual/')
+        Negotiation = Negotiation.sort_values(by='Call Date')
         user_list= collection['User Name'].unique().tolist()
 
 
@@ -94,30 +98,42 @@ def home(request):
         #print(f"user list:{combined_list}")
 
         
-        #user_name = first_name + " " + last_name 
+        user_name = first_name.strip() + " " + last_name.strip() 
         #user_name = "Wilson Mukobeza"
-        user_name = "Adeola Adebayo"
+       # user_name = "Adeola Adebayo"
         #collection
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).sum()
+        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+        collection_increase = total_paid_sum[-1] -  total_paid_sum[-2]
+        collection_increase = collection_increase >= 0
+        total_paid_sum = total_paid_sum[-1]
         #print(f"The sum total paid for {user_name} is: {total_paid_sum}")
         #calls
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
+        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+        calls_increase= total_calls[-1] - total_calls[-2]
+        calls_increase= calls_increase >= 0
+        total_calls = total_calls[-1]
         #contact_rate
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float)
-        length = len(contact)
-        contact=contact.sum()/length 
+        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
+        contact_increase = contact[-1] - contact[-2]
+        contact_increase = contact_increase >= 0
+        contact = contact[-1]
+        #length = len(contact)
+        #contact=contact.sum()/length 
         contact = round(contact, 2)
         #Negotiation
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float)
-        length1 = len(Negotiation_r)
-        Negotiation_r =  Negotiation_r.sum()/length1 
+        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
+        Negotiation_increase =  Negotiation_r[-1] - Negotiation_r[-2]
+        Negotiation_increase = Negotiation_increase >= 0
+        Negotiation_r = Negotiation_r[-1]
+        #length1 = len(Negotiation_r)
+        #Negotiation_r =  Negotiation_r.sum()/length1 
         Negotiation_r = round(Negotiation_r, 2)
         #print(f"The sum total rate for {user_name} is: {Negotiation_r}")
-        
+        kpi_increment_list = [collection_increase,calls_increase,contact_increase, Negotiation_increase]
 
 
         context = {'username': username,
@@ -135,7 +151,6 @@ def home(request):
         
         return render(request, 'index.html',context )
     return redirect(logIn) 
-
 
 
 def dataapi(request):

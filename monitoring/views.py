@@ -38,14 +38,20 @@ def monitor(request):
     last_name =  agent.last_name
 
     collection = bucket3('amount-collected-per-agent/')
+    collection = collection.sort_values(by='Call Date')
     calls = bucket3('calls-per-agent/')
+    calls = calls.sort_values(by='Call Date')
     contact_rate = bucket3('contact-rate-per-agent/')
+    contact_rate = contact_rate.sort_values(by='Call Date')
     Negotiation = bucket3('negotiation-rate-individual/')
+    Negotiation = Negotiation.sort_values(by='Call Date')
 
 
-    #user_name = first_name + " " + last_name 
-    user_name = "Wilson Mukobeza"
+    user_name = first_name.strip() + " " + last_name.strip()
+    print(user_name) 
+    #user_name = "Wilson Mukobeza"
     #user_name = "Adeola Adebayo"
+    #user_name = "Mercy Atieno"
     #collection
     collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
     total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()

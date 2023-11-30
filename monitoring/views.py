@@ -36,6 +36,85 @@ def monitor(request):
     username = username.capitalize()
     first_name = agent.first_name
     last_name =  agent.last_name
+    country = agent.country
+
+
+    calls_target_daily = ""
+    collection_target_daily  = ""
+    Negotiation_target_daily  = ""
+    calls_target_monthly = ""
+    collection_target_monthly = ""
+    Negotiation_target_monthly = ""
+    calls_target_weekly = ""
+    collection_target_weekly  = ""
+    Negotiation_target_weekly  = ""
+    if country == "Kenya":
+        calls_target_daily = 200
+        collection_target_daily  = 15833
+        Negotiation_target_daily  = 60
+        calls_target_monthly = 4800
+        collection_target_monthly = 380000
+        Negotiation_target_monthly = 60
+        calls_target_weekly = 1200
+        collection_target_weekly  = 94998
+        Negotiation_target_weekly  = 60
+    elif country == "Nigeria":
+        calls_target_daily = 180
+        collection_target_daily  = 145833
+        Negotiation_target_daily  = 50
+        calls_target_monthly = 4320
+        collection_target_monthly = 3500000
+        Negotiation_target_monthly = 50
+        calls_target_weekly = 1080
+        collection_target_weekly  = 874998
+        Negotiation_target_weekly  = 50
+    elif country == "Togo":
+        calls_target_daily = 150
+        collection_target_daily  = 104167
+        Negotiation_target_daily  = 50
+        calls_target_monthly = 3600
+        collection_target_monthly =  2500000
+        Negotiation_target_monthly = 50
+        calls_target_weekly = 900
+        collection_target_weekly  = 625000
+        Negotiation_target_weekly  = 50
+    elif country == "Uganda":
+        calls_target_daily = 160
+        collection_target_daily  = 500000
+        Negotiation_target_daily  = 60
+        calls_target_monthly = 3840
+        collection_target_monthly = 12000000
+        Negotiation_target_monthly = 60
+        calls_target_weekly = 960
+        collection_target_weekly  = 3000000
+        Negotiation_target_weekly  = 60
+    elif country == "Tanzania":
+        calls_target_daily = 160
+        collection_target_daily  = 325000
+        Negotiation_target_daily  = 60
+        calls_target_monthly = 3840
+        collection_target_monthly = 7800000
+        Negotiation_target_monthly = 60
+        calls_target_weekly = 960
+        collection_target_weekly  = 1950000
+        Negotiation_target_weekly  = 60
+    else:
+        calls_target_daily = 200
+        collection_target_daily  = 500000
+        Negotiation_target_daily  = 65
+        calls_target_monthly = 4800
+        collection_target_monthly = 12000000
+        Negotiation_target_monthly = 65
+        calls_target_weekly = 1200
+        collection_target_weekly  = 3000000
+        Negotiation_target_weekly  = 65
+
+
+
+
+
+    
+
 
     collection = bucket3('amount-collected-per-agent/')
     collection = collection.sort_values(by='Call Date')
@@ -65,6 +144,10 @@ def monitor(request):
     #calls
     calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
     total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+
+    dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
+    dash_date = dates.str[5:].astype(float).tolist()
+    #print(dash_date)
     length_call = len(total_calls) -1
     latest_call = total_calls[length_call]
     #contact_rate
@@ -85,7 +168,10 @@ def monitor(request):
                    "Negotiation":Negotiation_r,"latest_paid":latest_paid,
                    "latest_call":latest_call,
                    "latest_contact":latest_contact,
-                   "latest_negotiation":latest_negotiation, "first_name":first_name, "last_name":last_name}
+                   "latest_negotiation":latest_negotiation,
+                     "first_name":first_name,
+                       "last_name":last_name,
+                       "dash_date":dash_date}
     #input_list = json.dumps(input_list)
 
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list})

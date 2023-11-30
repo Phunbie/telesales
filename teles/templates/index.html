@@ -226,8 +226,8 @@
     <th style="width:10%;">Name</th>
     <th style="width:10%;">Calls</th>
     <th style="width:10%;">Collection</th>
-    <th style="width:10%;">Contact</th>
-    <th style="width:10%;">Negotiation</th>
+    <th style="width:10%;">Contact Rate</th>
+    <th style="width:10%;">Negotiation Rate</th>
   </tr>
   {% for item in combined_list %}
   <tr>
@@ -235,12 +235,12 @@
     <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px">{{ item.0 }}</td>
     <td>{{ item.2 }}</td>
     <td>{{ item.1 }}</td>
-    <td>{{ item.3 }}</td>
-    <td>{{ item.4 }}</td>
+    <td>{{ item.3 }}%</td>
+    <td>{{ item.4 }}%</td>
   </tr>
   {% endfor %}
 </table>
-<a href="#">See the whole Leaderboard</a>
+<a href="{% url 'leaderboard' %}">See the whole Leaderboard</a>
 
       </div>
     </div>

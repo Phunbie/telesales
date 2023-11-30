@@ -432,12 +432,20 @@ newsletter.className = ""
      Negotiation = JSON.parse(Negotiation);
      var collection = "{{ input_list.total_paid_sum }}";
      collection = JSON.parse(collection);
+     var chart_date = "{{ input_list.dash_date }}";
+     chart_date = JSON.parse(chart_date);
+
+     chart_date = chart_date.map(num => {
+     return num.toString().replace('.', '/');
+     });
+
      //alert(obj);
      // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     //first multiline Chart
     var multiline1_1 = {
-      x: [1, 2, 3,4, 5, 6, 7],
+     // x: [1, 2, 3,4, 5, 6, 7],
+     x: chart_date,
       //y: [10, 15, 13, 17, 5, 8, 9],
       y: calls,
       name: 'calls',
@@ -478,29 +486,31 @@ newsletter.className = ""
 
     //first barchart
     var barplot1_1 = {
-      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      //x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      x: chart_date,
       y: [150, 150, 150,150, 150, 150,150],
       name: 'Goal',
-      type: 'bar',
+      type: 'scatter',
       marker: {
           color: 'rgb(158,20,125)',
-          opacity: 0.6,
+         // opacity: 0.6, rgb(8,48,107)
           line: {
-            color: 'rgb(8,48,107)',
+            color: '#ffea00',
             width: 1.5
           }
         },
       };
 
     var barplot1_2 = {
-      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
-      //y: [12, 18, 29, 12, 18, 29,30],
+      x: chart_date,
+      //x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      //y: [12, 18, 29, 12, 18, 29,30],  'rgb(76,187,23)'
       y: calls,
       name: 'Achieved',
       type: 'bar',
       marker: {
-          color: 'rgb(158,202,225)',
-          opacity: 0.6,
+          color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)'],
+          //opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
             width: 1.5
@@ -531,7 +541,8 @@ newsletter.className = ""
 
     //first multiline Chart
     var multiline2_1 = {
-      x: [1, 2, 3, 4, 5, 6, 7 ],
+      x: chart_date,
+      //x: [1, 2, 3, 4, 5, 6, 7 ],
       //y: [10, 5, 11, 15],
       y:  Negotiation,
       name: 'Negotiation',
@@ -572,13 +583,14 @@ newsletter.className = ""
 
     //first barchart
     var barplot2_1 = {
-      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      x: chart_date,
+      //x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
       y:  [30,30,30,30,30,30,30],
       name: 'Goal',
-      type: 'bar',
+      type: 'scatter',
       marker: {
           color: 'rgb(158,20,125)',
-          opacity: 0.6,
+         // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
             width: 1.5
@@ -587,13 +599,14 @@ newsletter.className = ""
       };
 
     var barplot2_2 = {
-      x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
+      x: chart_date,
+      //x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
       y: Negotiation,
       name: 'Achieved',
       type: 'bar',
       marker: {
           color: 'rgb(158,202,225)',
-          opacity: 0.6,
+         // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
             width: 1.5
@@ -621,7 +634,8 @@ newsletter.className = ""
     
 //first multiline Chart
 var multiline3_1 = {
-      x: [1, 2, 3, 4, 5, 6, 7],
+      x: chart_date,
+      //x: [1, 2, 3, 4, 5, 6, 7],
       y: collection,
       name: 'collection',
       type: 'scatter'
@@ -661,13 +675,14 @@ var multiline3_1 = {
 
     //first barchart
     var barplot3_1 = {
-      x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
+      x: chart_date,
+      //x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
       y: [100000, 100000, 100000, 100000, 100000, 100000, 100000,],
       name: 'Goal',
-      type: 'bar',
+      type: 'scatter',
       marker: {
           color: 'rgb(158,20,125)',
-          opacity: 0.6,
+         // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
             width: 1.5
@@ -676,13 +691,14 @@ var multiline3_1 = {
       };
 
     var barplot3_2 = {
-      x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
+      x: chart_date,
+      //x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
       y: collection,
       name: 'Achieved',
       type: 'bar',
       marker: {
           color: 'rgb(158,202,225)',
-          opacity: 0.6,
+         // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
             width: 1.5

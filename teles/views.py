@@ -12,6 +12,53 @@ import json
 import pandas as pd
 
 
+Kenya_calls_target_daily = 200
+Kenya_collection_target_daily  = 15833
+Kenya_Negotiation_target_daily  = 60
+Kenya_calls_target_monthly = 4800
+Kenya_collection_target_monthly = 380000
+Kenya_Negotiation_target_monthly = 60
+Kenya_calls_target_weekly = 1200
+Kenya_collection_target_weekly  = 94998
+Kenya_Negotiation_target_weekly  = 60
+Nigeria_calls_target_daily = 180
+Nigeria_collection_target_daily  = 145833
+Nigeria_Negotiation_target_daily  = 50
+Nigeria_calls_target_monthly = 4320
+Nigeria_collection_target_monthly = 3500000
+Nigeria_Negotiation_target_monthly = 50
+Nigeria_calls_target_weekly = 1080
+Nigeria_collection_target_weekly  = 874998
+Nigeria_Negotiation_target_weekly  = 50
+Togo_calls_target_daily = 150
+Togo_collection_target_daily  = 104167
+Togo_Negotiation_target_daily  = 50
+Togo_calls_target_monthly = 3600
+Togo_collection_target_monthly =  2500000
+Togo_Negotiation_target_monthly = 50
+Togo_calls_target_weekly = 900
+Togo_collection_target_weekly  = 625000
+Togo_Negotiation_target_weekly  = 50
+Uganda_calls_target_daily = 160
+Uganda_collection_target_daily  = 500000
+Uganda_Negotiation_target_daily  = 60
+Uganda_calls_target_monthly = 3840
+Uganda_collection_target_monthly = 12000000
+Uganda_Negotiation_target_monthly = 60
+Uganda_calls_target_weekly = 960
+Uganda_collection_target_weekly  = 3000000
+Uganda_Negotiation_target_weekly  = 60
+Tanzania_calls_target_daily = 160
+Tanzania_collection_target_daily  = 325000
+Tanzania_Negotiation_target_daily  = 60
+Tanzania_calls_target_monthly = 3840
+Tanzania_collection_target_monthly = 7800000
+Tanzania_Negotiation_target_monthly = 60
+Tanzania_calls_target_weekly = 960
+Tanzania_collection_target_weekly  = 1950000
+Tanzania_Negotiation_target_weekly  = 60
+
+
 def bucket3(folder):
     s3 = boto3.resource(
                 's3',
@@ -31,6 +78,23 @@ def bucket3(folder):
     return data
 
 
+def mergedf(collectiondf,negotiationdf,callsdf):
+    df_merged = collectiondf.merge(callsdf, on=['User Name', 'Call Date', 'Country']).merge(negotiationdf, on=['User Name', 'Call Date', 'Country'])
+    return df_merged 
+
+def create_score_df(callskpi,collectionkpi,Negotiationkpi,df):
+    df['score'] = ((df['Count Calls Connected'].str.replace(',', '').astype(int) * 100)/callskpi) + ((df['Negotiation Rate'].str.replace('%', '').astype(float) * 100)/Negotiationkpi) + ((df['Sum Total Paid'].str.replace(',', '').astype(float) *100)/collectionkpi)
+    #final = df.groupby('User Name')['score'].sum().reset_index().sort_values(by='score')
+    return df
+
+
+def position_list(df):
+    final = df.groupby('User Name')['score'].sum().reset_index().sort_values(by='score')
+    return final['User Name'].tolist()
+
+
+
+
 def home(request):
     #users = User.objects.all()
     if request.user.is_authenticated:
@@ -44,6 +108,84 @@ def home(request):
         username = username.capitalize()
         first_name = agent.first_name
         last_name =  agent.last_name
+        country = agent.country
+        #daily, weekly & monthly kpi target per country
+        calls_target_daily = ""
+        collection_target_daily  = ""
+        Negotiation_target_daily  = ""
+        calls_target_monthly = ""
+        collection_target_monthly = ""
+        Negotiation_target_monthly = ""
+        calls_target_weekly = ""
+        collection_target_weekly  = ""
+        Negotiation_target_weekly  = ""
+        if country == "Kenya":
+            calls_target_daily = 200
+            collection_target_daily  = 15833
+            Negotiation_target_daily  = 60
+            calls_target_monthly = 4800
+            collection_target_monthly = 380000
+            Negotiation_target_monthly = 60
+            calls_target_weekly = 1200
+            collection_target_weekly  = 94998
+            Negotiation_target_weekly  = 60
+        elif country == "Nigeria":
+            calls_target_daily = 180
+            collection_target_daily  = 145833
+            Negotiation_target_daily  = 50
+            calls_target_monthly = 4320
+            collection_target_monthly = 3500000
+            Negotiation_target_monthly = 50
+            calls_target_weekly = 1080
+            collection_target_weekly  = 874998
+            Negotiation_target_weekly  = 50
+        elif country == "Togo":
+            calls_target_daily = 150
+            collection_target_daily  = 104167
+            Negotiation_target_daily  = 50
+            calls_target_monthly = 3600
+            collection_target_monthly =  2500000
+            Negotiation_target_monthly = 50
+            calls_target_weekly = 900
+            collection_target_weekly  = 625000
+            Negotiation_target_weekly  = 50
+        elif country == "Uganda":
+            calls_target_daily = 160
+            collection_target_daily  = 500000
+            Negotiation_target_daily  = 60
+            calls_target_monthly = 3840
+            collection_target_monthly = 12000000
+            Negotiation_target_monthly = 60
+            calls_target_weekly = 960
+            collection_target_weekly  = 3000000
+            Negotiation_target_weekly  = 60
+        elif country == "Tanzania":
+            calls_target_daily = 160
+            collection_target_daily  = 325000
+            Negotiation_target_daily  = 60
+            calls_target_monthly = 3840
+            collection_target_monthly = 7800000
+            Negotiation_target_monthly = 60
+            calls_target_weekly = 960
+            collection_target_weekly  = 1950000
+            Negotiation_target_weekly  = 60
+        else:
+            calls_target_daily = 200
+            collection_target_daily  = 500000
+            Negotiation_target_daily  = 65
+            calls_target_monthly = 4800
+            collection_target_monthly = 12000000
+            Negotiation_target_monthly = 65
+            calls_target_weekly = 1200
+            collection_target_weekly  = 3000000
+            Negotiation_target_weekly  = 65
+
+
+
+        #kpi goals
+        callskpi = 200
+        collectionkpi = 400000
+        negotiationkpi = 60
 
         collection = bucket3('amount-collected-per-agent/')
         collection = collection.sort_values(by='Call Date')
@@ -53,7 +195,34 @@ def home(request):
         contact_rate = contact_rate.sort_values(by='Call Date')
         Negotiation = bucket3('negotiation-rate-individual/')
         Negotiation = Negotiation.sort_values(by='Call Date')
-        user_list= collection['User Name'].unique().tolist()
+
+       
+
+        #create a position list
+        #original dataframes
+        merged_df =  mergedf(collection, Negotiation, calls)
+
+
+   
+
+        # dataframe per country score added
+        Nigeria_df = merged_df[merged_df['Country']=="Nigeria"]
+        Nigeria_df_scored = create_score_df(Nigeria_calls_target_daily, Nigeria_collection_target_daily,Nigeria_Negotiation_target_daily, Nigeria_df)
+        Kenya_df = merged_df[merged_df['Country']=="Kenya"]
+        Kenya_df_scored = create_score_df(Kenya_calls_target_daily, Kenya_collection_target_daily,Kenya_Negotiation_target_daily,  Kenya_df)
+        Tanzania_df = merged_df[merged_df['Country']=="Tanzania"]
+        Tanzania_df_scored = create_score_df( Tanzania_calls_target_daily, Tanzania_collection_target_daily, Tanzania_Negotiation_target_daily, Tanzania_df)
+        Uganda_df = merged_df[merged_df['Country']=="Uganda"] 
+        Uganda_df_scored = create_score_df(Uganda_calls_target_daily, Uganda_collection_target_daily,Uganda_Negotiation_target_daily, Uganda_df ) 
+
+        #append all the scored country's dfs 
+        scored_joined = pd.concat([Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ], axis=0)
+
+
+
+        user_list = position_list(scored_joined)
+
+        user_list= user_list[::-1]
 
 
         combined_list = ""
@@ -152,6 +321,96 @@ def home(request):
         
         return render(request, 'index.html',context )
     return redirect(logIn) 
+
+def leaderboard(request):
+
+     #kpi goals
+    callskpi = 200
+    collectionkpi = 400000
+    negotiationkpi = 60
+
+
+    collection = bucket3('amount-collected-per-agent/')
+    collection = collection.sort_values(by='Call Date')
+    calls = bucket3('calls-per-agent/')
+    calls = calls.sort_values(by='Call Date')
+    contact_rate = bucket3('contact-rate-per-agent/')
+    contact_rate = contact_rate.sort_values(by='Call Date')
+    Negotiation = bucket3('negotiation-rate-individual/')
+    Negotiation = Negotiation.sort_values(by='Call Date')
+
+     #create a position list
+    merged_df =  mergedf(collection, Negotiation, calls)
+
+
+
+     # dataframe per country score added
+    Nigeria_df = merged_df[merged_df['Country']=="Nigeria"]
+    Nigeria_df_scored = create_score_df(Nigeria_calls_target_daily, Nigeria_collection_target_daily,Nigeria_Negotiation_target_daily, Nigeria_df)
+    Kenya_df = merged_df[merged_df['Country']=="Kenya"]
+    Kenya_df_scored = create_score_df(Kenya_calls_target_daily, Kenya_collection_target_daily,Kenya_Negotiation_target_daily,  Kenya_df)
+    Tanzania_df = merged_df[merged_df['Country']=="Tanzania"]
+    Tanzania_df_scored = create_score_df( Tanzania_calls_target_daily, Tanzania_collection_target_daily, Tanzania_Negotiation_target_daily, Tanzania_df)
+    Uganda_df = merged_df[merged_df['Country']=="Uganda"] 
+    Uganda_df_scored = create_score_df(Uganda_calls_target_daily, Uganda_collection_target_daily,Uganda_Negotiation_target_daily, Uganda_df ) 
+
+    #append all the scored country's dfs 
+    scored_joined = pd.concat([Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ], axis=0)
+
+
+
+    user_list = position_list(scored_joined)
+
+    user_list= user_list[::-1]
+
+
+
+    #user_list= collection['User Name'].unique().tolist()
+
+
+    combined_list = ""
+    list_name = []
+    list_collection =[]
+    list_call = []
+    list_contact = []
+    list_negotiation =[]
+    for  user_name in user_list:
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).sum()
+        #calls
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
+        #contact_rate
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float)
+        length = len(contact)
+        contact=contact.sum()/length 
+        contact = round(contact, 2)
+        #Negotiation
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float)
+        length1 = len(Negotiation_r)
+        Negotiation_r =  Negotiation_r.sum()/length1 
+        Negotiation_r = round(Negotiation_r, 2)
+        
+        list_name.append(user_name)
+        
+        list_collection.append(total_paid_sum)
+        
+        list_call.append(total_calls)
+        
+        list_contact.append(contact)
+        
+        list_negotiation.append(Negotiation_r)
+        combined_list = list(zip(list_name, list_collection, list_call, list_contact, list_negotiation))
+       
+        context = {
+                   "combined_list": combined_list
+                   }
+        
+
+    return render(request, 'leaderboard.html',context )
+
 
 
 def dataapi(request):

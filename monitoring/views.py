@@ -138,12 +138,16 @@ def monitor(request):
     #collection
     collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
     total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+    collection_bar_color = [int(x>=collection_target_daily) for x in total_paid_sum]
+    collection_daily_target_list = [collection_target_daily for x in total_paid_sum]
     length_paid = len(total_paid_sum) -1
     latest_paid = total_paid_sum[length_paid]
     #print(f"The sum total paid for {user_name} is: {total_paid_sum}")
     #calls
     calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
     total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+    call_bar_color = [int(x>=calls_target_daily) for x in total_calls]
+    call_daily_target_list = [calls_target_daily for x in total_calls]
 
     dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
     dash_date = dates.str[5:].astype(float).tolist()
@@ -159,8 +163,12 @@ def monitor(request):
     #Negotiation
     Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
     Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
+    Negotiation_bar_color =  [int(x>=Negotiation_target_daily) for x in Negotiation_r]
+    Negotiation_daily_target_list = [Negotiation_target_daily for x in Negotiation_r]
     length_negotiotion = len(Negotiation_r) - 1
     latest_negotiation = Negotiation_r[length_negotiotion]
+    bar_colors = {"calls":call_bar_color,"collection":collection_bar_color,"Negotiation":Negotiation_bar_color}
+    daily_targets = {"calls":call_daily_target_list,"collection":collection_daily_target_list,"Negotiation": Negotiation_daily_target_list}
     #Negotiation_r = round(Negotiation_r, 2)
     input_list = {"total_paid_sum":total_paid_sum,
                    "total_calls":total_calls,
@@ -171,7 +179,10 @@ def monitor(request):
                    "latest_negotiation":latest_negotiation,
                      "first_name":first_name,
                        "last_name":last_name,
-                       "dash_date":dash_date}
+                       "dash_date":dash_date,
+                       "bar_colors":bar_colors,
+                       "daily_targets": daily_targets,
+                       }
     #input_list = json.dumps(input_list)
 
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list})

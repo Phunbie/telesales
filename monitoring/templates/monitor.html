@@ -434,10 +434,31 @@ newsletter.className = ""
      collection = JSON.parse(collection);
      var chart_date = "{{ input_list.dash_date }}";
      chart_date = JSON.parse(chart_date);
-
      chart_date = chart_date.map(num => {
      return num.toString().replace('.', '/');
      });
+     var calls_target = "{{ input_list.daily_targets.calls }}";
+     calls_target = JSON.parse(calls_target);
+     //calls_target = calls_target.map(num => {
+     //return num.toString().replace('.', '/');
+     //});
+
+     var Negotiation_target = "{{ input_list.daily_targets.Negotiation }}";
+     Negotiation_target = JSON.parse(Negotiation_target);
+     var collection_target = "{{ input_list.daily_targets.collection }}";
+     collection_target = JSON.parse(collection_target);
+     var calls_colors = "{{ input_list.bar_colors.calls }}";
+     calls_colors = JSON.parse(calls_colors);
+     let new_calls_colors = calls_colors.map(num => {return num === 0 ? 'red' : 'green';});
+     var Negotiation_colors = "{{ input_list.bar_colors.Negotiation }}";
+     Negotiation_colors = JSON.parse(Negotiation_colors);
+     let new_Negotiation_colors = Negotiation_colors.map(num => {return num === 0 ? 'red' : 'green';});
+     var collection_colors = "{{ input_list.bar_colors.collection }}";
+     collection_colors = JSON.parse(collection_colors);
+     let new_collection_colors = collection_colors.map(num => {return num === 0 ? 'red' : 'green';});
+  
+
+    
 
      //alert(obj);
      // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -488,14 +509,15 @@ newsletter.className = ""
     var barplot1_1 = {
       //x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
       x: chart_date,
-      y: [150, 150, 150,150, 150, 150,150],
+      //y: [150, 150, 150,150, 150, 150,150],
+      y: calls_target,
       name: 'Goal',
       type: 'scatter',
       marker: {
-          color: 'rgb(158,20,125)',
+          color: 'yellow',
          // opacity: 0.6, rgb(8,48,107)
           line: {
-            color: '#ffea00',
+            color: 'rgb(8,48,107)',
             width: 1.5
           }
         },
@@ -509,7 +531,7 @@ newsletter.className = ""
       name: 'Achieved',
       type: 'bar',
       marker: {
-          color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)'],
+          color: new_calls_colors,
           //opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
@@ -585,11 +607,12 @@ newsletter.className = ""
     var barplot2_1 = {
       x: chart_date,
       //x: ['day1', 'day2', 'day3','day4','day5','day6','day7'],
-      y:  [30,30,30,30,30,30,30],
+      //y:  [30,30,30,30,30,30,30],
+      y: Negotiation_target,
       name: 'Goal',
       type: 'scatter',
       marker: {
-          color: 'rgb(158,20,125)',
+          color: 'yellow',
          // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
@@ -605,7 +628,7 @@ newsletter.className = ""
       name: 'Achieved',
       type: 'bar',
       marker: {
-          color: 'rgb(158,202,225)',
+          color: new_Negotiation_colors,
          // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
@@ -677,11 +700,12 @@ var multiline3_1 = {
     var barplot3_1 = {
       x: chart_date,
       //x: ['day1', 'day2', 'day3', 'day4', 'day5', 'day6','day7'],
-      y: [100000, 100000, 100000, 100000, 100000, 100000, 100000,],
+      //y: [100000, 100000, 100000, 100000, 100000, 100000, 100000,],
+      y: collection_target,
       name: 'Goal',
       type: 'scatter',
       marker: {
-          color: 'rgb(158,20,125)',
+          color: "yellow",
          // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',
@@ -697,7 +721,7 @@ var multiline3_1 = {
       name: 'Achieved',
       type: 'bar',
       marker: {
-          color: 'rgb(158,202,225)',
+          color: new_collection_colors,
          // opacity: 0.6,
           line: {
             color: 'rgb(8,48,107)',

@@ -96,6 +96,13 @@ def position_list(df):
 
 
 def home(request):
+    #post conditional filter list by country
+    scan_country=""
+    if request.method == 'POST':
+        scan_country  = request.POST.get('country')
+
+
+        
     #users = User.objects.all()
     if request.user.is_authenticated:
         user = request.user
@@ -208,15 +215,32 @@ def home(request):
         # dataframe per country score added
         Nigeria_df = merged_df[merged_df['Country']=="Nigeria"]
         Nigeria_df_scored = create_score_df(Nigeria_calls_target_daily, Nigeria_collection_target_daily,Nigeria_Negotiation_target_daily, Nigeria_df)
+        Nigeria_first = position_list(Nigeria_df_scored)[-1]
         Kenya_df = merged_df[merged_df['Country']=="Kenya"]
         Kenya_df_scored = create_score_df(Kenya_calls_target_daily, Kenya_collection_target_daily,Kenya_Negotiation_target_daily,  Kenya_df)
+        Kenya_first = position_list(Kenya_df_scored)[-1]
         Tanzania_df = merged_df[merged_df['Country']=="Tanzania"]
         Tanzania_df_scored = create_score_df( Tanzania_calls_target_daily, Tanzania_collection_target_daily, Tanzania_Negotiation_target_daily, Tanzania_df)
+        Tanzania_first = position_list(Tanzania_df_scored)[-1]
         Uganda_df = merged_df[merged_df['Country']=="Uganda"] 
         Uganda_df_scored = create_score_df(Uganda_calls_target_daily, Uganda_collection_target_daily,Uganda_Negotiation_target_daily, Uganda_df ) 
-
+        Uganda_first = position_list(Uganda_df_scored)[-1]
         #append all the scored country's dfs 
         scored_joined = pd.concat([Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ], axis=0)
+
+        if scan_country == "Nigeria":
+            scored_joined = Nigeria_df_scored
+        elif scan_country == "Kenya":
+            scored_joined = Kenya_df_scored
+        elif scan_country == "Tanzania":
+            scored_joined = Tanzania_df_scored
+        elif scan_country == "Uganda":
+            scored_joined = Uganda_df_scored
+        else:
+            pass
+        #return redirect('home',test_country)
+
+        first_in_country = {"Nigeria":Nigeria_first,"Kenya":Kenya_first, "Tanzania":Tanzania_first,"Uganda":Uganda_first}
 
 
 
@@ -316,7 +340,8 @@ def home(request):
                    "total_calls":total_calls,
                    "contact":contact,
                    "negotiation_r":Negotiation_r,
-                   "combined_list": combined_list
+                   "combined_list": combined_list,
+                   "first_in_country":first_in_country,
                    }
         
         return render(request, 'index.html',context )

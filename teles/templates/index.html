@@ -12,12 +12,12 @@
 }
 
  .second {
-  height: 35vh;
+  height: 40vh;
   border-radius: 20px;
  }
 
  .third {
-  height: 20vh;
+  height: 15vh;
   border-radius: 20px;
  }
 
@@ -194,23 +194,25 @@
     <div class="col-md-7">
       <div id="table" class="second p-0 border bg-light" style="overflow-x:auto;overflow-y:auto;">
         <p class="leader-table">Leaderboard</p>
-        <form style="padding-top: 0;margin-top: 0;">
+        <form method="post" style="padding-top: 0;margin-top: 0;">
+          {% csrf_token %}
           <div class="container">
           <div class="row">
            <div class="form-group col-md-4" style="font-size: 0.8em;">
                 <label class="drop" for="inputState">Country</label>
-                <select id="country" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
+                <select id="country" class="form-control" name="country" style="height: 20px; padding-top: 0; font-size: 0.8em;">
                   <option selected>All</option>
-                  <option>Nigeria</option>
-                  <option>Kenya</option>
-                  <option>Tanzania</option>
+                  <option value="Nigeria">Nigeria</option>
+                  <option value="Kenya">Kenya</option>
+                  <option value="Tanzania">Tanzania</option>
+                  <option value="Uganda">Tanzania</option>
                 </select>
            </div>
            <div class="form-group col-md-4" style="font-size: 0.8em;">
                 <label class="drop" for="inputState">Duration</label>
                 <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
-                  <option selected>MTD</option>
-                  <option>WTD</option>
+                  <option value="MTD" selected>MTD</option>
+                  <option value="WTD">WTD</option>
                 </select>
            </div>
            <div class="form-group col-md-4">
@@ -255,9 +257,9 @@
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
-        <img class="flag" src="../static/Flag-Mozambique.webp" height="15px" width="15px">
-        <span class="countr">Mozambique</span>
-        <div class="current"></div>
+        <img class="flag" src="../static/Uganda.png" height="15px" width="15px">
+        <span class="countr">Uganda</span>
+        <div class="current">{{ first_in_country.Uganda }}</div>
         <div class="runner"></div>
       </div>
     </div>
@@ -266,7 +268,7 @@
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/Flag-Nigeria.webp" height="15px" width="15px">
         <span class="countr">Nigeria</span>
-        <div class="current"></div>
+        <div class="current">{{ first_in_country.Nigeria }}</div>
         <div class="runner"></div>
       </div>
     </div>
@@ -275,7 +277,7 @@
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/kenya.png" height="15px" width="15px">
         <span class="countr">Kenya</span>
-        <div class="current"></div>
+        <div class="current">{{ first_in_country.Kenya }}</div>
         <div class="runner"></div>
       </div>
     </div>
@@ -284,7 +286,7 @@
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
         <img class="flag" src="../static/Flag_of_Tanzania.svg.png" height="15px" width="15px">
         <span class="countr">Tanzania</span>
-        <div class="current"></div>
+        <div class="current">{{ first_in_country.Tanzania }}</div>
         <div class="runner"></div>
       </div>
     </div>

@@ -125,27 +125,55 @@ def monitor(request):
     Negotiation = bucket3('negotiation-rate-individual/')
     Negotiation = Negotiation.sort_values(by='Call Date')
     user_list= collection['User Name'].unique().tolist()
+    country_list = collection['Country'].unique().tolist()
+    country_list = [i for i in country_list if i is not None]
 
 
     user_name = first_name.strip() + " " + last_name.strip()
-    if  user_name not in user_list:
-        user_name = "Wilson Mukobeza"
+    if  user_name in user_list:
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+        contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+        Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
+    elif (country in country_list) and (user_name not in user_list):
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+        total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+        total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+        contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+        Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
+    else:
+        country = "Nigeria"
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+        total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+        total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+        contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+        Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
         #user_name = "Adeola Adebayo"
     print(user_name) 
     #user_name = "Wilson Mukobeza"
     #user_name = "Adeola Adebayo"
     #user_name = "Mercy Atieno"
     #collection
-    collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-    total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+   # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+   # total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
     collection_bar_color = [int(x>=collection_target_daily) for x in total_paid_sum]
     collection_daily_target_list = [collection_target_daily for x in total_paid_sum]
     length_paid = len(total_paid_sum) -1
     latest_paid = total_paid_sum[length_paid]
     #print(f"The sum total paid for {user_name} is: {total_paid_sum}")
     #calls
-    calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-    total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+   # calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+   # total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
     call_bar_color = [int(x>=calls_target_daily) for x in total_calls]
     call_daily_target_list = [calls_target_daily for x in total_calls]
 
@@ -155,14 +183,14 @@ def monitor(request):
     length_call = len(total_calls) -1
     latest_call = total_calls[length_call]
     #contact_rate
-    contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-    contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
+   # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+   # contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
     length_contact = len(contact) - 1
     latest_contact = contact[length_contact]
     #contact = round(contact, 2)
     #Negotiation
-    Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-    Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
+  #  Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+   # Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
     Negotiation_bar_color =  [int(x>=Negotiation_target_daily) for x in Negotiation_r]
     Negotiation_daily_target_list = [Negotiation_target_daily for x in Negotiation_r]
     length_negotiotion = len(Negotiation_r) - 1
@@ -182,6 +210,7 @@ def monitor(request):
                        "dash_date":dash_date,
                        "bar_colors":bar_colors,
                        "daily_targets": daily_targets,
+                       "country":country,
                        }
     #input_list = json.dumps(input_list)
 

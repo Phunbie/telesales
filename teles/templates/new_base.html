@@ -132,6 +132,7 @@
                             {% for message in messages %}
                                 <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
                                 {{ message }}
+                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                                 </div>
                             {% endfor %}
                             </div>
@@ -143,7 +144,7 @@
                     
                 </main>
 
-
+      <!--
                 <footer class="py-4 bg-dark mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -156,6 +157,7 @@
                         </div>
                     </div>
                 </footer>
+     -->
             </div>
         </div>
 

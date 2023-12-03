@@ -260,6 +260,17 @@ newsletter.className = ""
           </div> 
 
 
+          <form method="post" autocomplete="off"  style="position:absolute;left:45vw;top: 6vh;">
+            {% csrf_token %}
+            <p style="padding-bottom: 0;margin-bottom: 0;">{{ input_list.agent_name }}</p>
+           <!-- <div class="autocomplete" style="width:300px;">-->
+              <input id="agentInput" type="text" name="Agents" placeholder="Agent name" style="z-index: 3;">
+           <!-- </div> -->
+             <!-- <input type="submit" style="height: 20px; padding-top: 0;font-size: 0.8rem;">-->
+            <button style="background-color: #ffea00;">Filter</button>
+          </form>
+
+
           <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
 
           <form style="padding: 0;margin: 0;">
@@ -268,8 +279,8 @@ newsletter.className = ""
              <div class="form-group col-md-2" style="font-size: 0.8em;">
                   <!--<label class="drop" for="inputState">Duration</label>-->
                   <select id="inputState" class="form-control" style="padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
-                    <option selected>Today Status</option>
-                    <option>MTD Status</option>
+                  <!--  <option selected>Today Status</option> -->
+                    <option selected>MTD Status</option>
                     <option>WTD Status</option>
                   </select>
              </div>
@@ -366,38 +377,44 @@ newsletter.className = ""
             <table class="table">
               <tr>
                 <th>KPI</th>
+                <th>KPI Scale Ratings</th>
                 <th>Status</th>
                 <th>Rate</th>
                 <th>Description</th>
               </tr>
               <tr>
                 <td>Connected Calls</td>
+                <td>Do not meet expectation</td>
                 <td class="bad">Bad</td>
-                <td>2.4</td>
+                <td>1.4</td>
                 <td>This is a bad trend. <a href="#">Learn more..</a></td>
               </tr>
               <tr>
                 <td>Collection</td>
+                <td>Partial meet expectation</td>
                 <td class="good">Good</td>
-                <td>6.4</td>
+                <td>2.4</td>
                 <td>Good progress. <a href="#">Learn more..</a></td>
               </tr>
               <tr>
                 <td>Negotiation</td>
+                <td>Meet Expectation</td>
                 <td class="good">Good</td>
-                <td>6.4</td>
+                <td>3.6</td>
                 <td>Good progress. <a href="#">Learn more..</a></td>
               </tr>
               <tr>
                 <td>Quality Assuarance</td>
+                <td>Above expectation</td>
                 <td class="good">Good</td>
-                <td>6.4</td>
+                <td>4.4</td>
                 <td>Good progress. <a href="#">Learn more..</a></td>
               </tr>
               <tr>
                 <td>general performance</td>
+                <td>Outstanding</td>
                 <td class="good">Good</td>
-                <td>6.4</td>
+                <td>5.0</td>
                 <td>Good progress. <a href="#">Learn more..</a></td>
               </tr>
             </table>
@@ -437,6 +454,7 @@ newsletter.className = ""
      chart_date = chart_date.map(num => {
      return num.toString().replace('.', '/');
      });
+     //alert(chart_date)
      var calls_target = "{{ input_list.daily_targets.calls }}";
      calls_target = JSON.parse(calls_target);
      //calls_target = calls_target.map(num => {
@@ -457,8 +475,13 @@ newsletter.className = ""
      collection_colors = JSON.parse(collection_colors);
      let new_collection_colors = collection_colors.map(num => {return num === 0 ? 'red' : 'green';});
   
-
+     var list_of_agents = '{{ user_list|safe }}';
+     //list_of_agents = list_of_agents.replace('/&quot;/g', '"');
+     //list_of_agents = list_of_agents.replace('&quot;', "");
+     list_of_agents = JSON.parse(list_of_agents);
+     //alert(list_of_agents)
     
+     
 
      //alert(obj);
      // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -761,6 +784,106 @@ var classn= elems[i].className;
     var classn2= elems2[i].className.replace(" d-none","");
     elems2[i].className = classn2;
   }
+
+  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< auto complete form >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
+  }
+}
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+}
+// end autocomplete function
+autocomplete(document.getElementById("agentInput"), list_of_agents);
   </script>
 
 {% endblock %}

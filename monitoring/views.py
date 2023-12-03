@@ -30,6 +30,11 @@ def bucket3(folder):
     return data
 
 def monitor(request):
+    agent_name = ""
+    if request.method == 'POST':
+        if request.POST.get('Agents'):
+            agent_name = request.POST.get('Agents')
+
     user = request.user
     agent= Agent.objects.get(user=user)
     username = request.user.username
@@ -130,7 +135,10 @@ def monitor(request):
 
 
     user_name = first_name.strip() + " " + last_name.strip()
-    if  user_name in user_list:
+    if  (user_name in user_list) or (agent_name in user_list):
+        if agent_name in user_list:
+            user_name = agent_name
+        dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
         total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -140,16 +148,45 @@ def monitor(request):
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
         Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
     elif (country in country_list) and (user_name not in user_list):
-        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-        total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
-        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-        total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
-        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-        contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
-        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-        Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
+        dates= calls[calls["Country"] == country]["Call Date"].str.replace('-', '.')
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
+        total_paid_sum = collection[collection["Country"] == country]
+        total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
+        dates= total_paid_sum["Call Date"].str.replace('-', '.')
+        total_paid_sum = total_paid_sum.sort_values(by='Call Date')
+        total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
+# calls
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
+        total_calls = calls[calls["Country"] == country]
+        total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
+        total_calls= total_calls.sort_values(by='Call Date')
+        total_calls = total_calls["Count Calls Connected"].tolist()
+        #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+        #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
+        print(total_calls)
+# contact
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
+        contact  = contact_rate[contact_rate["Country"] == country]
+        contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
+        contact =  contact.sort_values(by='Call Date')
+        contact  =  contact["Contact Rate"].tolist()
+       # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+       # contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
+#Negotiation
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
+        Negotiation_r =  Negotiation[Negotiation["Country"] == country]
+        Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
+        Negotiation_r = Negotiation_r.sort_values(by='Call Date')
+        Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
+
+        #Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+        #Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
+        #collection_target_daily
+        #calls_target_daily
+       # Negotiation_target_daily
     else:
         country = "Nigeria"
+        dates= calls[calls["Country"] == country]["Call Date"].str.replace('-', '.')
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
         total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -164,6 +201,7 @@ def monitor(request):
     #user_name = "Adeola Adebayo"
     #user_name = "Mercy Atieno"
     #collection
+    #print(user_list)
    # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
    # total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
     collection_bar_color = [int(x>=collection_target_daily) for x in total_paid_sum]
@@ -177,7 +215,7 @@ def monitor(request):
     call_bar_color = [int(x>=calls_target_daily) for x in total_calls]
     call_daily_target_list = [calls_target_daily for x in total_calls]
 
-    dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
+    #dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
     dash_date = dates.str[5:].astype(float).tolist()
     #print(dash_date)
     length_call = len(total_calls) -1
@@ -211,10 +249,12 @@ def monitor(request):
                        "bar_colors":bar_colors,
                        "daily_targets": daily_targets,
                        "country":country,
+                       "agent_name": agent_name,
+                       "user": request.user,
                        }
-    #input_list = json.dumps(input_list)
-
-    return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list})
+    
+    user_list = json.dumps(user_list)
+    return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list, "user_list": user_list,})
 
 
 def monitorapi(request):

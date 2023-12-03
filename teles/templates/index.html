@@ -51,6 +51,14 @@
   left: 7px;
 }
 
+.fa-stop{
+  font-size: 1.2vw;
+  /*color:green; */
+  position: absolute;
+  top: -20px;
+  left: 7px;
+}
+
 .arrow {
   position: relative;
   
@@ -173,22 +181,23 @@
   <div class="row gx-5 gy-3">
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Calls Counted</p><p class="num">{{total_calls}}<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
+        <!-- <img class="trend" src="../static/down.jpeg"> <img class="trend" src="../static/up.jpeg"> -->
+        <p class="word1">Calls Counted</p><p class="num">{{total_calls}}<i class="arrow fa {{ kpi_increment_list.1 }}"></i></p>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Agent Collection</p><p class="num">{{total_paid_sum}}<i class="arrow fa fa-caret-up"></i><img class="trend" src="../static/up.jpeg"></p>
+        <p class="word1">Agent Collection</p><p class="num">{{total_paid_sum}}<i class="arrow fa {{ kpi_increment_list.0 }}"></i></p>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Contact Rate</p><p class="num">{{contact}}<i class="arrow fa fa-caret-down"></i><img class="trend" src="../static/down.jpeg"></p>
+        <p class="word1">Contact Rate</p><p class="num">{{contact}}<i class="arrow fa {{ kpi_increment_list.2 }}"></i></p>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
-        <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}<i class="arrow fa fa-caret-up"></i> <img class="trend" src="../static/up.jpeg"></p>
+        <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}<i class="arrow fa {{ kpi_increment_list.3 }}"></i></p>
       </div>
     </div>
     <div class="col-md-7">
@@ -205,7 +214,7 @@
                   <option value="Nigeria">Nigeria</option>
                   <option value="Kenya">Kenya</option>
                   <option value="Tanzania">Tanzania</option>
-                  <option value="Uganda">Tanzania</option>
+                  <option value="Uganda">Uganda</option>
                 </select>
            </div>
            <div class="form-group col-md-4" style="font-size: 0.8em;">
@@ -225,7 +234,7 @@
 <table id="myTable">
   <tr class="header" style="background-color: #ffea00;">
     <th style="width:5%;">Pos</th>
-    <th style="width:10%;">Name</th>
+    <th style="width:25%;">Name</th>
     <th style="width:10%;">Calls</th>
     <th style="width:10%;">Collection</th>
     <th style="width:10%;">Contact Rate</th>
@@ -234,7 +243,7 @@
   {% for item in combined_list %}
   <tr>
     <td></td>
-    <td><img class="Tpics" src="../static/img_avatar.png" height="20px" width="20px">{{ item.0 }}</td>
+    <td><img class="Tpics" src="../static/img_avatar.png" height="30px" width="30px">{{ item.0 }}</td>
     <td>{{ item.2 }}</td>
     <td>{{ item.1 }}</td>
     <td>{{ item.3 }}%</td>

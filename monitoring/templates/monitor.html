@@ -182,7 +182,10 @@ tr:nth-child(even) {
 }
 
 /* end hover popup */
-
+/* star rating  */
+.checked {
+  color: #ffea00;
+}
 </style>
 
 
@@ -259,6 +262,7 @@ newsletter.className = ""
             {{ input_list.first_name }}  {{ input_list.last_name }}
           </div> 
 
+          {% if input_list.user_is_supervisor %}
 
           <form method="post" autocomplete="off"  style="position:absolute;left:45vw;top: 6vh;">
             {% csrf_token %}
@@ -269,19 +273,20 @@ newsletter.className = ""
              <!-- <input type="submit" style="height: 20px; padding-top: 0;font-size: 0.8rem;">-->
             <button style="background-color: #ffea00;">Filter</button>
           </form>
-
+          {% endif %}
 
           <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
 
-          <form style="padding: 0;margin: 0;">
+          <form  method="post" style="padding: 0;margin: 0;">
+            {% csrf_token %}
             <div class="container">
             <div class="row">
              <div class="form-group col-md-2" style="font-size: 0.8em;">
                   <!--<label class="drop" for="inputState">Duration</label>-->
-                  <select id="inputState" class="form-control" style="padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
+                  <select id="inputState" class="form-control" name="date-range" style="padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
                   <!--  <option selected>Today Status</option> -->
-                    <option selected>MTD Status</option>
-                    <option>WTD Status</option>
+                    <option value="MTD" selected>MTD Status</option>
+                    <option value="WTD" >WTD Status</option>
                   </select>
              </div>
              <div class="form-group col-md-1 col-sm-2">
@@ -354,8 +359,9 @@ newsletter.className = ""
       </div>
 
        <!--end charts-->
-       <!--
+       
        <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">Meet expectation: 4 out of 5 </h5>
+       <!--
        <div class="col-12">
         <div class="third border bg-light">
           <div class="" style="height: 3.6vh; width: 100%; background-color: rgb(192, 239, 192);">
@@ -368,9 +374,17 @@ newsletter.className = ""
           </div>
         </div>
       </div>
+      -->
+      <div>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+     </div>
       <div class="col-12">
         <div class="fourth border bg-light">
-      -->
+      
 
           <h5>KPI Description</h5>
           <div class="table-responsive-sm">
@@ -449,10 +463,11 @@ newsletter.className = ""
      Negotiation = JSON.parse(Negotiation);
      var collection = "{{ input_list.total_paid_sum }}";
      collection = JSON.parse(collection);
-     var chart_date = "{{ input_list.dash_date }}";
+     var chart_date = '{{ input_list.dash_date|safe }}';
      chart_date = JSON.parse(chart_date);
      chart_date = chart_date.map(num => {
-     return num.toString().replace('.', '/');
+      //toString().
+     return num.replace('.', '/');
      });
      //alert(chart_date)
      var calls_target = "{{ input_list.daily_targets.calls }}";

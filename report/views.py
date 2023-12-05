@@ -9,4 +9,4 @@ from django.contrib.auth.decorators import login_required
 
 def report(request):
     username = request.user.username
-    return render(request, 'report.html',{'username':username})
+    return render(request, 'report.html',{'username':username}) 

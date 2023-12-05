@@ -132,7 +132,7 @@
                             {% for message in messages %}
                                 <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
                                 {{ message }}
-                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                <a href="#" class="closebtn" onclick="this.parentElement.style.display='none';">&times;</a> 
                                 </div>
                             {% endfor %}
                             </div>

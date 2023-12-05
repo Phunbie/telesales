@@ -112,8 +112,10 @@ def position_list(df):
 def home(request):
     #post conditional filter list by country
     scan_country=""
+    date_range = "MTD"
     if request.method == 'POST':
         scan_country  = request.POST.get('country')
+        date_range = request.POST.get('date-range')
         redirect(home)
 
         
@@ -201,21 +203,26 @@ def home(request):
             collection_target_weekly  = 3000000
             Negotiation_target_weekly  = 65
 
-
-
-        #kpi goals
-        callskpi = 200
-        collectionkpi = 400000
-        negotiationkpi = 60
-
-        collection = bucket3('amount-collected-per-agent/')
+        collection = bucket3('amount-collected-per-agent-mtd/')
         collection = collection.sort_values(by='Call Date')
-        calls = bucket3('calls-per-agent/')
+        calls = bucket3('calls-per-agent-mtd/')
         calls = calls.sort_values(by='Call Date')
-        contact_rate = bucket3('contact-rate-per-agent/')
+        contact_rate = bucket3('contact-rate-per-agent-mtd/')
         contact_rate = contact_rate.sort_values(by='Call Date')
-        Negotiation = bucket3('negotiation-rate-individual/')
+        Negotiation = bucket3('negotiation-rate-individual-mtd/')
         Negotiation = Negotiation.sort_values(by='Call Date')
+
+        if date_range == "WTD":
+            collection = bucket3('amount-collected-per-agent/')
+            collection = collection.sort_values(by='Call Date')
+            calls = bucket3('calls-per-agent/')
+            calls = calls.sort_values(by='Call Date')
+            contact_rate = bucket3('contact-rate-per-agent/')
+            contact_rate = contact_rate.sort_values(by='Call Date')
+            Negotiation = bucket3('negotiation-rate-individual/')
+            Negotiation = Negotiation.sort_values(by='Call Date')
+    
+   
 
        
 
@@ -442,6 +449,7 @@ def home(request):
                    "combined_list": combined_list,
                    "first_in_country":first_in_country,
                    "kpi_increment_list": kpi_increment_list,
+                   "scan_country":scan_country,
                    }
         
         return render(request, 'index.html',context )

@@ -357,7 +357,8 @@ q {font-style: italic;}
         <div class="p-1 border bg-light third" style="overflow-x:auto;overflow-y:auto;">
 
             <p class="leader-table" style="text-align: center;">Top Performing Countries</p>
-            <form style="padding-top: 0;margin-top: 0;">
+            <form method="post" style="padding-top: 0;margin-top: 0;">
+              {% csrf_token %}
               <div class="container">
               <div class="row">
                 <!--
@@ -373,9 +374,9 @@ q {font-style: italic;}
                  -->
                <div class="form-group col-md-2" style="font-size: 0.8em;">
                     <label class="drop" for="inputState">Duration</label>
-                    <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;margin-bottom: 1vh;">
-                      <option selected>MTD</option>
-                      <option>WTD</option>
+                    <select id="inputState" class="form-control" name="country-data" style="height: 20px; padding-top: 0; font-size: 0.8em;margin-bottom: 1vh;">
+                      <option value="MTD" selected>MTD</option>
+                      <option value="WTD">WTD</option>
                     </select>
                </div>
                <div class="form-group col-md-4">
@@ -391,40 +392,38 @@ q {font-style: italic;}
         <th style="width:10%;">Country</th>
         <th style="width:10%;">Calls</th>
         <th style="width:10%;">Collection</th>
-        <th style="width:10%;">Contact rate</th>
+       <!--<th style="width:10%;">Contact rate</th>--> 
         <th style="width:10%;">Negotiation</th>
       </tr>
       <tr>
         <td>1</td>
-        <td>{{ Country_features.0.4 }}</td>
+        <td>{{ Country_features.0.3 }}</td>
         <td>{{ Country_features.0.0 }}</td>
         <td>{{ Country_features.0.1 }}</td>
+        <!--<td>{{ Country_features.0.2 }}</td>-->
         <td>{{ Country_features.0.2 }}</td>
-        <td>{{ Country_features.0.3 }}</td>
       </tr>
       <tr>
         <td>2</td>
-        <td>{{ Country_features.1.4 }}</td>
+        <td>{{ Country_features.1.3 }}</td>
         <td>{{ Country_features.1.0 }}</td>
         <td>{{ Country_features.1.1 }}</td>
+        
         <td>{{ Country_features.1.2 }}</td>
-        <td>{{ Country_features.1.3 }}</td>
       </tr>
       <tr>
         <td>3</td>
-        <td>{{ Country_features.2.4 }}</td>
+        <td>{{ Country_features.2.3 }}</td>
         <td>{{ Country_features.2.0 }}</td>
         <td>{{ Country_features.2.1 }}</td>
         <td>{{ Country_features.2.2 }}</td>
-        <td>{{ Country_features.2.3 }}</td>
       </tr>
       <tr>
         <td>4</td>
-        <td>{{ Country_features.3.4 }}</td>
+        <td>{{ Country_features.3.3 }}</td>
         <td>{{ Country_features.3.0 }}</td>
         <td>{{ Country_features.3.1 }}</td>
         <td>{{ Country_features.3.2 }}</td>
-        <td>{{ Country_features.3.3 }}</td>
       </tr>
     </table>
         
@@ -436,22 +435,25 @@ q {font-style: italic;}
           <div class="slideshow-container" style="height: 80%;">
              <h5 style="text-align: center;"> Success Stories</h5>
             <div class="mySlides">
+              <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
               <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</q>
               <p class="author">- Kenya</p>
             </div>
             
             <div class="mySlides">
+              <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
               <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend.</q>
               <p class="author">- Tanzania</p>
             </div>
             
             <div class="mySlides">
+              <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
               <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend.</q>
               <p class="author">- Nigeria</p>
             </div>
             
-            <a class="prev" onclick="plusSlides(-1)">❮</a>
-            <a class="next" onclick="plusSlides(1)">❯</a>
+           <!-- <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>-->
             
           </div>
             

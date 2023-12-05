@@ -11,6 +11,13 @@ import pandas as pd
 
 
 
+
+def star_grade(num):
+    star_list = ["","","","",""]
+    for i in range(num):
+        star_list[i]= "checked"
+    return star_list
+
 def bucket3(folder):
     s3 = boto3.resource(
                 's3',
@@ -31,9 +38,13 @@ def bucket3(folder):
 
 def monitor(request):
     agent_name = ""
+    date_range = "MTD"
     if request.method == 'POST':
         if request.POST.get('Agents'):
             agent_name = request.POST.get('Agents')
+        if request.POST.get('date-range'):
+            date_range = request.POST.get('date-range')
+        
 
     user = request.user
     agent= Agent.objects.get(user=user)
@@ -119,22 +130,39 @@ def monitor(request):
 
 
     
-
-
-    collection = bucket3('amount-collected-per-agent/')
+    collection = bucket3('amount-collected-per-agent-mtd/')
     collection = collection.sort_values(by='Call Date')
-    calls = bucket3('calls-per-agent/')
+    calls = bucket3('calls-per-agent-mtd/')
     calls = calls.sort_values(by='Call Date')
-    contact_rate = bucket3('contact-rate-per-agent/')
+    contact_rate = bucket3('contact-rate-per-agent-mtd/')
     contact_rate = contact_rate.sort_values(by='Call Date')
-    Negotiation = bucket3('negotiation-rate-individual/')
+    Negotiation = bucket3('negotiation-rate-individual-mtd/')
     Negotiation = Negotiation.sort_values(by='Call Date')
     user_list= collection['User Name'].unique().tolist()
     country_list = collection['Country'].unique().tolist()
     country_list = [i for i in country_list if i is not None]
 
+    if date_range == "WTD":
+        collection = bucket3('amount-collected-per-agent/')
+        collection = collection.sort_values(by='Call Date')
+        calls = bucket3('calls-per-agent/')
+        calls = calls.sort_values(by='Call Date')
+        contact_rate = bucket3('contact-rate-per-agent/')
+        contact_rate = contact_rate.sort_values(by='Call Date')
+        Negotiation = bucket3('negotiation-rate-individual/')
+        Negotiation = Negotiation.sort_values(by='Call Date')
+        user_list= collection['User Name'].unique().tolist()
+        country_list = collection['Country'].unique().tolist()
+        country_list = [i for i in country_list if i is not None]
+
+
+
 
     user_name = first_name.strip() + " " + last_name.strip()
+    #defaults = len(calls["Call Date"].unique().tolist())
+    #defaults = [ 0 for j in range(defaults)]
+    #user_name = "Mercy Atieno"
+    #user_name = "Adeola Adebayo"
     if  (user_name in user_list) or (agent_name in user_list):
         if agent_name in user_list:
             user_name = agent_name
@@ -161,17 +189,14 @@ def monitor(request):
         total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
         total_calls= total_calls.sort_values(by='Call Date')
         total_calls = total_calls["Count Calls Connected"].tolist()
-        #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-        #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
-        print(total_calls)
+      
 # contact
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
         contact  = contact_rate[contact_rate["Country"] == country]
         contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
         contact =  contact.sort_values(by='Call Date')
         contact  =  contact["Contact Rate"].tolist()
-       # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-       # contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
+     
 #Negotiation
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
         Negotiation_r =  Negotiation[Negotiation["Country"] == country]
@@ -179,31 +204,40 @@ def monitor(request):
         Negotiation_r = Negotiation_r.sort_values(by='Call Date')
         Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
 
-        #Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-        #Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
         #collection_target_daily
         #calls_target_daily
        # Negotiation_target_daily
     else:
         country = "Nigeria"
         dates= calls[calls["Country"] == country]["Call Date"].str.replace('-', '.')
-        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-        total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
-        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-        total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
-        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
-        contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
-        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
-        Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
-        #user_name = "Adeola Adebayo"
-    print(user_name) 
-    #user_name = "Wilson Mukobeza"
-    #user_name = "Adeola Adebayo"
-    #user_name = "Mercy Atieno"
-    #collection
-    #print(user_list)
-   # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-   # total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
+        total_paid_sum = collection[collection["Country"] == country]
+        total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
+        dates= total_paid_sum["Call Date"].str.replace('-', '.')
+        total_paid_sum = total_paid_sum.sort_values(by='Call Date')
+        total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
+# calls
+        calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
+        total_calls = calls[calls["Country"] == country]
+        total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
+        total_calls= total_calls.sort_values(by='Call Date')
+        total_calls = total_calls["Count Calls Connected"].tolist()
+      
+# contact
+        contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
+        contact  = contact_rate[contact_rate["Country"] == country]
+        contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
+        contact =  contact.sort_values(by='Call Date')
+        contact  =  contact["Contact Rate"].tolist()
+     
+#Negotiation
+        Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
+        Negotiation_r =  Negotiation[Negotiation["Country"] == country]
+        Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
+        Negotiation_r = Negotiation_r.sort_values(by='Call Date')
+        Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
+
+  
     collection_bar_color = [int(x>=collection_target_daily) for x in total_paid_sum]
     collection_daily_target_list = [collection_target_daily for x in total_paid_sum]
     length_paid = len(total_paid_sum) -1
@@ -215,8 +249,9 @@ def monitor(request):
     call_bar_color = [int(x>=calls_target_daily) for x in total_calls]
     call_daily_target_list = [calls_target_daily for x in total_calls]
 
-    #dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
-    dash_date = dates.str[5:].astype(float).tolist()
+    #dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')      .astype(float)
+    dash_date = dates.str[5:].tolist()
+    dash_date = json.dumps(dash_date)
     #print(dash_date)
     length_call = len(total_calls) -1
     latest_call = total_calls[length_call]
@@ -232,7 +267,9 @@ def monitor(request):
     Negotiation_bar_color =  [int(x>=Negotiation_target_daily) for x in Negotiation_r]
     Negotiation_daily_target_list = [Negotiation_target_daily for x in Negotiation_r]
     length_negotiotion = len(Negotiation_r) - 1
+    #print(f"Negotiation_r: {Negotiation_r}")
     latest_negotiation = Negotiation_r[length_negotiotion]
+    #latest_negotiation = Negotiation_r[-1]
     bar_colors = {"calls":call_bar_color,"collection":collection_bar_color,"Negotiation":Negotiation_bar_color}
     daily_targets = {"calls":call_daily_target_list,"collection":collection_daily_target_list,"Negotiation": Negotiation_daily_target_list}
     #Negotiation_r = round(Negotiation_r, 2)
@@ -250,7 +287,7 @@ def monitor(request):
                        "daily_targets": daily_targets,
                        "country":country,
                        "agent_name": agent_name,
-                       "user": request.user,
+                       "user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()
                        }
     
     user_list = json.dumps(user_list)

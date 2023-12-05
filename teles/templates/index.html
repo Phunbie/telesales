@@ -24,14 +24,16 @@
  .word1 {
     position: relative;
     top: 5px;
-    left:2vw;
+    /*left:2vw;*/
+    text-align: center;
     font-size: 1.2vw;
  }
 
  .num {
   position: relative;
   top: -25px;
-  left: 2vw;
+  /*left: 2vw;*/
+  text-align: center;
   font-size: 3vw;
  }
 
@@ -210,7 +212,7 @@
            <div class="form-group col-md-4" style="font-size: 0.8em;">
                 <label class="drop" for="inputState">Country</label>
                 <select id="country" class="form-control" name="country" style="height: 20px; padding-top: 0; font-size: 0.8em;">
-                  <option selected>All</option>
+                  <option value="" selected>All</option>
                   <option value="Nigeria">Nigeria</option>
                   <option value="Kenya">Kenya</option>
                   <option value="Tanzania">Tanzania</option>
@@ -219,7 +221,7 @@
            </div>
            <div class="form-group col-md-4" style="font-size: 0.8em;">
                 <label class="drop" for="inputState">Duration</label>
-                <select id="inputState" class="form-control" style="height: 20px; padding-top: 0; font-size: 0.8em;">
+                <select id="inputState" class="form-control" name="date-range" style="height: 20px; padding-top: 0; font-size: 0.8em;">
                   <option value="MTD" selected>MTD</option>
                   <option value="WTD">WTD</option>
                 </select>
@@ -362,6 +364,8 @@ function myTimer() {
   const date = new Date();
   document.getElementById("today").innerHTML = date;
 }
+
+  
   </script>
   
 {% endblock %}

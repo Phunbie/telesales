@@ -10,7 +10,33 @@ import json
 import pandas as pd
 
 
+def percentage_grader(score):
+    star = 1
+    if score > 80:
+        star = 5
+    elif score > 60:
+        star = 4
+    elif score > 40:
+        star = 3
+    elif score > 20:
+        star = 2
+    else:
+        star = 1
+    return star
 
+def scale_rating(scale):
+    rating = "Do not meet expectation"
+    if scale == 5:
+        rating = "Outstanding"
+    elif scale == 4:
+        rating = "Above expectation"   
+    elif scale == 3:
+        rating = "Meet Expectation"
+    elif scale == 2:
+        rating = "Partial meet expectation"
+    elif scale == 1:
+        rating = "Do not meet expectation"
+    return rating
 
 def star_grade(num):
     star_list = ["","","","",""]
@@ -168,13 +194,27 @@ def monitor(request):
             user_name = agent_name
         dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
+        total_paid_sum = [round(num, 2) for num in total_paid_sum]
+        print(len(total_paid_sum))
+
+        total_paid_kpi_percent = sum([i/collection_target_daily for i in total_paid_sum ])/len(total_paid_sum) * 100
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+        total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).tolist()
+        total_calls = [round(num, 2) for num in total_calls]
+        total_calls_kpi_percent = sum([i/calls_target_daily for i in total_calls])/len(total_calls) * 100
+        print("calls:",calls_target_daily)
+        print("calls2:",total_calls)
+        print(total_calls_kpi_percent)
+
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
         contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
+        contact = [round(num, 2) for num in contact]
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
         Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
+        Negotiation_r = [round(num, 2) for num in  Negotiation_r]
+
+        Negotiation_kpi_percent = sum([i/Negotiation_target_daily for i in Negotiation_r])/len(Negotiation_r) * 100
     elif (country in country_list) and (user_name not in user_list):
         dates= calls[calls["Country"] == country]["Call Date"].str.replace('-', '.')
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
@@ -183,26 +223,31 @@ def monitor(request):
         dates= total_paid_sum["Call Date"].str.replace('-', '.')
         total_paid_sum = total_paid_sum.sort_values(by='Call Date')
         total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
+        total_paid_sum = [round(num, 2) for num in total_paid_sum]
+        total_paid_kpi_percent = sum([i/collection_target_daily for i in total_paid_sum ])/len(total_paid_sum) * 100
 # calls
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
         total_calls = calls[calls["Country"] == country]
         total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
         total_calls= total_calls.sort_values(by='Call Date')
         total_calls = total_calls["Count Calls Connected"].tolist()
-      
+        total_calls = [round(num, 2) for num in total_calls]
+        total_calls_kpi_percent = sum([i/calls_target_daily for i in total_calls])/len(total_calls) * 100
 # contact
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
         contact  = contact_rate[contact_rate["Country"] == country]
         contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
         contact =  contact.sort_values(by='Call Date')
         contact  =  contact["Contact Rate"].tolist()
-     
+        contact = [round(num, 2) for num in contact]    
 #Negotiation
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
         Negotiation_r =  Negotiation[Negotiation["Country"] == country]
         Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
         Negotiation_r = Negotiation_r.sort_values(by='Call Date')
         Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
+        Negotiation_r = [round(num, 2) for num in  Negotiation_r]
+        Negotiation_kpi_percent = sum([i/Negotiation_target_daily for i in Negotiation_r])/len(Negotiation_r) * 100
 
         #collection_target_daily
         #calls_target_daily
@@ -216,28 +261,48 @@ def monitor(request):
         dates= total_paid_sum["Call Date"].str.replace('-', '.')
         total_paid_sum = total_paid_sum.sort_values(by='Call Date')
         total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
+        total_paid_sum = [round(num, 2) for num in total_paid_sum]
+        total_paid_kpi_percent = sum([i/collection_target_daily for i in total_paid_sum ])/len(total_paid_sum) * 100
 # calls
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
         total_calls = calls[calls["Country"] == country]
         total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
         total_calls= total_calls.sort_values(by='Call Date')
         total_calls = total_calls["Count Calls Connected"].tolist()
-      
+        total_calls = [round(num, 2) for num in total_calls]
+        total_calls_kpi_percent = sum([i/calls_target_daily for i in total_calls])/len(total_calls) * 100
 # contact
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
         contact  = contact_rate[contact_rate["Country"] == country]
         contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
         contact =  contact.sort_values(by='Call Date')
         contact  =  contact["Contact Rate"].tolist()
-     
+        contact = [round(num, 2) for num in contact]    
 #Negotiation
         Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
         Negotiation_r =  Negotiation[Negotiation["Country"] == country]
         Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
         Negotiation_r = Negotiation_r.sort_values(by='Call Date')
         Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
+        Negotiation_r = [round(num, 2) for num in  Negotiation_r]
+        Negotiation_kpi_percent = sum([i/Negotiation_target_daily for i in Negotiation_r])/len(Negotiation_r) * 100
 
-  
+
+
+   #grading
+   #percentage_grader(score) total_paid_kpi_percent total_calls_kpi_percent  Negotiation_kpi_percent  kpi_grade Kpi_percent  scale_rating(scale):
+    total_paid_kpi_grade = percentage_grader(total_paid_kpi_percent)
+    total_calla_kpi_grade = percentage_grader(total_calls_kpi_percent)
+    Negotiation_kpi_grade = percentage_grader(Negotiation_kpi_percent) 
+
+    total_paid_scale_rating = scale_rating( total_paid_kpi_grade)
+    total_calla_scale_rating = scale_rating(total_calla_kpi_grade)
+    Negotiation_scale_rating = scale_rating(Negotiation_kpi_grade)
+
+    kpi_grade = {"total_paid_kpi_grade":total_paid_kpi_grade,"total_calla_kpi_grade":total_calla_kpi_grade, "Negotiation_kpi_grade": Negotiation_kpi_grade }
+    Kpi_percent = {"total_paid_kpi_percent":total_paid_kpi_percent,"total_calls_kpi_percent":total_calls_kpi_percent,"Negotiation_kpi_percent":Negotiation_kpi_percent}
+    kpi_scale_rating = {"total_paid_scale_rating":total_paid_scale_rating,"total_calla_scale_rating": total_calla_scale_rating,"Negotiation_scale_rating":Negotiation_scale_rating }
+
     collection_bar_color = [int(x>=collection_target_daily) for x in total_paid_sum]
     collection_daily_target_list = [collection_target_daily for x in total_paid_sum]
     length_paid = len(total_paid_sum) -1
@@ -291,7 +356,8 @@ def monitor(request):
                        }
     
     user_list = json.dumps(user_list)
-    return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list, "user_list": user_list,})
+    return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list,
+                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,"kpi_scale_rating":kpi_scale_rating})
 
 
 def monitorapi(request):

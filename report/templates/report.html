@@ -93,27 +93,34 @@ function selectchart(cla,acla){
       <div class="col-12" id="tog" style="display:none;">
         <div class="p-3 border bg-light tog">
 
-            <form class="row g-3">
- 
+            <form class="row g-3" autocomplete="off" method="post">
+              {% csrf_token %}
                 <div class="col-3">
                     <label for="date" class="">Date compare From</label>
-                    <input type="date" name="from"  class="form-control" id="datefrom">
+                    <input type="date" name="from"  class="form-control" id="datefrom" required>
                 </div>
                 <div class="col-3">
                     <label for="date" class="">Date compare To</label>
-                    <input type="date" name="to"  class="form-control" id="dateto">
+                    <input type="date" name="to"  class="form-control" id="dateto" required>
                 </div>
                 <div class="col-3">
                   <label for="sel" class="">KPI</label>
-                  <select class="form-select" id="sel">
+                  <select class="form-select" name="kpis" id="sel">
                     <option value="calls" selected>Connected calls</option>
-                    <option value="Collection">Collection</option>
-                    <option value=">Negotiation">Negotiation</option>
-              
+                    <option value="collection">Collection</option>
+                    <option value="Negotiation">Negotiation</option>      
                   </select>
                 </div>
-                <div class="col-3">
+                <div class="col-3 autocomplete">
                     <label for="sel2" class="">Compare with</label>
+                    <input type="text" class="form-control" placeholder="Agent" list="list-timezone" id="input-datalist" name="compare" required>
+                    <datalist id="list-timezone">
+                      {% for x in name_list %}
+                      <option>{{ x }}</option>
+                      {% endfor %}
+                    </datalist>
+                   
+                    <!--
                     <select class="form-select" id="sel2">
                       <option value="1">Oluwafunbi</option>
                       <option value="2" selected>Abisola</option>
@@ -121,6 +128,7 @@ function selectchart(cla,acla){
                       <option value="4">Dennis</option>
                       <option value="5">Kenya</option>
                     </select>
+                    -->
                 </div>
 
                 <div class="col-12">
@@ -169,9 +177,17 @@ function selectchart(cla,acla){
 
 
   <script>
+   //document.getElementById("datefrom").defaultValue = "2023-10-09";
+   //document.getElementById("dateto").defaultValue = "2023-11-09";
+   var dateInput = document.getElementById("datefrom");
+   dateInput.min = "{{ min_date  }}";
+   dateInput.max = "{{ max_date  }}";
 
-   document.getElementById("datefrom").defaultValue = "2023-10-09";
-   document.getElementById("dateto").defaultValue = "2023-11-09";
+   var dateInput1 = document.getElementById("dateto");
+   dateInput1.min = "{{ min_date  }}";
+   dateInput1.max = "{{ max_date  }}";
+   
+   //alert(list_of_agents)
 
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -364,6 +380,12 @@ var classn= elems[i].className;
    elems2[i].className = classn2;
  }
  */
+ document.addEventListener('DOMContentLoaded', e => {
+        $('#input-datalist').autocomplete()
+    }, false);
+ 
+
+ 
  </script>
 
 {% endblock %}

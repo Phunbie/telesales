@@ -285,10 +285,12 @@ def home(request):
         list_negotiation =[]
         for i, user_name in enumerate(user_list):
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).sum()
+            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).sum()
+            total_paid_sum = round(total_paid_sum,2)
             #calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-            total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).sum()
+            total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).sum()
+            total_calls = round(total_calls,2)
             #contact_rate
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
             contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float)
@@ -321,16 +323,23 @@ def home(request):
         country_list = [i for i in country_list if i is not None]
         
         user_name = first_name.strip() + " " + last_name.strip() 
+        
         if  user_name in user_list2:
             #user_name = "Wilson Mukobeza"
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
+            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
+            total_paid_sum = [round(num, 2) for num in total_paid_sum]
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
-            total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
+            total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).tolist()
+            total_calls = [round(num, 2) for num in  total_calls]
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
             contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
+            contact = [round(num, 2) for num in contact]
             Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
             Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
+            Negotiation_r = [round(num, 2) for num in Negotiation_r]
+
+            print("total_paid_sum",total_paid_sum)
         elif (country in country_list) and (user_name not in user_list2):
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
             total_paid_sum = collection[collection["Country"] == country]
@@ -338,21 +347,23 @@ def home(request):
             #dates= total_paid_sum["Call Date"].str.replace('-', '.')
             total_paid_sum = total_paid_sum.sort_values(by='Call Date')
             total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
+            total_paid_sum = [round(num, 2) for num in total_paid_sum]
     # calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
             total_calls = calls[calls["Country"] == country]
             total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
             total_calls= total_calls.sort_values(by='Call Date')
             total_calls = total_calls["Count Calls Connected"].tolist()
+            total_calls = [round(num, 2) for num in  total_calls]
             #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
-            print(total_calls)
     # contact
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
             contact  = contact_rate[contact_rate["Country"] == country]
             contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
             contact =  contact.sort_values(by='Call Date')
             contact  =  contact["Contact Rate"].tolist()
+            contact = [round(num, 2) for num in contact]
         # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
         # contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
     #Negotiation
@@ -361,7 +372,8 @@ def home(request):
             Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
             Negotiation_r = Negotiation_r.sort_values(by='Call Date')
             Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
-                
+            Negotiation_r = [round(num, 2) for num in Negotiation_r]
+            print("total_paid_sum2",total_paid_sum)   
            # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
             #total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
            # calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -375,24 +387,26 @@ def home(request):
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
             total_paid_sum = collection[collection["Country"] == country]
             total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
-            dates= total_paid_sum["Call Date"].str.replace('-', '.')
+            #dates= total_paid_sum["Call Date"].str.replace('-', '.')
             total_paid_sum = total_paid_sum.sort_values(by='Call Date')
             total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
+            total_paid_sum = [round(num, 2) for num in total_paid_sum]
     # calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
             total_calls = calls[calls["Country"] == country]
             total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
             total_calls= total_calls.sort_values(by='Call Date')
             total_calls = total_calls["Count Calls Connected"].tolist()
+            total_calls = [round(num, 2) for num in  total_calls]
             #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
-            print(total_calls)
     # contact
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
             contact  = contact_rate[contact_rate["Country"] == country]
             contact  =  contact.groupby('Call Date')['Contact Rate'].mean().reset_index()
             contact =  contact.sort_values(by='Call Date')
             contact  =  contact["Contact Rate"].tolist()
+            contact = [round(num, 2) for num in contact]
         # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
         # contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float).tolist()
     #Negotiation
@@ -401,7 +415,8 @@ def home(request):
             Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
             Negotiation_r = Negotiation_r.sort_values(by='Call Date')
             Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
-                
+            Negotiation_r = [round(num, 2) for num in Negotiation_r]
+           
 
 
             #user_name = "Adeola Adebayo"
@@ -409,12 +424,13 @@ def home(request):
        # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
        # total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(int).tolist()
         collection_increase = up_down_indicator(total_paid_sum)
+        
         total_paid_sum = total_paid_sum[-1]
         #print(f"The sum total paid for {user_name} is: {total_paid_sum}")
         #calls
        # calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
        # total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
-        calls_increase=  up_down_indicator(total_calls)
+        calls_increase = up_down_indicator(total_calls)
         total_calls = total_calls[-1]
         #contact_rate
        # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')

@@ -57,13 +57,11 @@ def country_data(country,collection, calls,Negotiation):
 
 
 
-
-
 def dashview(request):
     user= request.user
     username = user.username
     Country_features=[]
-    countries = ['Uganda', 'Tanzania', 'Kenya','Nigeria','Togo']
+    countries = ['Uganda', 'Tanzania', 'Kenya','Nigeria','Togo','Malawi']
     country_data_range = ""
     
  

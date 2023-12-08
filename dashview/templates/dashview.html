@@ -453,14 +453,14 @@ input[type=submit]:hover {
         </div>
       </div>
       <!--page 4-->
-      
+      {% if user_is_supervisor %} 
    <!--feedback 0-->
-      <div class="col-12 page pa4" id="popu">
-      <div class="p-3 border bg-light overflow-auto" style="height: 70vh;">
+    <div class="col-12 page pa4" id="popul">
+    <div class="p-3 border bg-light overflow-auto" style="height: 35vh;">
 
  
 <!--<form method="POST">-->
-  {% if user_is_supervisor %}
+  
   <div class="containerx">
     <form method="POST" id="feedbackForm">
       {% csrf_token %}
@@ -491,7 +491,16 @@ input[type=submit]:hover {
       </div>
     </form>
   </div>
+ 
+
+  </div>
+  </div>
   {% endif %}
+  
+  <div class="col-12 page pa4" id="popu">
+  <div class="p-3 border bg-light overflow-auto" style="height: 45vh;">
+
+
   <h2>Feedbacks</h2>
   {% if user_is_supervisor %}
   <div id="feedbackcontain">

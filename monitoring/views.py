@@ -24,6 +24,20 @@ def percentage_grader(score):
         star = 1
     return star
 
+
+def general_average_grader(first,second,third):
+    if first>100:
+        first = 100
+    if second>100:
+        second = 100
+    if third>100:
+        third = 100
+    avg = (first + second +third)/3
+    avg = percentage_grader(avg)
+    return avg
+       
+    
+
 def scale_rating(scale):
     rating = "Do not meet expectation"
     if scale == 5:
@@ -293,6 +307,7 @@ def monitor(request):
 
 
    #grading
+
    #percentage_grader(score) total_paid_kpi_percent total_calls_kpi_percent  Negotiation_kpi_percent  kpi_grade Kpi_percent  scale_rating(scale):
     total_paid_kpi_grade = percentage_grader(total_paid_kpi_percent)
     total_calla_kpi_grade = percentage_grader(total_calls_kpi_percent)
@@ -301,6 +316,17 @@ def monitor(request):
     total_paid_scale_rating = scale_rating( total_paid_kpi_grade)
     total_calla_scale_rating = scale_rating(total_calla_kpi_grade)
     Negotiation_scale_rating = scale_rating(Negotiation_kpi_grade)
+
+
+    general_score_percent = (total_paid_kpi_percent + total_calls_kpi_percent + Negotiation_kpi_percent)/3
+    #print("general:",general_score_percent,total_paid_kpi_percent,total_calls_kpi_percent,Negotiation_kpi_percent)
+    
+    #general_score_grade = percentage_grader(general_score_percent)
+    general_score_grade = general_average_grader(total_paid_kpi_percent, total_calls_kpi_percent, Negotiation_kpi_percent)
+    general_rating = scale_rating(general_score_grade)
+    stars = star_grade(general_score_grade)
+
+
 
     kpi_grade = {"total_paid_kpi_grade":total_paid_kpi_grade,"total_calla_kpi_grade":total_calla_kpi_grade, "Negotiation_kpi_grade": Negotiation_kpi_grade }
     Kpi_percent = {"total_paid_kpi_percent":total_paid_kpi_percent,"total_calls_kpi_percent":total_calls_kpi_percent,"Negotiation_kpi_percent":Negotiation_kpi_percent}
@@ -360,7 +386,9 @@ def monitor(request):
     name_list = user_list
     user_list = json.dumps(user_list)
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list,
-                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,"kpi_scale_rating":kpi_scale_rating, "name_list":name_list})
+                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,
+                                             "kpi_scale_rating":kpi_scale_rating, "name_list":name_list,
+                                             "general_score_percent":general_score_percent,"general_score_grade":general_score_grade,"stars":stars,"general_rating":general_rating})
 
 
 def monitorapi(request):

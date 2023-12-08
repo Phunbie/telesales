@@ -411,7 +411,7 @@ function toggleFunction() {
 
        <!--end charts-->
        
-       <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">Meet expectation: 4 out of 5 </h5>
+       <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">Meet expectation: {{ general_score_grade }} out of 5 </h5>
        <!--
        <div class="col-12">
         <div class="third border bg-light">
@@ -427,11 +427,11 @@ function toggleFunction() {
       </div>
       -->
       <div>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
+      <span class="fa fa-star {{ stars.0 }}"></span>
+      <span class="fa fa-star {{ stars.1 }}"></span>
+      <span class="fa fa-star {{ stars.2 }}"></span>
+      <span class="fa fa-star {{ stars.3 }}"></span>
+      <span class="fa fa-star  {{ stars.4 }}"></span>
      </div>
       <div class="col-12">
         <div class="fourth border bg-light">
@@ -477,9 +477,9 @@ function toggleFunction() {
               </tr>
               <tr>
                 <td>general performance</td>
-                <td>Outstanding</td>
+                <td>{{ general_rating }}</td>
                 <td class="">Good</td>
-                <td>5.0</td>
+                <td>{{ general_score_grade }}</td>
                 <td>Good progress. <a href="#">Learn more..</a></td>
               </tr>
             </table>

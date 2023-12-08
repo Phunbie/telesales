@@ -9,6 +9,7 @@ import boto3
 import json
 import pandas as pd
 import warnings
+import csv
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -111,16 +112,16 @@ def report(request):
         call_Agents = request.POST.get('compare')
         date_from = request.POST.get('from')
         date_to = request.POST.get('to')
+        csv_checkbox = request.POST.get("coc")
         call_agent_lists = query_date(kpis_dict[kpi],date_from,date_to,call_Agents,kpi_essential_column[kpi])
         if user_name not in name_list:
             user_df =  query_date_country(kpis_dict[kpi],date_from,date_to,country,kpi_essential_column[kpi])
         else:
             user_df =  query_date(kpis_dict[kpi],date_from,date_to,user_name,kpi_essential_column[kpi])
-        #print(date_from,date_to,Agent)
-        print("usertest",user_df[1])
-        print("usertest",user_df[0])
-        print("usertesta",call_agent_lists[1])
-        print("usertesta",call_agent_lists[0])
+        #download csv 
+        if  csv_checkbox=="report":
+            pass
+        
         user_dates = default_data[0]    #user_df[0]
         user_dates = json.dumps(user_dates)
         user_datas = user_df[1]

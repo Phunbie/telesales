@@ -204,7 +204,7 @@
     </div>
     <div class="col-md-7">
       <div id="table" class="second p-0 border bg-light" style="overflow-x:auto;overflow-y:auto;">
-        <p class="leader-table">Leaderboard</p>
+        <p class="leader-table">{{ scan_country }} Leaderboard {{ date_range }}</p>
         <form method="post" style="padding-top: 0;margin-top: 0;">
           {% csrf_token %}
           <div class="container">
@@ -264,7 +264,7 @@
       <div>Congratulations {{ combined_list.0.0 }} on your outstanding achievement leading the pack. Your determination is admirable! <a href="#">View more detail..</a></div>
       </div>
     </div>
-    <h2 style="text-align: center; font-size: 2.5vh;">Current MTD top performers</h2>
+    <h2 style="text-align: center; font-size: 2.5vh;">Current {{ date_range }} top performers</h2>
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">

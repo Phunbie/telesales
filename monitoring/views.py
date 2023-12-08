@@ -250,6 +250,9 @@ def monitor(request):
         total_calls = total_calls["Count Calls Connected"].tolist()
         total_calls = [round(num, 2) for num in total_calls]
         total_calls_kpi_percent = sum([i/calls_target_daily for i in total_calls])/len(total_calls) * 100
+        print("calls:",calls_target_daily)
+        print("calls2:",total_calls)
+        print(total_calls_kpi_percent)
 # contact
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
         contact  = contact_rate[contact_rate["Country"] == country]
@@ -387,7 +390,7 @@ def monitor(request):
     user_list = json.dumps(user_list)
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list,
                                              "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,
-                                             "kpi_scale_rating":kpi_scale_rating, "name_list":name_list,
+                                             "kpi_scale_rating":kpi_scale_rating, "name_list":name_list,"date_range":date_range,
                                              "general_score_percent":general_score_percent,"general_score_grade":general_score_grade,"stars":stars,"general_rating":general_rating})
 
 

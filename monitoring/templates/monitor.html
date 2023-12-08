@@ -390,9 +390,9 @@ function toggleFunction() {
       <!--charts-->
       <div class="col-sm-12 col-lg-5" id="s3charts">
         <div class="second border bg-light">
-          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart1">Call trend preview</p>
-          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart2">Negotiation trend preview</p>
-          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart3">Collection trend preview</p>
+          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart1">Call trend preview({{ date_range }})</p>
+          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart2">Negotiation trend preview({{ date_range }})</p>
+          <p style="margin-bottom: 0;padding-left: 20px;" class="char chart3">Collection trend preview({{ date_range }})</p>
           <div id="line1" class="graph char chart1"></div>
           <div id="line2" class="graph char chart2"></div>
           <div id="line3" class="graph char chart3"></div>
@@ -400,9 +400,9 @@ function toggleFunction() {
       </div>
       <div class="col-sm-12 col-lg-5">
         <div class="second border bg-light">
-          <p style="margin-bottom: 0; padding-left: 20px" class="char chart1">Call target preview</p>
-          <p style="margin-bottom: 0; padding-left: 20px" class="char chart2">Negotiation target preview</p>
-          <p style="margin-bottom: 0; padding-left: 20px" class="char chart3">Collection target preview</p>
+          <p style="margin-bottom: 0; padding-left: 20px" class="char chart1">Call target preview({{ date_range }})</p>
+          <p style="margin-bottom: 0; padding-left: 20px" class="char chart2">Negotiation target preview({{ date_range }})</p>
+          <p style="margin-bottom: 0; padding-left: 20px" class="char chart3">Collection target preview({{ date_range }})</p>
           <div id="bar1" class="graph char chart1"></div>
           <div id="bar2" class="graph char chart2"></div>
           <div id="bar3" class="graph char chart3"></div>
@@ -411,7 +411,7 @@ function toggleFunction() {
 
        <!--end charts-->
        
-       <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">Meet expectation: {{ general_score_grade }} out of 5 </h5>
+       <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">{{ general_rating }}: {{ general_score_grade }} out of 5 </h5>
        <!--
        <div class="col-12">
         <div class="third border bg-light">
@@ -437,7 +437,7 @@ function toggleFunction() {
         <div class="fourth border bg-light">
       
 
-          <h5>KPI Description</h5>
+          <h5>{{ date_range }} KPI Description</h5>
           <div class="table-responsive-sm">
             <table class="table">
               <tr>

@@ -452,6 +452,8 @@ def home(request):
         kpi_increment_list = [collection_increase,calls_increase,contact_increase, Negotiation_increase]
 
 
+   
+         
         context = {'username': username,
                    'email':email,
                    'agent':agent,
@@ -466,6 +468,7 @@ def home(request):
                    "first_in_country":first_in_country,
                    "kpi_increment_list": kpi_increment_list,
                    "scan_country":scan_country,
+                   "date_range":date_range
                    }
         
         return render(request, 'index.html',context )

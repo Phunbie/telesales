@@ -5,6 +5,7 @@ from teles.models import Agent
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 import boto3
 import json
 import pandas as pd
@@ -120,13 +121,28 @@ def report(request):
             user_df =  query_date(kpis_dict[kpi],date_from,date_to,user_name,kpi_essential_column[kpi])
         #download csv 
         if  csv_checkbox=="report":
-            pass
+            report_dictionary= {'user_date':user_df[0],user_name:user_df[1] }  # ,'compare_date':call_agent_lists[0] ,call_Agents:call_agent_lists[1]
+            df = pd.DataFrame.from_dict(report_dictionary)
+            csv_file = df.to_csv(index=False)
+            response = HttpResponse(csv_file,content_type='text/csv')
+            response['Content-Disposition'] = f'attachment; filename="{kpi_essential_column[kpi]}.csv"'
+           
+           # writer = csv.writer(response)
+
+            # Write the header row
+           # writer.writerow(['user_date', user_name,'compare_date', call_Agents])
+
+            # Write the data rows
+            #writer.writerow(['Row 1 Data 1', 'Row 1 Data 2', 'Row 1 Data 3'])
+            #writer.writerow(['Row 2 Data 1', 'Row 2 Data 2', 'Row 2 Data 3'])
+
+            return response
         
-        user_dates = default_data[0]    #user_df[0]
+        user_dates = user_df[0]
         user_dates = json.dumps(user_dates)
         user_datas = user_df[1]
        # user_datas =  json.dumps(user_datas)
-        other_dates =   default_data[0]        #call_agent_lists[0]
+        other_dates = call_agent_lists[0]
         other_dates = json.dumps(other_dates)
         other_datas = call_agent_lists[1]
        # other_datas = json.dumps(other_datas)

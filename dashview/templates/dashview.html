@@ -201,8 +201,8 @@ label {
 }
 
 input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
+  background-color: #ffea00;
+  /*color: white;*/
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
@@ -211,7 +211,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: orange;
 }
 
 .containerx {
@@ -222,13 +222,13 @@ input[type=submit]:hover {
 
 .col-25 {
   float: left;
-  width: 25%;
+  width: 20%;
   margin-top: 6px;
 }
 
 .col-75 {
   float: left;
-  width: 75%;
+  width: 80%;
   margin-top: 6px;
 }
 
@@ -394,19 +394,19 @@ input[type=submit]:hover {
              <h5 style="text-align: center;"> Success Stories</h5>
             <div class="mySlides">
               <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
-              <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</q>
+              <q>Utilizing our productivity analysis software, Kenya efficiently managed their call agent workforce. By accurately gauging peak call hours and aligning staff schedules accordingly, they reduced overall labor costs by 20%. This optimization not only improved operational efficiency but also ensured adequate agent availability during high-demand periods, resulting in reduced wait times for customers and increased service quality.</q>
               <p class="author">- Kenya</p>
             </div>
             
             <div class="mySlides">
               <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
-              <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend.</q>
+              <q>Implementing our call agent productivity analysis tool and witnessed a remarkable 25% increase in call resolution rates. By identifying top-performing agents and providing targeted training to those needing improvement, they significantly enhanced customer satisfaction scores within just three months. This led to improved customer loyalty and positive reviews, ultimately boosting the company's reputation and customer retention.</q>
               <p class="author">- Tanzania</p>
             </div>
             
             <div class="mySlides">
               <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
-              <q>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend.</q>
+              <q>With our call agent productivity analysis solution, Nigeria gained invaluable data-driven insights. By analyzing call trends, agent performance metrics, and customer feedback, they fine-tuned their processes and identified key areas for improvement. This approach led to a 40% reduction in call escalations and a 25% increase in first-call resolutions, showcasing the power of continuous improvement through data-driven decision-making.</q>
               <p class="author">- Nigeria</p>
             </div>
             
@@ -469,7 +469,7 @@ input[type=submit]:hover {
           <label for="fname">Agent Name</label>
         </div>
         <div class="col-75">
-          <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Your name..">
+          <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Agent name..">
           <datalist id="list-timezone">
             {% for x in name_list %}
             <option>{{ x }}</option>

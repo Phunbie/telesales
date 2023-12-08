@@ -219,17 +219,12 @@ function selectchart(cla,acla){
      type: 'scatter'
    };
 
-   var multiline1_2 = {
-     x: other_dates,
-     y: other_datas,
-     name: call_Agents,
-     type: 'scatter'
-   };
+  
 
   
 
    var layout2 = {margin: {
-   l: 20,
+   l: 30,
    r: 20,
    b: 20,
    t: 30,
@@ -239,17 +234,17 @@ function selectchart(cla,acla){
  legend: {"orientation": "h"},
  };
 
-   var data2 = [multiline1_1, multiline1_2];
+   var data2 = [multiline1_1];
 
    Plotly.newPlot('line1', data2,layout2);
 
 
    //first barchart
    var barplot1_1 = {
-     x: ['metric1', 'metric2', 'metric3'],
-     y: [20, 14, 23],
-     name: 'Goal',
-     type: 'bar',
+     x: other_dates,
+     y: other_datas,
+     name: call_Agents,
+     type: 'scatter',
      marker: {
          color: 'rgb(158,20,125)',
          opacity: 0.6,
@@ -259,7 +254,7 @@ function selectchart(cla,acla){
          }
        },
      };
-
+/*
    var barplot1_2 = {
      x: ['metric1', 'metric2', 'metric3'],
      y: [12, 18, 29],
@@ -274,11 +269,11 @@ function selectchart(cla,acla){
          }
        },
      };
-
-   var data1 = [barplot1_1, barplot1_2];
+*/
+   var data1 = [barplot1_1];
 
    var layout1 = {barmode: 'overlay',margin: {
-   l: 20,
+   l: 30,
    r: 20,
    b: 20,
    t: 30,

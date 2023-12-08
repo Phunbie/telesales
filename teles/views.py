@@ -325,7 +325,7 @@ def home(request):
         user_name = first_name.strip() + " " + last_name.strip() 
         
         if  user_name in user_list2:
-            #user_name = "Wilson Mukobeza"
+            #user_name = "Peniel Ezechukwu"
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
             total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
             total_paid_sum = [round(num, 2) for num in total_paid_sum]

@@ -187,148 +187,99 @@ q {font-style: italic;}
 
 /* feedback */
 
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.containerx {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
   
-/* feedback 0 */
+/* comments*/
 
-.content-item {
-  padding-top:30px;
-  padding-left: 100px;
-  padding-right: auto;
-  margin-right: 0;
-	background-color:#FFFFFF;
- 
+.containery {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
 }
 
-.content-item.grey {
-	background-color:#F0F0F0;
-	padding:50px 0;
-	height:100%;
-  margin-right: 0;
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
 }
 
-.content-item h2 {
-	font-weight:700;
-	font-size:35px;
-	line-height:45px;
-	text-transform:uppercase;
-	margin:20px 0;
-}
-
-.content-item h3 {
-	font-weight:400;
-	font-size:20px;
-	color:#555555;
-	margin:10px 0 15px;
-	padding:0;
-}
-
-.content-headline {
-	height:1px;
-	text-align:center;
-	margin:20px 0 70px;
-}
-
-.content-headline h2 {
-	background-color:#FFFFFF;
-	display:inline-block;
-	margin:-20px auto 0;
-	padding:0 20px;
-}
-
-.grey .content-headline h2 {
-	background-color:#F0F0F0;
-}
-
-.content-headline h3 {
-	font-size:14px;
-	color:#AAAAAA;
-	display:block;
+.containery::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 
-#comments {
-    box-shadow: 0 -1px 6px 1px rgba(0,0,0,0.1);
-	background-color:#FFFFFF;
+
+.time-right {
+  float: right;
+  color: #aaa;
 }
 
-#comments form {
-	margin-bottom:40px;
+.time-left {
+  float: left;
+  color: #999;
 }
 
-#comments .btn {
-	margin-top:7px;
-}
-
-#comments form fieldset {
-	clear:both;
-}
-
-#comments form textarea {
-	height:100px;
-}
-
-#comments .media {
-	border-top:1px dashed #DDDDDD;
-	padding:20px 0;
-	margin:0;
-}
-
-#comments .media > .pull-left {
-    margin-right:20px;
-}
-
-#comments .media img {
-	max-width:100px;
-}
-
-#comments .media h4 {
-	margin:0 0 10px;
-}
-
-#comments .media h4 span {
-	font-size:14px;
-	float:right;
-	color:#999999;
-}
-
-#comments .media p {
-	margin-bottom:15px;
-	text-align:justify;
-}
-
-#comments .media-detail {
-	margin:0;
-}
-
-#comments .media-detail li {
-	color:#AAAAAA;
-	font-size:12px;
-	padding-right: 10px;
-	font-weight:600;
-  display: inline;
-}
-
-#comments .media-detail a:hover {
-	text-decoration:underline;
-}
-
-#comments .media-detail li:last-child {
-	padding-right:0;
-}
-
-#comments .media-detail li i {
-	color:#666666;
-	font-size:15px;
-	margin-right:10px;
-}
-
-.False a{
- color:#AAAAAA;
-}
-
-.True a{
- color:blue;
-}
 
 /* feedback 0 */
 
@@ -505,112 +456,75 @@ q {font-style: italic;}
       
    <!--feedback 0-->
       <div class="col-12 page pa4" id="popu">
-        <div class="p-3 border bg-light overflow-auto" style="height: 70vh;">
+      <div class="p-3 border bg-light overflow-auto" style="height: 70vh;">
 
-          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<section class="content-item" id="comments">
-<div class="container">
-<div class="row">
-<div class="col-sm-10">
-<form id="feedbackForm" method="POST">
-  {% csrf_token %}
-<h3 class="pull-lef" style="text-align: center;">Add Feedback</h3>
-
-<fieldset >
-<div class="row">
-<div class="col-sm-3 col-lg-2 hidden-xs">
-<!--<img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" >-->
-</div>
-<div class="form-group col-xs-12 col-sm-9 col-lg-10">
-<textarea class="form-control" id="message" name="message" placeholder="Your feedback" required></textarea>
-</div>
-</div>
-</fieldset>
-<button id="feeder" type="submit" class="btn btn-primary btn-sm pull-right">Submit</button>
-</form>
-<h3>Feedbacks</h3>
-<!--test div-->
-<div id="feedbackcontain">
-<!--test div-->
-{% for vote in votes %}
-<div class="media">
-<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
-<div class="media-body">
-<h4 class="media-heading">{{ vote.user.username }}</h4>
-<p>{{ vote.feedback.text }}</p>
-<ul class="list-unstyled list-inline media-detail pull-left">
-<li><i class="fa fa-calendar"></i>{{ vote.feedback.date }}</li>
-<li><i class="fa fa-thumbs-up"></i>{{ vote.feedback.totalvote }}</li>
-</ul>
-<ul class="list-unstyled list-inline media-detail pull-right">
-<li class="{{ vote.value }} lik"><a href="{% url 'upvote' vote.id %}">upvote</a></li>
-<li class><a href>Reply</a></li>
-</ul>
-</div>
-</div>
-{% endfor %}
-
-<div class="media">
-<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
-<div class="media-body">
-<h4 class="media-heading">John Doe</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-<ul class="list-unstyled list-inline media-detail pull-left">
-<li><i class="fa fa-calendar"></i>27/02/2014</li>
-<li><i class="fa fa-thumbs-up"></i>13</li>
-</ul>
-<ul class="list-unstyled list-inline media-detail pull-right">
-<li class><a href>Like</a></li>
-<li class><a href>Reply</a></li>
-</ul>
-</div>
-</div>
-
-
-<div class="media">
-<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
-<div class="media-body">
-<h4 class="media-heading">John Doe</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-<ul class="list-unstyled list-inline media-detail pull-left">
-<li><i class="fa fa-calendar"></i>27/02/2014</li>
-<li><i class="fa fa-thumbs-up"></i>13</li>
-</ul>
-<ul class="list-unstyled list-inline media-detail pull-right">
-<li class><a  style="color: #AAAAAA;" href>Like</a></li>
-<li class><a href>Reply</a></li>
-</ul>
-</div>
-</div>
-
-
-<div class="media">
-<a class="pull-left" href="#"><img class="media-object" src="{% static 'img_avatar.png' %}" alt></a>
-<div class="media-body">
-<h4 class="media-heading">John Doe</h4>
-<p>Lorem dolor sit amet, consectetur adipiscing elit.</p>
-<ul class="list-unstyled list-inline media-detail pull-left">
-<li><i class="fa fa-calendar"></i>27/02/2014</li>
-<li><i class="fa fa-thumbs-up"></i>13</li>
-</ul>
-<ul class="list-unstyled list-inline media-detail pull-right">
-<li class><a href>Like</a></li>
-<li class><a href>Reply</a></li>
-</ul>
-</div>
-</div>
-<!--test div-->
-</div>
-<!--test div-->
-</div>
-</div>
-</div>
-</section>
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript">	</script>
  
+<!--<form method="POST">-->
+  {% if user_is_supervisor %}
+  <div class="containerx">
+    <form method="POST" id="feedbackForm">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">Agent Name</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Your name..">
+          <datalist id="list-timezone">
+            {% for x in name_list %}
+            <option>{{ x }}</option>
+            {% endfor %}
+          </datalist>
+        </div>
+      </div>
+     
+      <div class="row">
+        <div class="col-25">
+          <label for="feedback">Feedback</label>
+        </div>
+        <div class="col-75">
+          <textarea id="subject" name="feedback" placeholder="Write something.." style="height:100px"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+  {% endif %}
+  <h2>Feedbacks</h2>
+  {% if user_is_supervisor %}
+  <div id="feedbackcontain">
+  {% for feedback in feedbacks %}
+  <div class="containery">
+    <h3>{{ feedback.agent }}</h3>
+    <p>{{ feedback.text }}</p>
+    <span class="time-right">{{ feedback.date }}</span>
+    <a class="time-left" href="{% url 'replies' feedback.id %}">replies</a>
+  </div>
+  {% endfor %}
+  </div>
+
+  {% endif %}
+  <div id="any">
+  {% for feedback in agent_feedback %}
+  <div class="containery">
+    <h3>{{ feedback.user.username }}</h3>
+    <p>{{ feedback.text }}</p>
+    <span class="time-right">{{ feedback.date }}</span>
+    <a class="time-left" href="{% url 'replies' feedback.id %}">replies</a>
+  </div>
+  {% endfor %}
+  </div>
+
+
+  </div>
+
+
+
+
+ 
+      </div>
       </div>  
 
    <!--end feedback 0-->   
@@ -796,7 +710,7 @@ $(document).ready(function () {
      data: $(this).serialize(), // Serialize the form data
      success: function (response) {
 
-      $('#message').val('');
+      $('#subject').val('');
        // Handle the response
        $('#feedbackcontain').load(location.href + ' #feedbackcontain');
        console.log(response);
@@ -830,13 +744,10 @@ function(){
 */
 
 
-$(document).ready(function() {
- $(document).on('click', '.lik', function() {
-   setTimeout(function() {
-     $('#feedbackcontain').load(location.href + ' #feedbackcontain');
-   }, 1000);
- });
-});
+document.addEventListener('DOMContentLoaded', e => {
+        $('#fname').autocomplete()
+    }, false);
+ 
 </script>
 
 {% endblock %}

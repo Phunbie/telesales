@@ -251,6 +251,16 @@ monitor.className = "active"
 report.className = ""
 view.className = ""
 newsletter.className = ""  
+
+
+function toggleFunction() {
+  var x = document.getElementById("tog");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
 </script>
 <div id="testing"></div> 
 <div style="margin-top: 3vh;" class="container overflow-hidden">
@@ -263,16 +273,18 @@ newsletter.className = ""
           </div> 
 
           {% if input_list.user_is_supervisor %}
-
+  <!--
           <form method="post" autocomplete="off"  style="position:absolute;left:45vw;top: 6vh;">
             {% csrf_token %}
             <p style="padding-bottom: 0;margin-bottom: 0;">{{ input_list.agent_name }}</p>
-           <!-- <div class="autocomplete" style="width:300px;">-->
+          
               <input id="agentInput" type="text" name="Agents" placeholder="Agent name" style="z-index: 3;">
-           <!-- </div> -->
-             <!-- <input type="submit" style="height: 20px; padding-top: 0;font-size: 0.8rem;">-->
+          
             <button style="background-color: #ffea00;">Filter</button>
           </form>
+  -->
+        <p style="padding-bottom: 0;margin-bottom: 0;position:absolute;left:45vw;top: 2vh;">{{ input_list.agent_name }}</p>
+        <button style="background-color: #ffea00; position:absolute;left:45vw;top: 6vh;" onclick="toggleFunction()">Filter</button>
           {% endif %}
 
           <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
@@ -309,6 +321,45 @@ newsletter.className = ""
 
         </div>
       </div>
+
+
+
+      <div class="col-12" id="tog" style="display:none;">
+        <div class="p-3 border bg-light tog">
+
+            <form class="row g-3" autocomplete="off" method="post">
+              {% csrf_token %}
+
+
+              
+                <div class="col-3">
+                  <label for="sel" class="">Duration</label>
+                  <select class="form-select" name="date-range2" id="sel">
+                       <option value="MTD" selected>MTD Status</option>
+                        <option value="WTD" >WTD Status</option> 
+                  </select>
+                </div>
+                <div class="col-3 autocomplete">
+                    <label for="sel2" class="">Compare with</label>
+                    <input type="text" class="form-control" placeholder="Agent" list="list-timezone" id="input-datalist" name="compare" required>
+                    <datalist id="list-timezone">
+                      {% for x in name_list %}
+                      <option>{{ x }}</option>
+                      {% endfor %}
+                    </datalist>
+                 
+                </div>
+                <div class="col-auto">
+                  <button type="submit" id="submitx" class="btn btn-primary btn-sm mb-3" style="margin-top: 30%;">Apply Filter</button>
+                </div>
+              
+              </form>
+
+        </div>
+      </div>
+
+
+
       <!--small-->
       <div class="col-sm-12 col-lg-2 d-block d-lg-none">
         <div class="p-3 border bg-light">
@@ -900,6 +951,14 @@ document.addEventListener("click", function (e) {
 }
 // end autocomplete function
 autocomplete(document.getElementById("agentInput"), list_of_agents);
+
+
+
+
+document.addEventListener('DOMContentLoaded', e => {
+        $('#input-datalist').autocomplete()
+    }, false);
+ 
   </script>
 
 {% endblock %}

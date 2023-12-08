@@ -37,6 +37,7 @@ def query_date(data,date1,date2,user,data_col):
     mask = (data['User Name'] == user) & (data['Call Date'] >= pd.to_datetime(date1)) & (data['Call Date'] <= pd.to_datetime(date2))
     data = data[mask]
     data[data_col] = data[data_col].str.replace('%', '')
+    data[data_col] = data[data_col].str.replace(',', '')
     data['Call Date'] = data['Call Date'].dt.strftime('%Y-%m-%d').str.replace('-', '/')
     data[data_col] = data[data_col].astype(float)
     dates =  data['Call Date']
@@ -48,6 +49,7 @@ def query_date_country(data,date1,date2,country,data_col):
     mask = (data['Country'] == country) & (data['Call Date'] >= pd.to_datetime(date1)) & (data['Call Date'] <= pd.to_datetime(date2))
     first_res = data[mask]
     first_res[data_col] = first_res[data_col].str.replace('%', '')
+    first_res[data_col] = first_res[data_col].str.replace(',', '')
     first_res[data_col] = first_res[data_col].astype(float)
     final_res=first_res.groupby('Call Date')[data_col].mean().reset_index()
     final_res['Call Date'] = final_res['Call Date'].dt.strftime('%Y-%m-%d').str.replace('-', '/')
@@ -83,12 +85,26 @@ def report(request):
     kpis_dict = {"collection":collection,"calls":calls,"Negotiation":Negotiation}
     kpi_essential_column = {"collection":"Sum Total Paid","calls":"Count Calls Connected","Negotiation":"Negotiation Rate"}
 
+    min_date = contact_rate['Call Date'].unique().tolist()[0]
+    max_date = contact_rate['Call Date'].unique().tolist()[-1]
+
+
     kpi = ""
     call_Agents = ""
     date_from = ""
     date_to = ""
     compare_df = ""
     user_df = ""
+
+    default_data = query_date_country(collection, min_date,max_date,country,"Sum Total Paid")
+    user_dates = [1,2,3,5]
+   #user_dates =  json.dumps(user_dates)
+    user_datas = [1,2,3,4]
+   
+    other_dates = [1,2,3,4]
+    #other_dates =  json.dumps(other_dates)
+    other_datas = [1,2,3,4]
+   
 
     if request.method == 'POST':
         kpi = request.POST.get('kpis')
@@ -105,16 +121,25 @@ def report(request):
         print("usertest",user_df[0])
         print("usertesta",call_agent_lists[1])
         print("usertesta",call_agent_lists[0])
-  
+        user_dates = user_df[0]
+        user_dates = json.dumps(user_dates)
+        user_datas = user_df[1]
+        user_datas =  json.dumps(user_datas)
+        other_dates = call_agent_lists[0]
+        other_dates = json.dumps(other_dates)
+        other_datas = call_agent_lists[1]
+        other_datas = json.dumps(other_datas)
+        
+        
 
     
-    min_date = contact_rate['Call Date'].unique().tolist()[0]
-    max_date = contact_rate['Call Date'].unique().tolist()[-1]
+    #min_date = contact_rate['Call Date'].unique().tolist()[0]
+    #max_date = contact_rate['Call Date'].unique().tolist()[-1]
     #username = request.user.username
     name_list =  [x for x in name_list if x is not None]
     #print(name_list)
    # name_list = json.dumps(name_list)
-    return render(request, 'report.html',{'username':username,"name_list":name_list,"min_date":min_date,"max_date":max_date}) 
+    return render(request, 'report.html',{'username':username,"name_list":name_list,"min_date":min_date,"max_date":max_date,"user_dates":user_dates,"user_datas":user_datas,"other_dates":other_dates,"other_datas":other_datas}) 
 
 
 

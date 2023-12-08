@@ -66,8 +66,9 @@ def monitor(request):
     agent_name = ""
     date_range = "MTD"
     if request.method == 'POST':
-        if request.POST.get('Agents'):
-            agent_name = request.POST.get('Agents')
+        if request.POST.get('compare'):
+            agent_name = request.POST.get('compare')
+            date_range = request.POST.get('date-range2')
         if request.POST.get('date-range'):
             date_range = request.POST.get('date-range')
         
@@ -191,12 +192,14 @@ def monitor(request):
     #user_name = "Adeola Adebayo"
     if  (user_name in user_list) or (agent_name in user_list):
         if agent_name in user_list:
-            user_name = agent_name
+            user_name = agent_name.strip()
+        #user_name = "Peniel Ezechukwu"
         dates= calls[calls["User Name"] == user_name]["Call Date"].str.replace('-', '.')
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
+        #print()
+        total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()    
         total_paid_sum = [round(num, 2) for num in total_paid_sum]
-        print(len(total_paid_sum))
+        #print(user_name)
 
         total_paid_kpi_percent = sum([i/collection_target_daily for i in total_paid_sum ])/len(total_paid_sum) * 100
         calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -354,10 +357,10 @@ def monitor(request):
                        "agent_name": agent_name,
                        "user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()
                        }
-    
+    name_list = user_list
     user_list = json.dumps(user_list)
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list,
-                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,"kpi_scale_rating":kpi_scale_rating})
+                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,"kpi_scale_rating":kpi_scale_rating,"name_list":name_list})
 
 
 def monitorapi(request):

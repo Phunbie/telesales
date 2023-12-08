@@ -90,6 +90,7 @@ function selectchart(cla,acla){
       <div class="col-6 col-md-3">
         <div class="p-3 first"></div>
       </div>
+
       <div class="col-12" id="tog" style="display:none;">
         <div class="p-3 border bg-light tog">
 
@@ -189,29 +190,39 @@ function selectchart(cla,acla){
    
    //alert(list_of_agents)
 
+  // charts data = 
+  var user_dates = "{{ user_dates|safe }}";
+  user_dates = JSON.parse(user_dates);
+  var user_datas  = "{{ user_datas|safe  }}";
+  user_datas = JSON.parse(user_datas);
+
+  var other_dates   = "{{ other_dates|safe }}";
+  other_dates  = JSON.parse(other_dates );
+  var other_datas  = "{{ other_datas|safe }}";
+  other_datas = JSON.parse(other_datas);
+
+  
+
+
+
     // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< first tab >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
    //first multiline Chart
    var multiline1_1 = {
-     x: [1, 2, 3, 4],
-     y: [10, 15, 13, 17],
+     x: user_datas,
+     y: user_dates,
      name: 'Goal',
      type: 'scatter'
    };
 
    var multiline1_2 = {
-     x: [1, 2, 3, 4],
-     y: [16, 5, 11, 9],
+     x: other_datas,
+     y: other_dates,
      name: 'Achieved',
      type: 'scatter'
    };
 
-   var multiline1_3 = {
-     x: [1, 2, 3, 4],
-     y: [13, 5, 8, 9],
-     name: 'Achieved2',
-     type: 'scatter'
-   };
+  
 
    var layout2 = {margin: {
    l: 20,
@@ -224,7 +235,7 @@ function selectchart(cla,acla){
  legend: {"orientation": "h"},
  };
 
-   var data2 = [multiline1_1, multiline1_2,multiline1_3];
+   var data2 = [multiline1_1, multiline1_2];
 
    Plotly.newPlot('line1', data2,layout2);
 

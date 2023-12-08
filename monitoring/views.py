@@ -360,7 +360,7 @@ def monitor(request):
     name_list = user_list
     user_list = json.dumps(user_list)
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list,
-                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,"kpi_scale_rating":kpi_scale_rating,"name_list":name_list})
+                                             "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,"kpi_scale_rating":kpi_scale_rating, "name_list":name_list})
 
 
 def monitorapi(request):

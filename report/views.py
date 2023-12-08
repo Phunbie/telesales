@@ -97,15 +97,15 @@ def report(request):
     user_df = ""
 
     default_data = query_date_country(collection, min_date,max_date,country,"Sum Total Paid")
-    user_dates = [1,2,3,5]
-   #user_dates =  json.dumps(user_dates)
-    user_datas = [1,2,3,4]
+    user_dates =  default_data[0]
+    user_dates =  json.dumps(user_dates)
+    user_datas =  default_data[1]
    
-    other_dates = [1,2,3,4]
-    #other_dates =  json.dumps(other_dates)
-    other_datas = [1,2,3,4]
+    other_dates =  default_data[0]
+    other_dates =  json.dumps(other_dates)
+    other_datas =  default_data[1]
    
-
+    call_Agents = "other"
     if request.method == 'POST':
         kpi = request.POST.get('kpis')
         call_Agents = request.POST.get('compare')
@@ -121,25 +121,25 @@ def report(request):
         print("usertest",user_df[0])
         print("usertesta",call_agent_lists[1])
         print("usertesta",call_agent_lists[0])
-        user_dates = user_df[0]
+        user_dates = default_data[0]    #user_df[0]
         user_dates = json.dumps(user_dates)
         user_datas = user_df[1]
-        user_datas =  json.dumps(user_datas)
-        other_dates = call_agent_lists[0]
+       # user_datas =  json.dumps(user_datas)
+        other_dates =   default_data[0]        #call_agent_lists[0]
         other_dates = json.dumps(other_dates)
         other_datas = call_agent_lists[1]
-        other_datas = json.dumps(other_datas)
-        
+       # other_datas = json.dumps(other_datas)
         
 
-    
+     
     #min_date = contact_rate['Call Date'].unique().tolist()[0]
     #max_date = contact_rate['Call Date'].unique().tolist()[-1]
     #username = request.user.username
     name_list =  [x for x in name_list if x is not None]
     #print(name_list)
    # name_list = json.dumps(name_list)
-    return render(request, 'report.html',{'username':username,"name_list":name_list,"min_date":min_date,"max_date":max_date,"user_dates":user_dates,"user_datas":user_datas,"other_dates":other_dates,"other_datas":other_datas}) 
+    return render(request, 'report.html',{'username':username,"name_list":name_list,"min_date":min_date,
+                                          "max_date":max_date,"user_dates":user_dates,"user_datas":user_datas,"other_dates":other_dates,"other_datas":other_datas,"call_Agents":call_Agents}) 
 
 
 

@@ -106,7 +106,10 @@ def report(request):
     other_dates =  default_data[0]
     other_dates =  json.dumps(other_dates)
     other_datas =  default_data[1]
-   
+
+    third_dates =  other_dates
+    third_datas =  other_datas
+    
     call_Agents = "other"
     if request.method == 'POST':
         kpi = request.POST.get('kpis')
@@ -115,6 +118,7 @@ def report(request):
         date_to = request.POST.get('to')
         csv_checkbox = request.POST.get("coc")
         call_agent_lists = query_date(kpis_dict[kpi],date_from,date_to,call_Agents,kpi_essential_column[kpi])
+        third_df =  query_date_country(kpis_dict[kpi],date_from,date_to,country,kpi_essential_column[kpi])
         if user_name not in name_list:
             user_df =  query_date_country(kpis_dict[kpi],date_from,date_to,country,kpi_essential_column[kpi])
         else:
@@ -122,6 +126,7 @@ def report(request):
         #download csv 
         if  csv_checkbox=="report":
             report_dictionary= {'user_date':user_df[0],user_name:user_df[1] }  # ,'compare_date':call_agent_lists[0] ,call_Agents:call_agent_lists[1]
+            comparision_dictionary = {'compare_date':call_agent_lists[0] ,call_Agents:call_agent_lists[1]}
             df = pd.DataFrame.from_dict(report_dictionary)
             csv_file = df.to_csv(index=False)
             response = HttpResponse(csv_file,content_type='text/csv')
@@ -146,8 +151,10 @@ def report(request):
         other_dates = json.dumps(other_dates)
         other_datas = call_agent_lists[1]
        # other_datas = json.dumps(other_datas)
-        
-
+        third_dates =  third_df[0]
+        third_dates =  json.dumps(third_dates)
+        third_datas =  third_df[1]
+   
      
     #min_date = contact_rate['Call Date'].unique().tolist()[0]
     #max_date = contact_rate['Call Date'].unique().tolist()[-1]
@@ -156,7 +163,8 @@ def report(request):
     #print(name_list)
    # name_list = json.dumps(name_list)
     return render(request, 'report.html',{'username':username,"name_list":name_list,"min_date":min_date,
-                                          "max_date":max_date,"user_dates":user_dates,"user_datas":user_datas,"other_dates":other_dates,"other_datas":other_datas,"call_Agents":call_Agents}) 
+                                          "max_date":max_date,"user_dates":user_dates,"user_datas":user_datas,"other_dates":other_dates,
+                                          "other_datas":other_datas,"call_Agents":call_Agents,"third_dates":third_dates,"third_datas":third_datas}) 
 
 
 

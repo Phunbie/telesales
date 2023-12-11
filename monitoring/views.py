@@ -79,10 +79,12 @@ def bucket3(folder):
 def monitor(request):
     agent_name = ""
     date_range = "MTD"
+    agent_country = ""
     if request.method == 'POST':
         if request.POST.get('compare'):
             agent_name = request.POST.get('compare')
             date_range = request.POST.get('date-range2')
+            agent_country = request.POST.get('country2')
         if request.POST.get('date-range'):
             date_range = request.POST.get('date-range')
         
@@ -94,7 +96,8 @@ def monitor(request):
     first_name = agent.first_name
     last_name =  agent.last_name
     country = agent.country
-
+    if agent_country:
+        country = agent_country
 
     calls_target_daily = ""
     collection_target_daily  = ""

@@ -134,7 +134,7 @@ function selectchart(cla,acla){
 
                 <div class="col-12">
                    <!-- <p style="margin-bottom: 0;">Features</p> -->
-                    <input type="checkbox" id="coc" name="coc" value="report" checked>
+                    <input type="checkbox" id="coc" name="coc" value="report">
                     <label for="coc">Download Report</label>
                     <!--
                     <input type="checkbox" id="coll" name="coll" value="Car" checked>
@@ -203,6 +203,12 @@ function selectchart(cla,acla){
   
   var other_datas  = "{{ other_datas|safe }}";
   other_datas = JSON.parse(other_datas);
+
+  var third_dates   = '{{ third_dates|safe }}';
+  third_dates  = JSON.parse(third_dates );
+  
+  var third_datas  = "{{ third_datas|safe }}";
+  third_datas = JSON.parse(third_datas);
  
   var call_Agents = "{{ call_Agents }}"
   
@@ -293,12 +299,12 @@ function selectchart(cla,acla){
 
    //first multiline Chart
    var multiline2_1 = {
-     x: [1, 2, 3, 4],
-     y: [10, 5, 11, 15],
-     name: 'Goal',
+     x: third_dates,
+     y: third_datas,
+     name: 'country average',
      type: 'scatter'
    };
-
+/*
    var multiline2_2 = {
      x: [1, 2, 3, 4],
      y: [18, 15, 11, 19],
@@ -312,9 +318,9 @@ function selectchart(cla,acla){
      name: 'Achieved2',
      type: 'scatter'
    };
-
+*/
    var layout3 = {margin: {
-   l: 20,
+   l: 30,
    r: 20,
    b: 20,
    t: 30,
@@ -324,7 +330,7 @@ function selectchart(cla,acla){
    legend: {"orientation": "h"},
 };
 
-   var data3 = [multiline2_1, multiline2_2,multiline2_3];
+   var data3 = [multiline2_1];
 
    Plotly.newPlot('line2', data3,layout3);
 

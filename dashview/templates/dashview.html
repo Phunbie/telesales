@@ -222,13 +222,13 @@ input[type=submit]:hover {
 
 .col-25 {
   float: left;
-  width: 20%;
+  width: 15%;
   margin-top: 6px;
 }
 
 .col-75 {
   float: left;
-  width: 80%;
+  width: 85%;
   margin-top: 6px;
 }
 
@@ -252,7 +252,7 @@ input[type=submit]:hover {
 .containery {
   border: 2px solid #dedede;
   background-color: #f1f1f1;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 10px;
   margin: 10px 0;
 }
@@ -466,7 +466,7 @@ input[type=submit]:hover {
       {% csrf_token %}
       <div class="row">
         <div class="col-25">
-          <label for="fname">Agent Name</label>
+          <label for="fname"><b>Agent Name</b></label>
         </div>
         <div class="col-75">
           <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Agent name..">
@@ -480,7 +480,7 @@ input[type=submit]:hover {
      
       <div class="row">
         <div class="col-25">
-          <label for="feedback">Feedback</label>
+          <label for="feedback"><b>Feedback</b></label>
         </div>
         <div class="col-75">
           <textarea id="subject" name="feedback" placeholder="Write something.." style="height:100px"></textarea>
@@ -501,15 +501,17 @@ input[type=submit]:hover {
   <div class="p-3 border bg-light overflow-auto" style="height: 45vh;">
 
 
-  <h2>Feedbacks</h2>
+  <h2 style="text-align: center;font-family: Roboto;">Feedbacks</h2>
   {% if user_is_supervisor %}
   <div id="feedbackcontain">
   {% for feedback in feedbacks %}
   <div class="containery">
-    <h3>{{ feedback.agent }}</h3>
+    <h4 style="font-family: Roboto; border-bottom:3px solid #ffea00;">{{ feedback.agent }}</h3>
     <p>{{ feedback.text }}</p>
-    <span class="time-right">{{ feedback.date }}</span>
-    <a class="time-left" href="{% url 'replies' feedback.id %}">replies</a>
+    <div style="border-top:1px solid #ffea00;">
+      <span class="time-right">{{ feedback.date }}</span>
+      <a class="time-left" href="{% url 'replies' feedback.id %}">replies</a>
+    </div>
   </div>
   {% endfor %}
   </div>
@@ -518,7 +520,7 @@ input[type=submit]:hover {
   <div id="any">
   {% for feedback in agent_feedback %}
   <div class="containery">
-    <h3>{{ feedback.user.username }}</h3>
+    <h4 style="font-family: Roboto; border-bottom:3px solid #ffea00;">{{ feedback.user.username }}</h3>
     <p>{{ feedback.text }}</p>
     <span class="time-right">{{ feedback.date }}</span>
     <a class="time-left" href="{% url 'replies' feedback.id %}">replies</a>

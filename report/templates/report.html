@@ -78,9 +78,11 @@ function selectchart(cla,acla){
 <h3>{{ current_kpi }} from {{ start_date }} to {{ end_date }}</h3>
 <div class="container overflow-hidden" style="padding-top: 10px;">
     <div class="row gy-3">
+     {% if permitted %}
       <div class="col-3 col-md-1">
         <div class="p-3 border first filtr" onclick="toggleFunction()">Filters</div>
       </div>
+      {% endif %}
       <div class="col-6 col-md-3">
         <div class="p-3 first"></div>
       </div>
@@ -161,19 +163,19 @@ function selectchart(cla,acla){
       </div>
       <div class="col-6">
         <div class="p-3 border bg-light second">
-            <p>{{ other_title }}</p>
+            <p>{{ other_title }} {{ current_kpi }}</p>
             <div id="bar1" class="graph char chart1" style="height: 90%;width: 100%;"></div>
         </div>
       </div>
       <div class="col-6">
         <div class="p-3 border bg-light second">
-            <p>{{ user_title }}</p>
+            <p>{{ user_title }} {{ current_kpi }}</p>
             <div id="line1" class="graph char chart2" style="height: 90%;width: 100%;"></div>
         </div>
       </div>
       <div class="col-12">
         <div class="p-3 border bg-light third">
-           <p>{{ third_title }}</p>
+           <p>{{ third_title }} {{ current_kpi }}</p>
             <div id="line2" class="graph char chart3" style="height: 90%;width: 100%;"></div>
         </div>
       </div>

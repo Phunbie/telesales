@@ -236,7 +236,7 @@ def monitor(request):
     else:
          user_position = "None"
 
-    print("agentpos", user_position,"number of agents",country_agents_number)
+    #print("agentpos", user_position,"number of agents",country_agents_number)
 
     #user_name = first_name.strip() + " " + last_name.strip()
     #defaults = len(calls["Call Date"].unique().tolist())

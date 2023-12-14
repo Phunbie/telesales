@@ -110,7 +110,8 @@ def report(request):
     kpis_dict = {"collection":collection,"calls":calls,"Negotiation":Negotiation}
     kpi_essential_column = {"collection":"Sum Total Paid","calls":"Count Calls Connected","Negotiation":"Negotiation Rate"}
     kpi_essential_column2 = {"collection":"Collection","calls":"Calls Connected","Negotiation":"Negotiation Rate"}
-
+    is_super = user.groups.filter(name="Supervisor").exists()
+    permitted = user_name in  all_name_list or is_super
     min_date = contact_rate['Call Date'].unique().tolist()[0]
     max_date = contact_rate['Call Date'].unique().tolist()[-1]
     start_date = contact_rate['Call Date'].unique().tolist()[0]
@@ -165,6 +166,7 @@ def report(request):
         end_date = date_to
         call_agent_lists = query_date(kpis_dict[kpi],date_from,date_to,call_Agents,kpi_essential_column[kpi])
         third_df =  query_date_country(kpis_dict[kpi],date_from,date_to,country,kpi_essential_column[kpi])
+        other_title = call_Agents
         third_title = "Country"
         if user_name not in name_list:
             user_df =  query_date_country(kpis_dict[kpi],date_from,date_to,country,kpi_essential_column[kpi])
@@ -211,10 +213,12 @@ def report(request):
     name_list =  [x for x in name_list if x is not None]
     #print(name_list)
    # name_list = json.dumps(name_list)
+   
     return render(request, 'report.html',{'username':username,"name_list":name_list,"min_date":min_date,
                                           "max_date":max_date,"user_dates":user_dates,"user_datas":user_datas,"other_dates":other_dates,
                                           "other_datas":other_datas,"call_Agents":call_Agents,"third_dates":third_dates,"third_datas":third_datas,
-                                          "start_date":start_date,"end_date":end_date,"current_kpi":current_kpi," user_title": user_title,"other_title":other_title,"third_title":third_title}) 
+                                          "start_date":start_date,"end_date":end_date,"current_kpi":current_kpi,"user_title": user_title,
+                                          "other_title":other_title,"third_title":third_title,"permitted":permitted}) 
 
 
 

@@ -130,13 +130,13 @@
   position: relative;
   border-radius: 50%;
   right:35px;
-  top:12px;
+  top:10px;
 }
 
 .pics{
   position: relative;
   right: 18px;
-  top: -14px; 
+  top: -17px; 
 } 
 
 #form-button:hover{
@@ -179,8 +179,11 @@
 <div class="container-fluid overflow-hidden">
   <h2 style="margin-top: 5vh; font-size: 3vh;">Dashboard</h2>
   <p id="today" style="margin-top:0px; margin-bottom: 10px auto; font-size: 1.4vh;"></p>
+  
 
-  <div class="row gx-5 gy-3">
+
+  <div class="row gx-5 gy-3 bg-secondary pb-2 ">
+
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
         <!-- <img class="trend" src="../static/down.jpeg"> <img class="trend" src="../static/up.jpeg"> -->
@@ -202,6 +205,11 @@
         <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.3 }}"></i></p>
       </div>
     </div>
+
+  </div>
+  
+    <div class="row gx-5 gy-3 mt-3 mb-1  pb-2 " style="background-color: #ffea00;"> <!--bg-secondary-->
+
     <div class="col-md-7">
       <div id="table" class="second p-0 border bg-light" style="overflow-x:auto;overflow-y:auto;">
         <p class="leader-table">{{ scan_country }} Leaderboard {{ date_range }}</p>
@@ -264,7 +272,14 @@
       <div>Congratulations {{ combined_list.0.0 }} on your outstanding achievement leading the pack. Your determination is admirable!</div>
       </div>
     </div>
+
+    </div>
+
     <h2 style="text-align: center; font-size: 2.5vh;">Current {{ date_range }} top performers</h2>
+
+
+    <div class="row  gy-3 bg-secondary pb-2 mt-2"> <!--gx-5-->
+
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
         <img class="pics" src="../static/img_avatar.png" height="55px" width="55px">
@@ -301,7 +316,7 @@
   </div>
 </div>
 
-
+</div>
 
 <!--2nd  Modal 
 
@@ -324,7 +339,7 @@
     <!-- Modal body -->
     <div class="modal-body">
       <table id="myTable2">
-        <tr class="header" style="background-color: #ffea00;">
+        <tr class="header" style="background-color: #ffea00;position: sticky;top: 0;">
           <th style="width:5%;">Pos</th>
           <th style="width:25%;">Name</th>
           <th style="width:10%;">Calls</th>

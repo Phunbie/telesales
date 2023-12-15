@@ -10,6 +10,8 @@ from django.http import HttpResponse
 import boto3
 import json
 import pandas as pd
+from django.db.models import Q
+
 
 
 
@@ -66,8 +68,9 @@ def dashview(request):
     lastname = agents.last_name.strip()
     agent_username = firstname + " " + lastname
     #print(firstname,lastname, agent_username)
-    general_feedback = Feedbacknew.objects.filter(agent="all").order_by('-date')
-    agent_feedback = Feedbacknew.objects.filter(agent=agent_username).order_by('-date')
+    #general_feedback = Feedbacknew.objects.filter(agent="all").order_by('-date')
+    #agent_feedback = Feedbacknew.objects.filter(agent=agent_username).order_by('-date')
+    agent_feedback = Feedbacknew.objects.filter(Q(agent=agent_username) | Q(agent='all')).order_by('-date')
     username = user.username
     Country_features=[]
     countries = ['Uganda', 'Tanzania', 'Kenya','Nigeria','Togo','Malawi']
@@ -119,7 +122,7 @@ def dashview(request):
     #votes = Vote.objects.all().order_by('-feedback_id') #.values()
 
     return render(request, 'dashview.html',{'username':username,"Country_features":Country_features,
-                                            "feedbacks":feedbacks,"agent_feedback":agent_feedback,"name_list":name_list,"is_agent":is_agent,"general_feedback": general_feedback,
+                                            "feedbacks":feedbacks,"agent_feedback":agent_feedback,"name_list":name_list,"is_agent":is_agent,#"general_feedback": general_feedback,
                                             "user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()})
 
 

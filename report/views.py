@@ -111,7 +111,7 @@ def report(request):
     kpi_essential_column = {"collection":"Sum Total Paid","calls":"Count Calls Connected","Negotiation":"Negotiation Rate"}
     kpi_essential_column2 = {"collection":"Collection","calls":"Calls Connected","Negotiation":"Negotiation Rate"}
     is_super = user.groups.filter(name="Supervisor").exists()
-    permitted = user_name in  all_name_list or is_super
+    permitted = (user_name in  all_name_list) or is_super
     min_date = contact_rate['Call Date'].unique().tolist()[0]
     max_date = contact_rate['Call Date'].unique().tolist()[-1]
     start_date = contact_rate['Call Date'].unique().tolist()[0]
@@ -132,18 +132,18 @@ def report(request):
     user_dates =  default_data_collection[0]
     user_dates =  json.dumps(user_dates)
     user_datas =  default_data_collection[1]
-    user_title = "Country"
+    user_title = country #"Country"
     if user_name  in all_name_list:
         user_dates =  your_collection[0]
         user_dates =  json.dumps(user_dates)
         user_datas =  your_collection[1]
-        user_title = "your"
+        user_title = "Your"
 
    
     other_dates =  default_data_collection[0]
     other_dates =  json.dumps(other_dates)
     other_datas =  default_data_collection[1]
-    other_title = "country"
+    other_title = country #"Country"
 
    #third_dates =  other_dates
     #third_datas =  other_datas
@@ -154,7 +154,7 @@ def report(request):
     third_title = "Global"
 
     
-    call_Agents = "country"
+    call_Agents = country #"Country"
     if request.method == 'POST':
         kpi = request.POST.get('kpis')
         current_kpi = kpi_essential_column2[kpi]

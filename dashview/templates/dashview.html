@@ -510,21 +510,7 @@ input[type=submit]:hover {
   {% endfor %}
   </div>
 
-  {% if is_agent %}
-  {% if general_feedback %}
-  <h4>General Feedback</h4>
-  {% endif %}
-  <div id="any1">
-    {% for feedback in general_feedback %}
-    <div class="containery">
-      <h4 style="font-family: Roboto; border-bottom:3px solid #ffea00;">{{ feedback.user.username }}</h3>
-      <p>{{ feedback.text }}</p>
-      <span class="time-right">{{ feedback.date }}</span>
-      <a class="time-left" href="{% url 'replies' feedback.id %}">replies</a>
-    </div>
-    {% endfor %}
-    </div>
-  {% endif  %}
+ 
   </div>
 
 

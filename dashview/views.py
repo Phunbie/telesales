@@ -142,6 +142,7 @@ def feedback_comment(request,f_id):
 
 
 """
+
 def upvote(request,uid):
     vote= Vote.objects.get(id=uid)
     feedbackid = vote.feedback.id

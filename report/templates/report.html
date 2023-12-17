@@ -238,12 +238,22 @@ function selectchart(cla,acla){
    var layout2 = {margin: {
    l: 30,
    r: 20,
-   b: 20,
+   b: 50,
    t: 30,
    pad: 1
  },
  showlegend: true,
- legend: {"orientation": "h"},
+ //legend: {"orientation": "h"},
+ legend: {
+    x: 1,
+    font: {
+      size: 10,
+    },
+    //xanchor: 'right',
+    y: 1,
+    xanchor: 'right',
+    bgcolor: 'rgba(255, 0, 0, 0);',
+  },
  };
 
    var data2 = [multiline1_1];
@@ -287,12 +297,22 @@ function selectchart(cla,acla){
    var layout1 = {barmode: 'overlay',margin: {
    l: 30,
    r: 20,
-   b: 20,
+   b: 50,
    t: 30,
    pad: 1
    },
    showlegend: true,
-   legend: {"orientation": "h"},
+   //legend: {"orientation": "h"},
+   legend: {
+    x: 1,
+    font: {
+      size: 10,
+    },
+    //xanchor: 'right',
+    y: 1,
+    xanchor: 'right',
+    bgcolor: 'rgba(255, 0, 0, 0);',
+  },
 };
 
    
@@ -328,12 +348,22 @@ function selectchart(cla,acla){
    var layout3 = {margin: {
    l: 30,
    r: 20,
-   b: 20,
+   b: 50,
    t: 30,
    pad: 1
    },
    showlegend: true,
-   legend: {"orientation": "h"},
+   //legend: {"orientation": "h"},
+   legend: {
+    x: 1,
+    font: {
+      size: 10,
+    },
+    //xanchor: 'right',
+    y: 1,
+    xanchor: 'right',
+    bgcolor: 'rgba(255, 0, 0, 0);',
+  },
 };
 
    var data3 = [multiline2_1];
@@ -377,12 +407,22 @@ function selectchart(cla,acla){
    var layout4 = {barmode: 'overlay',margin: {
    l: 20,
    r: 20,
-   b: 20,
+   b: 50,
    t: 30,
    pad: 1
    },
    showlegend: true,
-   legend: {"orientation": "h"},
+   //legend: {"orientation": "h"},
+   legend: {
+    x: 1,
+    font: {
+      size: 10,
+    },
+    //xanchor: 'right',
+    y: 1,
+    xanchor: 'right',
+    bgcolor: 'rgba(255, 0, 0, 0);',
+  },
 };
 
    Plotly.newPlot('bar_2', data4, layout4);

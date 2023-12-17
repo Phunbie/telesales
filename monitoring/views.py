@@ -359,6 +359,10 @@ def monitor(request):
     total_calla_scale_rating = scale_rating(total_calla_kpi_grade)
     Negotiation_scale_rating = scale_rating(Negotiation_kpi_grade)
 
+    total_paid_scale_status = goodbad(total_paid_kpi_grade)
+    total_calla_scale_status = goodbad(total_calla_kpi_grade)
+    Negotiation_scale_status = goodbad(Negotiation_kpi_grade)
+
 
     general_score_percent = (total_paid_kpi_percent + total_calls_kpi_percent + Negotiation_kpi_percent)/3
     #print("general:",general_score_percent,total_paid_kpi_percent,total_calls_kpi_percent,Negotiation_kpi_percent)
@@ -367,6 +371,7 @@ def monitor(request):
     general_score_grade = general_average_grader(total_paid_kpi_percent, total_calls_kpi_percent, Negotiation_kpi_percent)
     general_rating = scale_rating(general_score_grade)
     stars = star_grade(general_score_grade)
+    general_status = goodbad(general_score_grade)
 
 
 
@@ -422,6 +427,10 @@ def monitor(request):
                        "bar_colors":bar_colors,
                        "daily_targets": daily_targets,
                        "country":country,
+                       "total_paid_scale_status":total_paid_scale_status,
+                       "total_calla_scale_status":total_calla_scale_status,
+                       "Negotiation_scale_status":Negotiation_scale_status,
+                       "general_status": general_status,
                        "agent_name": agent_name,
                        "user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()
                        }

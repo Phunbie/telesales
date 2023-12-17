@@ -461,37 +461,37 @@ function toggleFunction() {
               <tr>
                 <td>Connected Calls</td>
                 <td>{{ kpi_scale_rating.total_calla_scale_rating }}</td>
-                <td class="">Bad</td>
+                <td class="">{{ input_list.total_calla_scale_status }}</td>
                 <td>{{  kpi_grade.total_calla_kpi_grade }}</td>
-                <td>This is a bad trend. <a href="#">Learn more..</a></td>
+                <td>This is a bad trend.</td><!--<a href="#">Learn more..</a>-->
               </tr>
               <tr>
                 <td>Collection</td>
                 <td>{{ kpi_scale_rating.total_paid_scale_rating }}</td>
-                <td class="">Good</td>
+                <td class="">{{ input_list.total_paid_scale_status }}</td>
                 <td>{{  kpi_grade.total_paid_kpi_grade }}</td>
-                <td>Good progress. <a href="#">Learn more..</a></td>
+                <td>Good progress.</td>
               </tr>
               <tr>
                 <td>Negotiation</td>
                 <td>{{ kpi_scale_rating.Negotiation_scale_rating }}</td>
-                <td class="">Good</td>
+                <td class="">{{ input_list.Negotiation_scale_status }}</td>
                 <td>{{  kpi_grade.Negotiation_kpi_grade }}</td>
-                <td>Good progress. <a href="#">Learn more..</a></td>
+                <td>Good progress.</td>
               </tr>
               <tr>
                 <td>Quality Assuarance</td>
                 <td>Above expectation</td>
                 <td class="">Good</td>
                 <td>4.4</td>
-                <td>Good progress. <a href="#">Learn more..</a></td>
+                <td>Good progress.</td>
               </tr>
               <tr>
                 <td>general performance</td>
                 <td>{{ general_rating }}</td>
-                <td class="">Good</td>
+                <td class="">{{ input_list.general_status }}</td>
                 <td>{{ general_score_grade }}</td>
-                <td>Good progress. <a href="#">Learn more..</a></td>
+                <td>Good progress.</td>
               </tr>
             </table>
           </div>

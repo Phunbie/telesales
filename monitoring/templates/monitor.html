@@ -68,7 +68,7 @@
 .graph{
   width:100%;
   max-width:600px;
-  height:90%;
+  height:92%;
   margin: 0;
   padding: 0;
 }
@@ -356,9 +356,10 @@ function toggleFunction() {
                       {% for x in name_list %}
                       <option>{{ x }}</option>
                       {% endfor %}
-                    </datalist>
-                 
+                   </datalist>         
                 </div>
+
+
                 <div class="col-auto">
                   <button type="submit" id="submitx" class="btn btn-primary btn-sm mb-3" style="margin-top: 30%;">Apply Filter</button>
                 </div>
@@ -370,6 +371,9 @@ function toggleFunction() {
 
 
 
+    </div>
+<!--end of first row  ..................................>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>-->
+<div class="row gy-3 gx-3 bg-secondary mt-3 pb-3">
       <!--small-->
       <div class="col-sm-12 col-lg-2 d-block d-lg-none">
         <div class="p-3 border bg-light">
@@ -419,8 +423,13 @@ function toggleFunction() {
         </div>
       </div>
 
+
+
+</div>
        <!--end charts-->
-       
+       <!--end of second row-->
+
+
        <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">{{ general_rating }} with {{ general_score_grade }} out of 5 rating</h5>
        <!--
        <div class="col-12">
@@ -447,6 +456,11 @@ function toggleFunction() {
       <div class="col-12">
         <div class="fourth border bg-light">
       
+
+
+          <!--begining of the third row>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..-->
+     <div class="row gy-3 gx-3">
+
 
           <h5>{{ date_range }} KPI Description</h5>
           <div class="table-responsive-sm">
@@ -497,6 +511,7 @@ function toggleFunction() {
           </div>
 
         </div>
+        
       </div>
     </div>
   </div>

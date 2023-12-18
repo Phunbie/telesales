@@ -308,7 +308,7 @@ input[type=submit]:hover {
       <div class="col-12 page pa1" id="pag1">
         <div class="p-1 border bg-light third" style="overflow-x:auto;overflow-y:auto;">
 
-            <p class="leader-table" style="text-align: center;">Top Performing Countries</p>
+            <p class="leader-table" style="text-align: center;">Country Performance</p>
             <form method="post" style="padding-top: 0;margin-top: 0;">
               {% csrf_token %}
               <div class="container">
@@ -325,14 +325,15 @@ input[type=submit]:hover {
                </div>
                  -->
                <div class="form-group col-md-2" style="font-size: 0.8em;">
-                    <label class="drop" for="inputState">Duration</label>
-                    <select id="inputState" class="form-control" name="country-data" style="height: 20px; padding-top: 0; font-size: 0.8em;margin-bottom: 1vh;">
+                    <!--<label class="drop" for="inputState">Duration</label>-->
+                   
+                    <select id="inputState" class="form-control" name="country-data" style="height: 20px; padding-top: 0; font-size: 0.8em;">
                       <option value="MTD" selected>MTD</option>
                       <option value="WTD">WTD</option>
                     </select>
                </div>
-               <div class="form-group col-md-4">
-                <button id="form-button" type="submit" class="btn filter-button" style="font-size: 0.8em; padding: 2px;background-color: #ffea00;position:relative;top:5vh">Filter</button>
+               <div class="form-group col-md-4" style="font-size: 0.8em;">
+                <button id="form-button" type="submit" class="btn filter-button" style="background-color: #ffea00;height: 20px; padding-top: 0; font-size: 0.8em;position: relative;top:-0.5vh;">Filter</button>
               </div>
              </div>
             </div>
@@ -340,50 +341,24 @@ input[type=submit]:hover {
     
     <table id="myTable">
       <tr class="header" style="background-color: #ffea00;">
-        <th style="width:5%;">Pos</th>
+        <th style="width:5%;">SN</th>
         <th style="width:10%;">Country</th>
         <th style="width:10%;">Calls</th>
         <th style="width:10%;">Collection</th>
        <!--<th style="width:10%;">Contact rate</th>--> 
         <th style="width:10%;">Negotiation</th>
       </tr>
+      {% for feature in Country_features  %}
       <tr>
-        <td>1</td>
-        <td>{{ Country_features.0.3 }}</td>
-        <td>{{ Country_features.0.0 }}</td>
-        <td>{{ Country_features.0.1 }}</td>
-        <!--<td>{{ Country_features.0.2 }}</td>-->
-        <td>{{ Country_features.0.2 }}</td>
+        <td> {{ forloop.counter }}</td>
+        <td>{{  feature.3 }}</td>
+        <td>{{  feature.0 }}</td>
+        <td>{{  feature.1 }}</td>
+        <!--<td>{{ Country_features.0.2 }}</td> -->
+        <td>{{  feature.2 }}</td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>{{ Country_features.1.3 }}</td>
-        <td>{{ Country_features.1.0 }}</td>
-        <td>{{ Country_features.1.1 }}</td>
-        
-        <td>{{ Country_features.1.2 }}</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>{{ Country_features.2.3 }}</td>
-        <td>{{ Country_features.2.0 }}</td>
-        <td>{{ Country_features.2.1 }}</td>
-        <td>{{ Country_features.2.2 }}</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>{{ Country_features.3.3 }}</td>
-        <td>{{ Country_features.3.0 }}</td>
-        <td>{{ Country_features.3.1 }}</td>
-        <td>{{ Country_features.3.2 }}</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>{{ Country_features.4.3 }}</td>
-        <td>{{ Country_features.4.0 }}</td>
-        <td>{{ Country_features.4.1 }}</td>
-        <td>{{ Country_features.4.2 }}</td>
-      </tr>
+      {% endfor %}
+    
     </table>
         
         </div>
@@ -396,19 +371,25 @@ input[type=submit]:hover {
             <div class="mySlides">
               <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
               <q>Utilizing our productivity analysis software, Kenya efficiently managed their call agent workforce. By accurately gauging peak call hours and aligning staff schedules accordingly, they reduced overall labor costs by 20%. This optimization not only improved operational efficiency but also ensured adequate agent availability during high-demand periods, resulting in reduced wait times for customers and increased service quality.</q>
-              <p class="author">- Kenya</p>
+              <p class="author"><em>- Abisola Oladeji, Nigeria.</em></p>
+              
             </div>
             
             <div class="mySlides">
               <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
               <q>Implementing our call agent productivity analysis tool and witnessed a remarkable 25% increase in call resolution rates. By identifying top-performing agents and providing targeted training to those needing improvement, they significantly enhanced customer satisfaction scores within just three months. This led to improved customer loyalty and positive reviews, ultimately boosting the company's reputation and customer retention.</q>
-              <p class="author">- Tanzania</p>
+              <!--<p class="author">- Tanzania</p>-->
+              <p class="author"><em>- Oluwafunbi Adeneye, Kenya.</em></p>
+             
             </div>
             
             <div class="mySlides">
               <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
               <q>With our call agent productivity analysis solution, Nigeria gained invaluable data-driven insights. By analyzing call trends, agent performance metrics, and customer feedback, they fine-tuned their processes and identified key areas for improvement. This approach led to a 40% reduction in call escalations and a 25% increase in first-call resolutions, showcasing the power of continuous improvement through data-driven decision-making.</q>
-              <p class="author">- Nigeria</p>
+             <!-- <p class="author" style="margin-bottom: 0;padding-bottom: 0;"><em>Oluwafunbi Adeneye</em></p>
+              <p class="author" style="margin-top: 0;padding-top: 0;">- Tanzania</p>-->
+              <p class="author"><em>-Oluwafunbi Adeneye, Tanzania.</em></p>
+
             </div>
             
            <!-- <a class="prev" onclick="plusSlides(-1)">❮</a>
@@ -529,7 +510,7 @@ input[type=submit]:hover {
   {% endfor %}
   </div>
 
-
+ 
   </div>
 
 

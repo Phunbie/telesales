@@ -36,14 +36,18 @@ def general_average_grader(first,second,third):
     avg = percentage_grader(avg)
     return avg
        
-    
+def goodbad(scale): 
+    res = "Bad"
+    if scale >= 3:
+         res = "Good"
+    return res
 
 def scale_rating(scale):
     rating = "Do not meet expectation"
     if scale == 5:
         rating = "Outstanding"
     elif scale == 4:
-        rating = "Above expectation"   
+        rating = "Exceeds expectations"   
     elif scale == 3:
         rating = "Meet Expectation"
     elif scale == 2:
@@ -57,6 +61,23 @@ def star_grade(num):
     for i in range(num):
         star_list[i]= "checked"
     return star_list
+
+
+def mergedf(collectiondf,negotiationdf,callsdf):
+    df_merged = collectiondf.merge(callsdf, on=['User Name', 'Call Date', 'Country']).merge(negotiationdf, on=['User Name', 'Call Date', 'Country'])
+    return df_merged 
+
+def create_score_df(callskpi,collectionkpi,Negotiationkpi,df):
+    df['score'] = ((df['Count Calls Connected'].str.replace(',', '').astype(int) * 100)/callskpi) + ((df['Negotiation Rate'].str.replace('%', '').astype(float) * 100)/Negotiationkpi) + ((df['Sum Total Paid'].str.replace(',', '').astype(float) *100)/collectionkpi)
+    #final = df.groupby('User Name')['score'].sum().reset_index().sort_values(by='score')
+    return df
+
+
+def position_list(df):
+    final = df.groupby('User Name')['score'].sum().reset_index().sort_values(by='score')
+    return final['User Name'].tolist()
+
+
 
 def bucket3(folder):
     s3 = boto3.resource(
@@ -102,72 +123,72 @@ def monitor(request):
     calls_target_daily = ""
     collection_target_daily  = ""
     Negotiation_target_daily  = ""
-    calls_target_monthly = ""
-    collection_target_monthly = ""
-    Negotiation_target_monthly = ""
-    calls_target_weekly = ""
-    collection_target_weekly  = ""
-    Negotiation_target_weekly  = ""
+    #calls_target_monthly = ""
+    #collection_target_monthly = ""
+    #Negotiation_target_monthly = ""
+    #calls_target_weekly = ""
+    #collection_target_weekly  = ""
+    #Negotiation_target_weekly  = ""
     if country == "Kenya":
         calls_target_daily = 200
         collection_target_daily  = 15833
         Negotiation_target_daily  = 60
-        calls_target_monthly = 4800
-        collection_target_monthly = 380000
-        Negotiation_target_monthly = 60
-        calls_target_weekly = 1200
-        collection_target_weekly  = 94998
-        Negotiation_target_weekly  = 60
+        #calls_target_monthly = 4800
+        #collection_target_monthly = 380000
+        #Negotiation_target_monthly = 60
+        #calls_target_weekly = 1200
+        #collection_target_weekly  = 94998
+        #Negotiation_target_weekly  = 60
     elif country == "Nigeria":
         calls_target_daily = 180
         collection_target_daily  = 145833
         Negotiation_target_daily  = 50
-        calls_target_monthly = 4320
-        collection_target_monthly = 3500000
-        Negotiation_target_monthly = 50
-        calls_target_weekly = 1080
-        collection_target_weekly  = 874998
-        Negotiation_target_weekly  = 50
+        #calls_target_monthly = 4320
+        #collection_target_monthly = 3500000
+        #Negotiation_target_monthly = 50
+        #calls_target_weekly = 1080
+        #collection_target_weekly  = 874998
+        #Negotiation_target_weekly  = 50
     elif country == "Togo":
         calls_target_daily = 150
         collection_target_daily  = 104167
         Negotiation_target_daily  = 50
-        calls_target_monthly = 3600
-        collection_target_monthly =  2500000
-        Negotiation_target_monthly = 50
-        calls_target_weekly = 900
-        collection_target_weekly  = 625000
-        Negotiation_target_weekly  = 50
+        #calls_target_monthly = 3600
+        #collection_target_monthly =  2500000
+        #Negotiation_target_monthly = 50
+        #calls_target_weekly = 900
+        #collection_target_weekly  = 625000
+        #Negotiation_target_weekly  = 50
     elif country == "Uganda":
         calls_target_daily = 160
         collection_target_daily  = 500000
         Negotiation_target_daily  = 60
-        calls_target_monthly = 3840
-        collection_target_monthly = 12000000
-        Negotiation_target_monthly = 60
-        calls_target_weekly = 960
-        collection_target_weekly  = 3000000
-        Negotiation_target_weekly  = 60
+        #calls_target_monthly = 3840
+        #collection_target_monthly = 12000000
+        #Negotiation_target_monthly = 60
+       #calls_target_weekly = 960
+        #collection_target_weekly  = 3000000
+        #Negotiation_target_weekly  = 60
     elif country == "Tanzania":
         calls_target_daily = 160
         collection_target_daily  = 325000
         Negotiation_target_daily  = 60
-        calls_target_monthly = 3840
-        collection_target_monthly = 7800000
-        Negotiation_target_monthly = 60
-        calls_target_weekly = 960
-        collection_target_weekly  = 1950000
-        Negotiation_target_weekly  = 60
+        #calls_target_monthly = 3840
+        #collection_target_monthly = 7800000
+        #Negotiation_target_monthly = 60
+        #calls_target_weekly = 960
+        #collection_target_weekly  = 1950000
+       # Negotiation_target_weekly  = 60
     else:
         calls_target_daily = 200
         collection_target_daily  = 500000
         Negotiation_target_daily  = 65
-        calls_target_monthly = 4800
-        collection_target_monthly = 12000000
-        Negotiation_target_monthly = 65
-        calls_target_weekly = 1200
-        collection_target_weekly  = 3000000
-        Negotiation_target_weekly  = 65
+       # calls_target_monthly = 4800
+       # collection_target_monthly = 12000000
+       # Negotiation_target_monthly = 65
+       # calls_target_weekly = 1200
+        #collection_target_weekly  = 3000000
+       # Negotiation_target_weekly  = 65
 
 
 
@@ -199,10 +220,25 @@ def monitor(request):
         country_list = collection['Country'].unique().tolist()
         country_list = [i for i in country_list if i is not None]
 
-
-
-
     user_name = first_name.strip() + " " + last_name.strip()
+    merged_kpi_df = mergedf(collection,Negotiation,calls)
+    merged_kpi_df_scored = create_score_df(calls_target_daily,calls_target_daily, Negotiation_target_daily, merged_kpi_df)
+    country_daf = ""
+    if country in  country_list:
+        country_daf = merged_kpi_df_scored[merged_kpi_df_scored['Country']==country]
+    else:
+        country_daf = merged_kpi_df_scored
+    country_position_list = position_list(country_daf)
+    country_agents_number = len(country_position_list)
+    country_position_list.reverse()
+    if  user_name in user_list:
+        user_position = country_position_list.index(user_name) + 1
+    else:
+         user_position = "None"
+
+    #print("agentpos", user_position,"number of agents",country_agents_number)
+
+    #user_name = first_name.strip() + " " + last_name.strip()
     #defaults = len(calls["Call Date"].unique().tolist())
     #defaults = [ 0 for j in range(defaults)]
     #user_name = "Mercy Atieno"
@@ -223,9 +259,9 @@ def monitor(request):
         total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).tolist()
         total_calls = [round(num, 2) for num in total_calls]
         total_calls_kpi_percent = sum([i/calls_target_daily for i in total_calls])/len(total_calls) * 100
-        print("calls:",calls_target_daily)
-        print("calls2:",total_calls)
-        print(total_calls_kpi_percent)
+        #print("calls:",calls_target_daily)
+        #print("calls2:",total_calls)
+        #print(total_calls_kpi_percent)
 
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
         contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
@@ -253,9 +289,9 @@ def monitor(request):
         total_calls = total_calls["Count Calls Connected"].tolist()
         total_calls = [round(num, 2) for num in total_calls]
         total_calls_kpi_percent = sum([i/calls_target_daily for i in total_calls])/len(total_calls) * 100
-        print("calls:",calls_target_daily)
-        print("calls2:",total_calls)
-        print(total_calls_kpi_percent)
+        #print("calls:",calls_target_daily)
+        #print("calls2:",total_calls)
+        #print(total_calls_kpi_percent)
 # contact
         contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '').astype(float)
         contact  = contact_rate[contact_rate["Country"] == country]
@@ -323,6 +359,10 @@ def monitor(request):
     total_calla_scale_rating = scale_rating(total_calla_kpi_grade)
     Negotiation_scale_rating = scale_rating(Negotiation_kpi_grade)
 
+    total_paid_scale_status = goodbad(total_paid_kpi_grade)
+    total_calla_scale_status = goodbad(total_calla_kpi_grade)
+    Negotiation_scale_status = goodbad(Negotiation_kpi_grade)
+
 
     general_score_percent = (total_paid_kpi_percent + total_calls_kpi_percent + Negotiation_kpi_percent)/3
     #print("general:",general_score_percent,total_paid_kpi_percent,total_calls_kpi_percent,Negotiation_kpi_percent)
@@ -331,6 +371,7 @@ def monitor(request):
     general_score_grade = general_average_grader(total_paid_kpi_percent, total_calls_kpi_percent, Negotiation_kpi_percent)
     general_rating = scale_rating(general_score_grade)
     stars = star_grade(general_score_grade)
+    general_status = goodbad(general_score_grade)
 
 
 
@@ -386,6 +427,10 @@ def monitor(request):
                        "bar_colors":bar_colors,
                        "daily_targets": daily_targets,
                        "country":country,
+                       "total_paid_scale_status":total_paid_scale_status,
+                       "total_calla_scale_status":total_calla_scale_status,
+                       "Negotiation_scale_status":Negotiation_scale_status,
+                       "general_status": general_status,
                        "agent_name": agent_name,
                        "user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()
                        }
@@ -394,7 +439,8 @@ def monitor(request):
     return render(request, 'monitor.html', {'username': username,'agent':agent,"input_list":input_list,
                                              "user_list": user_list,"kpi_grade":kpi_grade,"Kpi_percent" :Kpi_percent,
                                              "kpi_scale_rating":kpi_scale_rating, "name_list":name_list,"date_range":date_range,
-                                             "general_score_percent":general_score_percent,"general_score_grade":general_score_grade,"stars":stars,"general_rating":general_rating})
+                                             "general_score_percent":general_score_percent,"general_score_grade":general_score_grade,
+                                             "stars":stars,"general_rating":general_rating,"user_position":user_position,"country_agents_number":country_agents_number})
 
 
 def monitorapi(request):

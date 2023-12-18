@@ -109,6 +109,7 @@ def position_list(df):
 
 
 
+
 def home(request):
     #post conditional filter list by country
     scan_country=""
@@ -278,6 +279,7 @@ def home(request):
 
         user_list2 = position_list(scored_joined)
         combined_list = ""
+        longer_list = ""
         list_name = []
         list_collection =[]
         list_call = []
@@ -313,9 +315,49 @@ def home(request):
             list_contact.append(contact)
             
             list_negotiation.append(Negotiation_r)
-            if i == 4:
-                combined_list = list(zip(list_name, list_collection, list_call, list_contact, list_negotiation))
-                break
+            #if i == 4:
+            combined_list = list(zip(list_name[:5], list_collection[:5], list_call[:5], list_contact[:5], list_negotiation[:5]))
+            longer_list = list(zip(list_name, list_collection, list_call, list_contact, list_negotiation))
+            #break
+    
+#kpis for a list of first in four countries
+        combined_list_top_in_country = ""
+        country_top_in_country = []
+        list_name_top_in_country  = []
+        list_collection_top_in_country = []
+        list_call_top_in_country  = []
+        list_contact_top_in_country  = []
+        list_negotiation_top_in_country  =[]
+        for countryx, namex in first_in_country.items():
+            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+            total_paid_sum1 = collection[collection["User Name"] == namex]["Sum Total Paid"].astype(float).sum()
+            total_paid_sum1 = round(total_paid_sum1,2)
+            #calls
+            calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
+            total_calls1 = calls[calls["User Name"] == namex]["Count Calls Connected"].astype(float).sum()
+            total_calls1 = round(total_calls1,2)
+            #contact_rate
+            contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+            contact1 = contact_rate[contact_rate["User Name"] == namex]["Contact Rate"].astype(float)
+            lengt = len(contact1)
+            contact1=contact1.sum()/lengt 
+            contact1 = round(contact1, 2)
+            #Negotiation
+            Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
+            Negotiation_r1 = Negotiation[Negotiation["User Name"] == namex]["Negotiation Rate"].astype(float)
+
+            #print("Negotiationx",Negotiation_r1)
+            lengt1 = len(Negotiation_r1)
+            Negotiation_r1 =  Negotiation_r1.sum()/lengt1 
+            Negotiation_r1 = round(Negotiation_r1, 2)
+            country_top_in_country.append(countryx)
+            list_name_top_in_country.append(namex)
+            list_collection_top_in_country.append(total_paid_sum1)
+            list_call_top_in_country.append(total_calls1)
+            list_negotiation_top_in_country.append( Negotiation_r1)
+        print(country_top_in_country,list_name_top_in_country,list_call_top_in_country,list_negotiation_top_in_country,list_collection_top_in_country)
+        combined_list_top_in_country = list(zip(country_top_in_country,list_name_top_in_country,list_call_top_in_country,list_negotiation_top_in_country,list_collection_top_in_country))
+
 
 
         #print(f"user list:{combined_list}")
@@ -339,7 +381,7 @@ def home(request):
             Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
             Negotiation_r = [round(num, 2) for num in Negotiation_r]
 
-            print("total_paid_sum",total_paid_sum)
+            #print("total_paid_sum",total_paid_sum)
         elif (country in country_list) and (user_name not in user_list2):
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
             total_paid_sum = collection[collection["Country"] == country]
@@ -465,10 +507,12 @@ def home(request):
                    "contact":contact,
                    "negotiation_r":Negotiation_r,
                    "combined_list": combined_list,
+                   "longer_list":longer_list,
                    "first_in_country":first_in_country,
                    "kpi_increment_list": kpi_increment_list,
                    "scan_country":scan_country,
-                   "date_range":date_range
+                   "date_range":date_range,
+                   "combined_list_top_in_country":combined_list_top_in_country,
                    }
         
         return render(request, 'index.html',context )

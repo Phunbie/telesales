@@ -10,6 +10,8 @@ from django.http import HttpResponse
 import boto3
 import json
 import pandas as pd
+from django.db.models import Q
+
 
 
 
@@ -40,7 +42,7 @@ def country_data(country,collection, calls,Negotiation):
     calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
     total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).sum()
     #contact_rate
-    #contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
+    # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
    # contact = contact_rate[contact_rate["Country"] == country]["Contact Rate"].astype(float)
    # length = len(contact)
    # contact=contact.sum()/length 
@@ -66,19 +68,27 @@ def dashview(request):
     lastname = agents.last_name.strip()
     agent_username = firstname + " " + lastname
     #print(firstname,lastname, agent_username)
-    agent_feedback = Feedbacknew.objects.filter(agent=agent_username).order_by('-date')
+    #general_feedback = Feedbacknew.objects.filter(agent="all").order_by('-date')
+    #agent_feedback = Feedbacknew.objects.filter(agent=agent_username).order_by('-date')
+    agent_feedback = Feedbacknew.objects.filter(Q(agent=agent_username) | Q(agent='all')).order_by('-date')
     username = user.username
     Country_features=[]
     countries = ['Uganda', 'Tanzania', 'Kenya','Nigeria','Togo','Malawi']
     country_data_range = ""
     
- 
+
+    collection = bucket3('amount-collected-per-agent-mtd/')
+    name_list = collection['User Name'].unique().tolist()
+    calls = bucket3('calls-per-agent-mtd/')
+    is_agent = agent_username in  name_list
 
     if request.method == 'POST':
         if request.POST.get('country-data'):
             country_data_range = request.POST.get('country-data')
         if request.POST.get('feedback'):
-            agent_name = request.POST.get('agent_name')   
+            agent_name = request.POST.get('agent_name')  
+            if  agent_name not in name_list:
+                agent_name = "all"
             message = request.POST.get('feedback')
             feedback = Feedbacknew(
                 user=user,
@@ -89,9 +99,9 @@ def dashview(request):
     
     
 
-    collection = bucket3('amount-collected-per-agent-mtd/')
-    name_list = collection['User Name'].unique().tolist()
-    calls = bucket3('calls-per-agent-mtd/')
+    #collection = bucket3('amount-collected-per-agent-mtd/')
+    #name_list = collection['User Name'].unique().tolist()
+    #calls = bucket3('calls-per-agent-mtd/')
     #contact_rate = bucket3('contact-rate-per-agent-mtd/')
     Negotiation = bucket3('negotiation-rate-individual-mtd/')
     if country_data_range == 'WTD':
@@ -111,7 +121,9 @@ def dashview(request):
    
     #votes = Vote.objects.all().order_by('-feedback_id') #.values()
 
-    return render(request, 'dashview.html',{'username':username,"Country_features":Country_features,"feedbacks":feedbacks,"agent_feedback":agent_feedback,"name_list":name_list,"user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()})
+    return render(request, 'dashview.html',{'username':username,"Country_features":Country_features,
+                                            "feedbacks":feedbacks,"agent_feedback":agent_feedback,"name_list":name_list,"is_agent":is_agent,#"general_feedback": general_feedback,
+                                            "user_is_supervisor": request.user.groups.filter(name="Supervisor").exists()})
 
 
 def feedback_comment(request,f_id):
@@ -130,6 +142,7 @@ def feedback_comment(request,f_id):
 
 
 """
+
 def upvote(request,uid):
     vote= Vote.objects.get(id=uid)
     feedbackid = vote.feedback.id

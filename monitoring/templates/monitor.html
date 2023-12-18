@@ -112,12 +112,14 @@ table {
 th, td {
       text-align: left;
       padding: 0.2vh;
-      font-size: 1.5vh;
+      font-size: 1.4vh;
     }
  
 tr:nth-child(even) {
       background-color: #f2f2f2;
     }
+
+
 
 #available{
   font-size: 0.7em;
@@ -453,17 +455,20 @@ function toggleFunction() {
       <span class="fa fa-star  {{ stars.4 }}"></span>
      </div>
      <p Style="margin: 0;">You are  in position {{ user_position }} out of {{ country_agents_number }}</p>
+
+
+     <div class="row gy-3 gx-3 bg-secondary mt-2 pb-3">
       <div class="col-12">
         <div class="fourth border bg-light">
       
 
 
           <!--begining of the third row>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..-->
-     <div class="row gy-3 gx-3">
+     
 
 
           <h5>{{ date_range }} KPI Description</h5>
-          <div class="table-responsive-sm">
+          <div class="table-responsive-sm ">
             <table class="table">
               <tr>
                 <th>KPI</th>
@@ -511,7 +516,7 @@ function toggleFunction() {
           </div>
 
         </div>
-        
+
       </div>
     </div>
   </div>

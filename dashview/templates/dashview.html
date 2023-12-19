@@ -445,20 +445,20 @@ input[type=submit]:hover {
       {% if user_is_supervisor %} 
    <!--feedback 0-->
     <div class="col-12 page pa4" id="popul">
-    <div class="p-3 border bg-light overflow-auto" style="height: 35vh;">
+    <div class="p-3 border bg-light overflow-auto" >
 
  
-<!--<form method="POST">-->
+<!--<form method="POST"   style="height: 35vh;">-->
   
   <div class="containerx">
     <form method="POST" id="feedbackForm">
       {% csrf_token %}
       <div class="row">
         <div class="col-25">
-          <label for="fname" style="font-size: 2.5vh;"><b>Agent Name</b></label>
+          <label for="fname" style="font-size: 2vh; white-space: nowrap; "><b>Agent Name</b></label>
         </div>
         <div class="col-75">
-          <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Agent name..">
+          <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Agent name.." style="height:5vh;font-size: 1.5vh;">
           <datalist id="list-timezone">
             {% for x in name_list %}
             <option>{{ x }}</option>
@@ -469,14 +469,14 @@ input[type=submit]:hover {
      
       <div class="row">
         <div class="col-25">
-          <label for="feedback" style="font-size: 2.5vh;"><b>Feedback</b></label>
+          <label for="feedback" style="font-size: 2vh;"><b>Feedback</b></label>
         </div>
         <div class="col-75">
-          <textarea id="subject" name="feedback" placeholder="Write something.." style="height:100px"></textarea>
+          <textarea id="subject" name="feedback" placeholder="Write something.." style="height:10vh; font-size: 1.5vh;"></textarea>
         </div>
       </div>
       <div class="row">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" style="height: 4vh;padding-top: 0;padding-bottom: 0;font-size: 1.5vh;">
       </div>
     </form>
   </div>

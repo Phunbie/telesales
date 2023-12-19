@@ -27,6 +27,10 @@
 
     .recom{
         height:25vh; 
+        
+       
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .third{
@@ -311,7 +315,7 @@ input[type=submit]:hover {
       <div class="col-12 page pa1" id="pag1">
         <div class="p-1 border bg-light third" style="overflow-x:auto;overflow-y:auto;">
 
-            <p class="leader-table" style="text-align: center;">Country Performance</p>
+            <p class="leader-table" style="text-align: center;font-size: 2vh;">Country Performance</p>
             <form method="post" style="padding-top: 0;margin-top: 0;">
               {% csrf_token %}
               <div class="container">
@@ -369,29 +373,29 @@ input[type=submit]:hover {
       <div class="col-12 page pa1" id="pag2">
         <div class="p-3 border bg-light second">
          
-          <div class="slideshow-container" style="height: 80%;">
-             <h5 style="text-align: center;"> Success Stories</h5>
+          <div class="slideshow-container" style="height: 80%;line-height: 3vh;">
+             <h5 style="text-align: center;font-size: 2.5vh;margin-bottom: 0;"> Success Stories</h5>
             <div class="mySlides">
-              <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
-              <q>Utilizing our productivity analysis software, Kenya efficiently managed their call agent workforce. By accurately gauging peak call hours and aligning staff schedules accordingly, they reduced overall labor costs by 20%. This optimization not only improved operational efficiency but also ensured adequate agent availability during high-demand periods, resulting in reduced wait times for customers and increased service quality.</q>
-              <p class="author"><em>- Abisola Oladeji, Nigeria.</em></p>
+              <img src="{% static 'img_avatar.png' %}"  style="float: left;height: 8vh;width: 9vh;">
+              <q style="font-size: 1vw;" >Utilizing our productivity analysis software, Kenya efficiently managed their call agent workforce. By accurately gauging peak call hours and aligning staff schedules accordingly, they reduced overall labor costs by 20%. This optimization not only improved operational efficiency but also ensured adequate agent availability during high-demand periods, resulting in reduced wait times for customers and increased service quality.</q>
+              <p class="author" style="font-size: 1vw;"><em>- Abisola Oladeji, Nigeria.</em></p>
               
             </div>
             
             <div class="mySlides">
-              <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
-              <q>Implementing our call agent productivity analysis tool and witnessed a remarkable 25% increase in call resolution rates. By identifying top-performing agents and providing targeted training to those needing improvement, they significantly enhanced customer satisfaction scores within just three months. This led to improved customer loyalty and positive reviews, ultimately boosting the company's reputation and customer retention.</q>
+              <img src="{% static 'img_avatar.png' %}"  style="float: left;height: 8vh;width: 9vh;">
+              <q style="font-size: 1vw;">Implementing our call agent productivity analysis tool and witnessed a remarkable 25% increase in call resolution rates. By identifying top-performing agents and providing targeted training to those needing improvement, they significantly enhanced customer satisfaction scores within just three months. This led to improved customer loyalty and positive reviews, ultimately boosting the company's reputation and customer retention.</q>
               <!--<p class="author">- Tanzania</p>-->
-              <p class="author"><em>- Oluwafunbi Adeneye, Kenya.</em></p>
+              <p class="author" style="font-size: 1vw;"><em>- Oluwafunbi Adeneye, Kenya.</em></p>
              
             </div>
             
             <div class="mySlides">
-              <img src="{% static 'img_avatar.png' %}" height="80px" width="80px" style="float: left;">
-              <q>With our call agent productivity analysis solution, Nigeria gained invaluable data-driven insights. By analyzing call trends, agent performance metrics, and customer feedback, they fine-tuned their processes and identified key areas for improvement. This approach led to a 40% reduction in call escalations and a 25% increase in first-call resolutions, showcasing the power of continuous improvement through data-driven decision-making.</q>
+              <img src="{% static 'img_avatar.png' %}" style="float: left; height: 8vh;width: 9vh;">
+              <q style="font-size: 1vw;">With our call agent productivity analysis solution, Nigeria gained invaluable data-driven insights. By analyzing call trends, agent performance metrics, and customer feedback, they fine-tuned their processes and identified key areas for improvement. This approach led to a 40% reduction in call escalations and a 25% increase in first-call resolutions, showcasing the power of continuous improvement through data-driven decision-making.</q>
              <!-- <p class="author" style="margin-bottom: 0;padding-bottom: 0;"><em>Oluwafunbi Adeneye</em></p>
               <p class="author" style="margin-top: 0;padding-top: 0;">- Tanzania</p>-->
-              <p class="author"><em>-Oluwafunbi Adeneye, Tanzania.</em></p>
+              <p class="author" style="font-size: 1vw;"><em>-Oluwafunbi Adeneye, Tanzania.</em></p>
 
             </div>
             
@@ -418,8 +422,8 @@ input[type=submit]:hover {
 
       <div class="col-12 page pa2" id="pag4">
         <div class="p-3 border bg-light third">
-          <h5 style="text-align: center;">Prediction & Analysis</h5>
-            <p style="text-align: center;">lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</p>
+          <h5 style="text-align: center; font-size: 1.6vw;">Prediction & Analysis</h5>
+            <p style="text-align: center;font-size: 1vw;">lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</p>
         </div>
       </div>
        <!--page 3-->
@@ -433,8 +437,8 @@ input[type=submit]:hover {
 
       <div class="col-12 page pa3" id="pag6">
         <div class="p-3 border bg-light recom">
-            <h5 style="text-align: center;">Insights & Recommendations</h5>
-            <p style="text-align: center;">lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</p>
+            <h5 style="text-align: center;font-size:1.6vw;">Insights & Recommendations</h5>
+            <p style="text-align: center;font-size: 1vw;">lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi varius nisl sed odio malesuada, vitae bibendum urna cursus. Vivamus id porttitor magna. Cras cursus ullamcorper eleifend. In id nibh sit amet nulla placerat hendrerit eget ac ligula. Proin cursus ex condimentum nunc imperdiet, sed rutrum nulla aliquet. Mauris vitae ipsum purus. Aliquam mollis porta massa, a finibus massa accumsan a. Donec in volutpat dui, eget porttitor metus.</p>
         </div>
       </div>
       <!--page 4-->
@@ -451,7 +455,7 @@ input[type=submit]:hover {
       {% csrf_token %}
       <div class="row">
         <div class="col-25">
-          <label for="fname"><b>Agent Name</b></label>
+          <label for="fname" style="font-size: 2.5vh;"><b>Agent Name</b></label>
         </div>
         <div class="col-75">
           <input type="text" id="fname" list="list-timezone" name="agent_name" placeholder="Agent name..">
@@ -465,7 +469,7 @@ input[type=submit]:hover {
      
       <div class="row">
         <div class="col-25">
-          <label for="feedback"><b>Feedback</b></label>
+          <label for="feedback" style="font-size: 2.5vh;"><b>Feedback</b></label>
         </div>
         <div class="col-75">
           <textarea id="subject" name="feedback" placeholder="Write something.." style="height:100px"></textarea>

@@ -212,6 +212,8 @@ def home(request):
         contact_rate = contact_rate.sort_values(by='Call Date')
         Negotiation = bucket3('negotiation-rate-individual-mtd/')
         Negotiation = Negotiation.sort_values(by='Call Date')
+        ATT = bucket3('negotiation-rate-individual-mtd/')
+        ATT = Negotiation.sort_values(by='Call Date')
 
         if date_range == "WTD":
             collection = bucket3('amount-collected-per-agent/')
@@ -222,6 +224,8 @@ def home(request):
             contact_rate = contact_rate.sort_values(by='Call Date')
             Negotiation = bucket3('negotiation-rate-individual/')
             Negotiation = Negotiation.sort_values(by='Call Date')
+            ATT = bucket3('negotiation-rate-individual/')
+            ATT = Negotiation.sort_values(by='Call Date')
     
    
 

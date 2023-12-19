@@ -12,18 +12,18 @@
 <style>
 .first{
     height: 14vh;
-    border-radius: 30px;
-    line-height: 3.5vh;
+    border-radius: 2vw;
+    line-height: 2.7vh;
 }
 .second{
     height: 31vh;
     border-radius: 30px;
 }
-
+/*
 .fourth {
   height: 30vh;
 } 
-
+*/
 .tab-button{
     width:100%;
     height: 30%;
@@ -285,8 +285,8 @@ function toggleFunction() {
             <button style="background-color: #ffea00;">Filter</button>
           </form>
   -->
-        <p style="padding-bottom: 0;margin-bottom: 0;position:absolute;left:45vw;top: 2vh;">{{ input_list.agent_name }}</p>
-        <button style="background-color: #ffea00; position:absolute;left:45vw;top: 6vh;" onclick="toggleFunction()">Filter</button>
+        <p style="padding-bottom: 0;margin-bottom: 0;position:absolute;right:40vw;top: 2vh;">{{ input_list.agent_name }}</p>
+        <button style="background-color: #ffea00; position:absolute;right:40vw;top: 6vh;" onclick="toggleFunction()">Filter</button>
           {% endif %}
 
           <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
@@ -297,7 +297,7 @@ function toggleFunction() {
             <div class="row">
              <div class="form-group col-md-2" style="font-size: 0.8em;">
                   <!--<label class="drop" for="inputState">Duration</label>-->
-                  <select id="inputState" class="form-control" name="date-range" style="padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
+                  <select id="inputState" class="form-control" name="date-range" style="padding-bottom: 0;padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
                   <!--  <option selected>Today Status</option> -->
                     <option value="MTD" selected>MTD Status</option>
                     <option value="WTD" >WTD Status</option>
@@ -317,8 +317,8 @@ function toggleFunction() {
         
               <div style="text-align: center;">
                <!-- <p id="available" class="good" style="font-size: 1vw;">Online</p>-->
-                       <p style="font-size: 1.7vw;">{{ input_list.country }}</p>
-                <p id="datetime" style="font-size: 0.95vw;"></p> 
+                       <p style="font-size: 1.6vw;">{{ input_list.country }}</p>
+                <p id="datetime" style="font-size: 0.9vw;"></p> 
               </div>
 
         </div>
@@ -447,14 +447,14 @@ function toggleFunction() {
         </div>
       </div>
       -->
-      <div style="padding-top: 0;margin-top: 0;">
+      <div style="padding-top: 0;margin-top: 0; font-size: 1vw;">
       <span class="fa fa-star {{ stars.0 }}"></span>
       <span class="fa fa-star {{ stars.1 }}"></span>
       <span class="fa fa-star {{ stars.2 }}"></span>
       <span class="fa fa-star {{ stars.3 }}"></span>
       <span class="fa fa-star  {{ stars.4 }}"></span>
      </div>
-     <p Style="margin: 0;">You are  in position {{ user_position }} out of {{ country_agents_number }}</p>
+     <p Style="margin: 0;font-size: 1vw;">You are  in position {{ user_position }} out of {{ country_agents_number }}</p>
 
 
      <div class="row gy-3 gx-3 bg-secondary mt-2 pb-3">

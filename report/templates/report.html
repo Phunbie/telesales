@@ -12,7 +12,7 @@
     }
 
     .filtr{
-        border-radius: 20px;
+        border-radius: 2vh;
         background-color:#ffea00;
         border-style: outset;
         text-align: center;
@@ -80,7 +80,7 @@ function selectchart(cla,acla){
     <div class="row gy-3  bg-secondary pb-3">
      {% if permitted %}
       <div class="col-3 col-md-1">
-        <div class="p-3 border first filtr" onclick="toggleFunction()">Filters</div>
+        <div class="p-3 border first filtr" style="width: 90px;" onclick="toggleFunction()">Filters</div>
       </div>
       {% endif %}
       <div class="col-6 col-md-3">
@@ -162,19 +162,19 @@ function selectchart(cla,acla){
         </div>
       </div>
       <div class="col-6">
-        <div class="p-3 border bg-light second">
+        <div class="p-3 border bg-light second" style="font-size: 2vh; padding: 0;margin: 0;">
             <p>{{ other_title }} {{ current_kpi }}</p>
             <div id="bar1" class="graph char chart1" style="height: 90%;width: 100%;"></div>
         </div>
       </div>
       <div class="col-6">
-        <div class="p-3 border bg-light second">
+        <div class="p-3 border bg-light second" style="font-size: 2vh;">
             <p>{{ user_title }} {{ current_kpi }}</p>
             <div id="line1" class="graph char chart2" style="height: 90%;width: 100%;"></div>
         </div>
       </div>
       <div class="col-12">
-        <div class="p-3 border bg-light third">
+        <div class="p-3 border bg-light third" style="font-size: 2vh;">
            <p>{{ third_title }} {{ current_kpi }}</p>
             <div id="line2" class="graph char chart3" style="height: 90%;width: 100%;"></div>
         </div>

@@ -97,7 +97,7 @@ def mergedf(collectiondf,negotiationdf,callsdf):
     return df_merged 
 
 def create_score_df(callskpi,collectionkpi,Negotiationkpi,df):
-    df['score'] = ((df['Count Calls Connected'].str.replace(',', '').astype(int) * 100)/callskpi) + ((df['Negotiation Rate'].str.replace('%', '').astype(float) * 100)/Negotiationkpi) + ((df['Sum Total Paid'].str.replace(',', '').astype(float) *100)/collectionkpi)
+    df['score'] = ((df['Count Calls Connected'].str.replace(',', '').astype(int) * 100)/callskpi) + ((df['Negotiation Rate'].str.replace('%', '').astype(float) * 100)/Negotiationkpi) + ((df['Sum Total Paid'].str.replace(',', '').astype(float) *100)/collectionkpi)+ ((df['Average Talk Time'].astype(float)*100)/200)
     #final = df.groupby('User Name')['score'].sum().reset_index().sort_values(by='score')
     return df
 
@@ -212,8 +212,8 @@ def home(request):
         contact_rate = contact_rate.sort_values(by='Call Date')
         Negotiation = bucket3('negotiation-rate-individual-mtd/')
         Negotiation = Negotiation.sort_values(by='Call Date')
-        ATT = bucket3('negotiation-rate-individual-mtd/')
-        ATT = Negotiation.sort_values(by='Call Date')
+        ATT = bucket3('calls-per-agent-mtd/')
+        ATT = ATT.sort_values(by='Call Date')
 
         if date_range == "WTD":
             collection = bucket3('amount-collected-per-agent/')
@@ -224,11 +224,12 @@ def home(request):
             contact_rate = contact_rate.sort_values(by='Call Date')
             Negotiation = bucket3('negotiation-rate-individual/')
             Negotiation = Negotiation.sort_values(by='Call Date')
-            ATT = bucket3('negotiation-rate-individual/')
-            ATT = Negotiation.sort_values(by='Call Date')
+            ATT =  bucket3('calls-per-agent/')
+            ATT = ATT.sort_values(by='Call Date')
+        
     
    
-
+        
        
 
         #create a position list
@@ -287,7 +288,7 @@ def home(request):
         list_name = []
         list_collection =[]
         list_call = []
-        list_contact = []
+        list_ATT = []
         list_negotiation =[]
         for i, user_name in enumerate(user_list):
             collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
@@ -303,6 +304,13 @@ def home(request):
             length = len(contact)
             contact=contact.sum()/length 
             contact = round(contact, 2)
+            #ATT
+           # ATT1 = ATT[ATT["User Name"] == user_name]['Average Talk Time'] = pd.to_numeric(ATT[ATT["User Name"] == user_name]['Average Talk Time'], errors='coerce')
+            ATT1 = ATT[ATT["User Name"] == user_name]['Average Talk Time'] = ATT[ATT["User Name"] == user_name]['Average Talk Time'].fillna(0).astype(int).sum()
+            #ATT1 = ATT[ATT["User Name"] == user_name]['Average Talk Time'].astype(int).sum()
+            print("ATT:",ATT1)
+            #ATT = round(ATT,1)
+
             #Negotiation
             Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
             Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float)
@@ -316,12 +324,12 @@ def home(request):
             
             list_call.append(total_calls)
             
-            list_contact.append(contact)
+            list_ATT.append(ATT1)
             
             list_negotiation.append(Negotiation_r)
             #if i == 4:
-            combined_list = list(zip(list_name[:5], list_collection[:5], list_call[:5], list_contact[:5], list_negotiation[:5]))
-            longer_list = list(zip(list_name, list_collection, list_call, list_contact, list_negotiation))
+            combined_list = list(zip(list_name[:5], list_collection[:5], list_call[:5], list_ATT[:5], list_negotiation[:5]))
+            longer_list = list(zip(list_name, list_collection, list_call, list_ATT, list_negotiation))
             #break
     
 #kpis for a list of first in four countries
@@ -359,7 +367,7 @@ def home(request):
             list_collection_top_in_country.append(total_paid_sum1)
             list_call_top_in_country.append(total_calls1)
             list_negotiation_top_in_country.append( Negotiation_r1)
-        print(country_top_in_country,list_name_top_in_country,list_call_top_in_country,list_negotiation_top_in_country,list_collection_top_in_country)
+        #print(country_top_in_country,list_name_top_in_country,list_call_top_in_country,list_negotiation_top_in_country,list_collection_top_in_country)
         combined_list_top_in_country = list(zip(country_top_in_country,list_name_top_in_country,list_call_top_in_country,list_negotiation_top_in_country,list_collection_top_in_country))
 
 

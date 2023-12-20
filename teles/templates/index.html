@@ -253,7 +253,7 @@
     <th style="width:25%;">Name</th>
     <th style="width:10%;">Calls</th>
     <th style="width:10%;">Collection</th>
-    <th style="width:10%;">Contact Rate</th>
+    <th style="width:10%;">Average Talk Time</th>
     <th style="width:10%;">Negotiation Rate</th>
   </tr>
   {% for item in combined_list %}
@@ -262,7 +262,7 @@
     <td><img class="Tpics" src="../static/img_avatar.png" style="height: 12%;width:12%" >{{ item.0 }}</td> <!-- height="30px" width="30px" -->
     <td>{{ item.2 }}</td>
     <td>{{ item.1 }}</td>
-    <td>{{ item.3 }}%</td>
+    <td>{{ item.3 }}</td>
     <td>{{ item.4 }}%</td>
   </tr>
   {% endfor %}
@@ -358,7 +358,7 @@
           <th style="width:25%;">Name</th>
           <th style="width:10%;">Calls</th>
           <th style="width:10%;">Collection</th>
-          <th style="width:10%;">Contact Rate</th>
+          <th style="width:10%;">Average Talk Time</th>
           <th style="width:10%;">Negotiation Rate</th>
         </tr>
         {% for item in longer_list %}
@@ -367,7 +367,7 @@
           <td><img class="Tpics" src="../static/img_avatar.png" height="30px" width="30px">{{ item.0 }}</td>
           <td>{{ item.2 }}</td>
           <td>{{ item.1 }}</td>
-          <td>{{ item.3 }}%</td>
+          <td>{{ item.3 }}</td>
           <td>{{ item.4 }}%</td>
         </tr>
         {% endfor %}

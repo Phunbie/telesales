@@ -71,6 +71,17 @@ Tanzania_Negotiation_target_monthly = 60
 Tanzania_calls_target_weekly = 960
 Tanzania_collection_target_weekly  = 1950000
 Tanzania_Negotiation_target_weekly  = 60
+# placeholder value for Malawi
+Malawi_calls_target_daily = 200
+Malawi_collection_target_daily  = 500000
+Malawi_Negotiation_target_daily  = 65
+Malawi_calls_target_monthly = 4800
+Malawi_collection_target_monthly = 12000000
+Malawi_Negotiation_target_monthly = 65
+Malawi_calls_target_weekly = 1200
+Malawi_collection_target_weekly  = 3000000
+Malawi_Negotiation_target_weekly  = 65
+
 
 
 def bucket3(folder):
@@ -252,8 +263,15 @@ def home(request):
         Uganda_df = merged_df[merged_df['Country']=="Uganda"] 
         Uganda_df_scored = create_score_df(Uganda_calls_target_daily, Uganda_collection_target_daily,Uganda_Negotiation_target_daily, Uganda_df ) 
         Uganda_first = position_list(Uganda_df_scored)[-1]
+        Togo_df = merged_df[merged_df['Country']=="Togo"] 
+        Togo_df_scored = create_score_df(Togo_calls_target_daily, Togo_collection_target_daily,Togo_Negotiation_target_daily, Togo_df ) 
+        Togo_first = position_list(Togo_df_scored)[-1]
+        Malawi_df = merged_df[merged_df['Country']=="Malawi"] 
+        Malawi_df_scored = create_score_df(Malawi_calls_target_daily, Malawi_collection_target_daily,Malawi_Negotiation_target_daily, Malawi_df ) 
+        Togo_first = position_list(Malawi_df_scored)[-1]
+
         #append all the scored country's dfs 
-        scored_joined = pd.concat([Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ], axis=0)
+        scored_joined = pd.concat([Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ,Togo_df_scored, Malawi_df_scored], axis=0)
         dfscore=""
         checker=False
         if scan_country == "Nigeria":
@@ -267,6 +285,12 @@ def home(request):
             checker=True
         elif scan_country == "Uganda":
             dfscore = Uganda_df_scored
+            checker=True
+        elif scan_country == "Togo":
+            dfscore = Togo_df_scored
+            checker=True
+        elif scan_country == "Malawi":
+            dfscore = Malawi_df_scored
             checker=True
         else:
             pass
@@ -308,7 +332,7 @@ def home(request):
            # ATT1 = ATT[ATT["User Name"] == user_name]['Average Talk Time'] = pd.to_numeric(ATT[ATT["User Name"] == user_name]['Average Talk Time'], errors='coerce')
             ATT1 = ATT[ATT["User Name"] == user_name]['Average Talk Time'] = ATT[ATT["User Name"] == user_name]['Average Talk Time'].fillna(0).astype(int).sum()
             #ATT1 = ATT[ATT["User Name"] == user_name]['Average Talk Time'].astype(int).sum()
-            print("ATT:",ATT1)
+            #print("ATT:",ATT1)
             #ATT = round(ATT,1)
 
             #Negotiation
@@ -386,6 +410,8 @@ def home(request):
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).tolist()
             total_calls = [round(num, 2) for num in  total_calls]
+            ATT['Average Talk Time'] = ATT['Average Talk Time'].fillna(0).astype(int)
+            ATT2 = ATT[ATT["User Name"] == user_name]['Average Talk Time'].tolist()
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
             contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
             contact = [round(num, 2) for num in contact]
@@ -409,6 +435,12 @@ def home(request):
             total_calls= total_calls.sort_values(by='Call Date')
             total_calls = total_calls["Count Calls Connected"].tolist()
             total_calls = [round(num, 2) for num in  total_calls]
+   #average talk time
+            ATT['Average Talk Time'] = ATT['Average Talk Time'].fillna(0).astype(int)
+            ATT2 = ATT[ATT["Country"] == country]
+            ATT2 = ATT2.groupby('Call Date')['Average Talk Time'].mean().reset_index()
+            ATT2= ATT2.sort_values(by='Call Date')
+            ATT2 = ATT2['Average Talk Time'].tolist()
             #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
     # contact
@@ -427,7 +459,7 @@ def home(request):
             Negotiation_r = Negotiation_r.sort_values(by='Call Date')
             Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
             Negotiation_r = [round(num, 2) for num in Negotiation_r]
-            print("total_paid_sum2",total_paid_sum)   
+            #print("total_paid_sum2",total_paid_sum)   
            # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
             #total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
            # calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -452,6 +484,12 @@ def home(request):
             total_calls= total_calls.sort_values(by='Call Date')
             total_calls = total_calls["Count Calls Connected"].tolist()
             total_calls = [round(num, 2) for num in  total_calls]
+
+            ATT['Average Talk Time'] = ATT['Average Talk Time'].fillna(0).astype(int)
+            ATT2 = ATT[ATT["Country"] == country]
+            ATT2 = ATT2.groupby('Call Date')['Average Talk Time'].mean().reset_index()
+            ATT2= ATT2.sort_values(by='Call Date')
+            ATT2 = ATT2['Average Talk Time'].tolist()
             #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
     # contact
@@ -486,6 +524,10 @@ def home(request):
        # total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
         calls_increase = up_down_indicator(total_calls)
         total_calls = total_calls[-1]
+
+
+        ATT_increase =  up_down_indicator(ATT2)
+        current_ATT = round(ATT2[-1],2)
         #contact_rate
        # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
        # contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
@@ -503,7 +545,7 @@ def home(request):
         #Negotiation_r =  Negotiation_r.sum()/length1 
         Negotiation_r = round(Negotiation_r, 2)
         #print(f"The sum total rate for {user_name} is: {Negotiation_r}")
-        kpi_increment_list = [collection_increase,calls_increase,contact_increase, Negotiation_increase]
+        kpi_increment_list = [collection_increase,calls_increase,contact_increase, Negotiation_increase, ATT_increase]
 
 
    
@@ -518,6 +560,7 @@ def home(request):
                    "total_calls":total_calls,
                    "contact":contact,
                    "negotiation_r":Negotiation_r,
+                   "current_ATT":current_ATT,
                    "combined_list": combined_list,
                    "longer_list":longer_list,
                    "first_in_country":first_in_country,

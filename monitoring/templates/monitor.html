@@ -14,10 +14,12 @@
     height: 14vh;
     border-radius: 2vw;
     line-height: 2.7vh;
+   
 }
 .second{
     height: 31vh;
     border-radius: 30px;
+
 }
 /*
 .fourth {
@@ -32,7 +34,7 @@
 .butl{
   height: 32%;
   width:100%;
-  font-size: 1vw;
+  font-size: 2vh;
   background-color: #ffea00;
   border-radius: 20%;
   border-style: outset;
@@ -112,7 +114,7 @@ table {
 th, td {
       text-align: left;
       padding: 0.2vh;
-      font-size: 1.4vh;
+      font-size: 0.7vw;
     }
  
 tr:nth-child(even) {
@@ -130,6 +132,7 @@ tr:nth-child(even) {
 }
 
 
+/*
 .chip {
   display: inline-block;
   padding: 0 25px;
@@ -139,12 +142,31 @@ tr:nth-child(even) {
   border-radius: 25px;
   background-color: #f1f1f1;
 }
-
 .chip img {
   float: left;
   margin: 0 10px 0 -25px;
   height: 50px;
   width: 50px;
+  border-radius: 50%;
+}
+
+*/
+
+.chip {
+  display: inline-block;
+  padding: 0 3.5vh;
+  height: 7vh;
+  font-size: 2.1vh;
+  line-height: 7vh;
+  border-radius: 3.5vh;
+  background-color: #f1f1f1;
+}
+
+.chip img {
+  float: left;
+  margin: 0 1.4vh 0 -3.5vh;
+  height: 7vh;
+  width: 7vh;
   border-radius: 50%;
 }
 #goal{
@@ -272,9 +294,12 @@ function toggleFunction() {
           <div class="chip" style="font-family: Audiowide, sans-serif;">
             <img src="{% static 'img_avatar.png' %}" alt="Person" width="96" height="96">
             {{ input_list.first_name }}  {{ input_list.last_name }}
+            {% if input_list.user_is_supervisor %}
+             <a  href="#" onclick="toggleFunction()">Filter</a>
+             {% endif %}
           </div> 
 
-          {% if input_list.user_is_supervisor %}
+         
   <!--
           <form method="post" autocomplete="off"  style="position:absolute;left:45vw;top: 6vh;">
             {% csrf_token %}
@@ -284,12 +309,13 @@ function toggleFunction() {
           
             <button style="background-color: #ffea00;">Filter</button>
           </form>
-  -->
+ 
         <p style="padding-bottom: 0;margin-bottom: 0;position:absolute;right:40vw;top: 2vh;">{{ input_list.agent_name }}</p>
         <button style="background-color: #ffea00; position:absolute;right:40vw;top: 6vh;" onclick="toggleFunction()">Filter</button>
-          {% endif %}
+         -->
+         
 
-          <h2 style="padding-top:0;font-size: 2vw;">Monitoring Dashboard</h2>
+          <h2 style="padding-top:0;font-size: 4vh;">Monitoring Dashboard</h2>
 
           <form  method="post" style="padding: 0;margin: 0;">
             {% csrf_token %}
@@ -313,12 +339,12 @@ function toggleFunction() {
         </div>
       </div>
       <div class="col-sm-12 col-lg-5">
-        <div class="first p-3 border bg-light">
+        <div class="first p-3 border bg-light card">
         
-              <div style="text-align: center;">
-               <!-- <p id="available" class="good" style="font-size: 1vw;">Online</p>-->
-                       <p style="font-size: 1.6vw;">{{ input_list.country }}</p>
-                <p id="datetime" style="font-size: 0.9vw;"></p> 
+              <div style="text-align: center;" >
+               <!-- <p id="available" class="good" style="font-size: 1vw;">Online</p> 1.6,0.9vw-->
+                       <p style="font-size: 3vh;">{{ input_list.country }}</p>
+                <p id="datetime" style="font-size: 1.6vh;"></p> 
               </div>
 
         </div>
@@ -388,17 +414,19 @@ function toggleFunction() {
       <!--big-->
       <div class="col-sm-12 col-lg-2 d-none d-lg-block">
         <div class="second p-3 border bg-light">
-          <div class="but butl" style="margin-top: 0;margin-bottom: 5px;" onclick="selectchart('chart1','char')">
+          <div class="but butl card" style="margin-top: 0;margin-bottom: 5px;" onclick="selectchart('chart1','char')">
             <P style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">Call</P>
-            <p style="padding-top: 0;">{{ input_list.latest_call }}<i class="arrow fa fa-arrow-down"></i></p>
+            <p style="padding-top: 0;">{{ input_list.latest_call }}</p>
+            <!-- <i class="arrow fa fa-arrow-down"></i> -->
           </div>
-          <div class=" but butl" style="margin-bottom: 5px;" onclick="selectchart('chart2','char')">
+          <div class=" but butl card" style="margin-bottom: 5px;" onclick="selectchart('chart2','char')">
             <p style="padding-bottom: 0; margin-bottom: 1vh;margin-top: 0.6vh;">Negotiation</p>
-            <p style="padding-top: 0;">{{ input_list.latest_negotiation }} <i class="arrow fa fa-arrow-up"></i></p>
+            <p style="padding-top: 0;">{{ input_list.latest_negotiation }}</p>
+            <!-- <i class="arrow fa fa-arrow-up"></i> -->
           </div>
-          <div class="but butl" style="margin-top: 0;margin-bottom:0;" onclick="selectchart('chart3','char')">
+          <div class="but butl card" style="margin-top: 0;margin-bottom:0;" onclick="selectchart('chart3','char')">
             <p style="padding-bottom: 0;margin-bottom: 1vh;margin-top: 0.6vh;">Collection</p>
-            <p style="padding-top: 0;" class="bad">{{ input_list.latest_paid }}</p>
+            <p style="padding-top: 0;" class="">{{ input_list.latest_paid }}</p>
           </div>
         </div>
       </div>
@@ -432,7 +460,7 @@ function toggleFunction() {
        <!--end of second row-->
 
 
-       <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 1.2vw;">{{ general_rating }} with {{ general_score_grade }} out of 5 rating</h5>
+       <h5 style="padding-bottom: 0;margin-bottom: 0;font-size: 2.2vh;">{{ general_rating }} with {{ general_score_grade }} out of 5 rating</h5>
        <!--
        <div class="col-12">
         <div class="third border bg-light">
@@ -447,14 +475,14 @@ function toggleFunction() {
         </div>
       </div>
       -->
-      <div style="padding-top: 0;margin-top: 0; font-size: 1vw;">
+      <div style="padding-top: 0;margin-top: 0; font-size: 1.8vh;">
       <span class="fa fa-star {{ stars.0 }}"></span>
       <span class="fa fa-star {{ stars.1 }}"></span>
       <span class="fa fa-star {{ stars.2 }}"></span>
       <span class="fa fa-star {{ stars.3 }}"></span>
       <span class="fa fa-star  {{ stars.4 }}"></span>
      </div>
-     <p Style="margin: 0;font-size: 1vw;">You are  in position {{ user_position }} out of {{ country_agents_number }}</p>
+     <p Style="margin: 0;font-size: 1.8vh;">You are  in position {{ user_position }} out of {{ country_agents_number }}</p>
 
 
      <div class="row gy-3 gx-3 bg-secondary mt-2 pb-3">
@@ -467,7 +495,7 @@ function toggleFunction() {
      
 
 
-          <h5>{{ date_range }} KPI Description</h5>
+          <h5 style="font-size: 2.5vh;">{{ date_range }} KPI Description</h5>
           <div class="table-responsive-sm ">
             <table class="table">
               <tr>

@@ -9,39 +9,44 @@
   width: 100%;
   height: 10vh;
   border-radius: 20px;
+  line-height: 4.9vh;
+  
 }
 
  .second {
   height: 40vh;
   border-radius: 20px;
+
  }
 
  .third {
-  height: 19vh;
-  border-radius: 20px;
+  height: 16vh;
+  border-radius: 1.6vw;
+  overflow: scroll;
  }
 
  .word1 {
-    position: relative;
-    top: 0.2vh;
+   /* position: relative;/*
+    /*top: 0.2vh;/*
     /*left:2vw; 5px */
     text-align: center;
-    font-size: 1.2vw;
+    font-size: 2vh;
+    padding-top: 0;
  }
 
  .num {
   position: relative;
-  top: -3.8vh;
-  /*left: 2vw; -25px   arrow top = -20px*/
+  top: -3.5vh;
+  /*left: 2vw; -25px   arrow top = -20px  top: -3.vh;*/
   text-align: center;
-  font-size: 2.5vw;
+  font-size: 4.2vh;
  }
 
  .fa-caret-down{
   font-size: 1.2vw;
   color:red;
   position: absolute;
-  top: -2vh;
+  top: -1vh;
   left: 7px;
  }
 
@@ -49,7 +54,7 @@
   font-size: 1.2vw;
   color:green;
   position: absolute;
-  top: -2vh;
+  top: -1vh;
   left: 7px;
 }
 
@@ -114,7 +119,7 @@
 }
 
 #myTable{
-  font-size: 1.3vh;
+  font-size: 0.8vw;
 }
 /*Table style end   font-size: 0.7em */
 #form-button {
@@ -132,17 +137,22 @@
 
 .flag{
   /*  right:35px top:10px; pics right: 18px;top: -17px;  */
-  position: relative;
+  /* position: relative;
   border-radius: 50%;
-  right:3.8vh;
-  top:0.4vh;
+  left: -2.5vw */
+
+  /* right:10.8vh;
+  top:0.9vh; */
 }
 
 .pics{
   position: relative;
-  right: 2.2vh;
-  top: -2.1vh; 
-} 
+  left: -4.5vw; 
+
+  /* right: 9.2vh;*/
+  /* top: 10vh;   */
+
+}  
 
 #form-button:hover{
   background-color: #555;
@@ -150,9 +160,9 @@
 }
 
 .current{
-  border-top-style: double;
+ /* border-top-style: double;*/
   width: 100%;
-  height: 140px;
+ /* height: 140px;*/
 }
 
 .runner{
@@ -176,40 +186,109 @@
 .countr{
   font-size: 1vw;
 }
+
+.tileh{
+  font-size: 2vh;
+}
+
+.tilev{
+   font-size: 3vh;
+}
+.tile{
+  height: 50px;
+}
+.card-header{
+  background-color: #ffea00;
+}
 </style>
 
 
 
 
 <div class="container-fluid overflow-hidden">
-  <h2 style="margin-top: 5vh; font-size: 3vh;">Dashboard</h2>
+  <h2 style="margin-top: 4vh; font-size: 3vh;padding: 0;">Dashboard</h2>
   <p id="today" style="margin-top:0px; margin-bottom: 10px auto; font-size: 1.4vh;"></p>
   
 
 
-  <div class="row gx-5 gy-3 bg-secondary pb-2 ">
+  <div class="row gx-5 gy-3 bg-secondary pb-1 pt-1">
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-1 border bg-light">
-        <!-- <img class="trend" src="../static/down.jpeg"> <img class="trend" src="../static/up.jpeg"> -->
-        <p class="word1">Calls Counted</p><p class="num">{{total_calls}}<i class="arrow fa {{ kpi_increment_list.1 }}"></i></p>
+    <div class="col-md-3 ">
+      <div class="col ">
+        <div class="card text-center text-black  mb-3 " id="orders-pending">
+          <div id="bbglp1"  class="card-header">
+            <h5 class="card-title tileh">Calls Counted</h5>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title tilev">{{total_calls}}<i class="arrow fa {{ kpi_increment_list.1 }}"></i></h3>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+
+
+    <div class="col-md-3 ">
+      <div class="col">
+        <div class="card text-center text-black  mb-3 " id="orders-pending">
+          <div id="bbglp2"  class="card-header ">
+            <h5 class="card-title tileh">Agent Collection</h5>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title tilev">{{total_paid_sum}}<i class="arrow fa {{ kpi_increment_list.0 }}"></i></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 ">
+      <div class="col">
+        <div class="card text-center text-black  mb-3 " id="orders-pending">
+          <div id="bbglp3"  class="card-header ">
+            <h5 class="card-title tileh">Average Talk Time</h5>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title tilev">{{current_ATT}}<i class="arrow fa {{ kpi_increment_list.4 }}"></i></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 ">
+      <div class="col">
+        <div class="card text-center text-black  mb-3 " id="orders-pending">
+          <div id="bbglp4"  class="card-header ">
+            <h5 class="card-title tileh">Negotiation Rate</h5>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title tilev">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.3 }}"></i></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="first p-1 border bg-light">
+        <img class="trend" src="../static/down.jpeg"> <img class="trend" src="../static/up.jpeg"> -->
+        <!-- <p class="word1">Calls Counted</p><p class="num">{{total_calls}}<i class="arrow fa {{ kpi_increment_list.1 }}"></i></p>
+      </div> -->
+    <!-- </div> --> 
+<!-- 
+    <div class="col-md-3">
+      <div class="first p-1 border bg-light card">
         <p class="word1">Agent Collection</p><p class="num">{{total_paid_sum}}<i class="arrow fa {{ kpi_increment_list.0 }}"></i></p>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-md-3">
       <div class="first p-1 border bg-light">
-        <p class="word1">Contact Rate</p><p class="num">{{contact}}%<i class="arrow fa {{ kpi_increment_list.2 }}"></i></p>
+        <p class="word1">Average Talk Time</p><p class="num">{{current_ATT}}<i class="arrow fa {{ kpi_increment_list.4 }}"></i></p>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-md-3">
       <div class="first p-1 border bg-light">
         <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.3 }}"></i></p>
       </div>
-    </div>
+    </div> 
+  -->
 
   </div>
   
@@ -224,24 +303,26 @@
           <div class="row">
            <div class="form-group col-md-4" style="font-size: 0.9vw;">
                 <label class="drop" for="inputState">Country</label>
-                <select id="country" class="form-control" name="country" style="height: 2vh; padding-top: 0; padding-bottom: 0; font-size: 0.7vw;">
+                <select id="country" class="form-control" name="country" style="height: 2vh; padding-top: 0; padding-bottom: 0; font-size: 1.2vh;">
                   <option value="" selected>All</option>
                   <option value="Nigeria">Nigeria</option>
                   <option value="Kenya">Kenya</option>
                   <option value="Tanzania">Tanzania</option>
                   <option value="Uganda">Uganda</option>
+                  <option value="Togo">Togo</option>
+                  <option value="Malawi">Malawi</option>
                 </select>
            </div>
            <div class="form-group col-md-4" style="font-size: 0.9vw;">
                 <label class="drop" for="inputState">Duration</label>
-                <select id="inputState" class="form-control" name="date-range" style="height: 2vh; padding-top: 0; padding-bottom: 0; font-size: 0.7vw;"> <!-- height: 20px; padding-top: 0; font-size: 0.8em; -->
+                <select id="inputState" class="form-control" name="date-range" style="height: 2vh; padding-top: 0; padding-bottom: 0; font-size: 1.2vh;"> <!-- height: 20px; padding-top: 0; font-size: 0.8em;0.7vw -->
                   <option value="MTD" selected>MTD</option>
                   <option value="WTD">WTD</option>
                 </select>
            </div>
            <div class="form-group col-md-4" style="font-size: 0.75vw;">
             <label class="drop" for="form-button" style="visibility: hidden;">filter</label><br>
-            <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.7vw; height: 2vh; padding-top: 0; padding-bottom: 0;">Filter</button>
+            <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 1.2vh; height: 2vh; padding-top: 0; padding-bottom: 0;">Filter</button>
           </div>
          </div>
         </div>
@@ -275,7 +356,7 @@
       <div class="second p-3 border bg-light" style="text-align:center;">        
         <h3 style="font-size: 1.7vw;">&#127881; Current winner &#127881;</h3>
         <img src="../static/img_avatar.png"  style="border-radius: 35px; display: block; margin-left: auto; margin-right: auto;height: 35%;width: 40%;"><!--height="120px" width="160px" -->
-      <div style="font-size: 1.3vw;">Congratulations {{ combined_list.0.0 }} on your outstanding achievement leading the pack. Your determination is admirable!</div>
+      <div style="font-size: 1.1vw;">Congratulations {{ combined_list.0.0 }} on your outstanding achievement leading the pack. Your determination is admirable!</div>
       </div>
     </div>
 
@@ -284,18 +365,185 @@
     <h2 style="text-align: center; font-size: 2.5vh;">Current {{ date_range }} top performers</h2>
 
 
-    <div class="row  gy-3 bg-secondary pb-2 mt-2"> <!--gx-5-->
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    
+
+
+
+    <div class="row gx-5 gy-3 bg-secondary pb-1 pt-1 mt-1">
+
+
+
+      <div class="container">
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card text-center text-black mb-3" id="orders-pending">
+                    <div id="bbglp1" class="card-header">
+                        <div style="display: inline;">
+                            <img class="pics" src="../static/img_avatar.png" width="40" height="40" style="height: auto; width: 20%;">
+                            <img class="flag" src="../static/Uganda.png" style="height: 10%; width: 5%;">
+                        </div>
+                        <span class="countr">Uganda</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="current" style="font-size: 2vh; text-align: center;">{{ first_in_country.Uganda }}
+                            <p style="font-size: 1.3vh; text-align: center;">Having {{ combined_list_top_in_country.3.2 }}
+                                connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{combined_list_top_in_country.3.3 }}% average negotiation rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+              <div class="card text-center text-black mb-3" id="orders-pending">
+                  <div id="bbglp1" class="card-header">
+                      <div style="display: inline;">
+                          <img class="pics" src="../static/img_avatar.png" width="40" height="40" style="height: auto; width: 20%;">
+                          <img class="flag" src="../static/Flag-Nigeria.webp" style="height: 10%; width: 5%;">
+                      </div>
+                      <span class="countr">Nigeria</span>
+                  </div>
+                  <div class="card-body">
+                      <div class="current" style="font-size: 2vh; text-align: center;">{{ first_in_country.Nigeria }} 
+                          <p style="font-size: 1.3vh; text-align: center;">Having {{ combined_list_top_in_country.0.2 }} connected calls, {{ combined_list_top_in_country.0.4 }} collection,
+                             and {{ combined_list_top_in_country.0.3 }}% average negotiation rate</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card text-center text-black mb-3" id="orders-pending">
+                <div id="bbglp1" class="card-header">
+                    <div style="display: inline;">
+                        <img class="pics" src="../static/img_avatar.png" width="40" height="40" style="height: auto; width: 20%;">
+                        <img class="flag" src="../static/kenya.png" style="height: 10%; width: 5%;">
+                    </div>
+                    <span class="countr">Kenya</span>
+                </div>
+                <div class="card-body">
+                    <div class="current" style="font-size: 2vh; text-align: center;">{{ first_in_country.Kenya }}
+                        <p style="font-size: 1.3vh; text-align: center;">Having {{ combined_list_top_in_country.1.2 }} connected calls, {{ combined_list_top_in_country.1.4 }}
+                          collection, and {{ combined_list_top_in_country.1.3 }}% average negotiation rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card text-center text-black mb-3" id="orders-pending">
+              <div id="bbglp1" class="card-header">
+                  <div style="display: inline;">
+                      <img class="pics" src="../static/img_avatar.png" width="40" height="40" style="height: auto; width: 24%;padding-left: 1.6vh;">
+                      <img class="flag" src="../static/Flag_of_Tanzania.svg.png" style="height: 10%; width: 5%;">
+                  </div>
+                  <span class="countr">Tanzania</span>
+              </div>
+              <div class="card-body">
+                  <div class="current" style="font-size: 2vh; text-align: center;">{{ first_in_country.Tanzania }}
+                      <p style="font-size: 1.3vh; text-align: center;">Having {{ combined_list_top_in_country.2.2 }} connected calls,
+                        {{ combined_list_top_in_country.2.4 }} collection, and {{ combined_list_top_in_country.2.3 }}% average negotiation rate</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+            
+        </div>
+    </div>
+  
+
+      <!-- <div class="col-md-3 ">
+        <div class="col ">
+          <div class="card text-center text-black  mb-3 " id="orders-pending">
+            <div id="bbglp1"  class="card-header">
+              <div style="display: inline;">
+                <img class="pics" src="../static/img_avatar.png" width="40" height="40" style="height:auto; width:20%"> 
+                <img class="flag" src="../static/Uganda.png" style="height:10%; width:5%"> 
+              </div>
+              <span class="countr">Uganda</span>
+            </div>
+            <div class="card-body">
+             
+              <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Uganda }} <p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.3.2 }} connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{ combined_list_top_in_country.3.3 }}% average negotiation rate</p></div>      
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+      <!-- <div class="col-md-3 ">
+        <div class="col ">
+          <div class="card text-center text-black  mb-3 " id="orders-pending">
+            <div id="bbglp1"  class="card-header">
+              <div style="display: inline;">
+                <img class="pics" src="../static/img_avatar.png" style="height:40%; width:20%" > 
+                <img class="flag" src="../static/Uganda.png" style="height:10%; width:5%"> 
+              </div>
+              <span class="countr">Uganda</span>
+            </div>
+            <div class="card-body">
+             
+              <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Uganda }} <p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.3.2 }} connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{ combined_list_top_in_country.3.3 }}% average negotiation rate</p></div>      
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-3 ">
+        <div class="col ">
+          <div class="card text-center text-black  mb-3 " id="orders-pending">
+            <div id="bbglp1"  class="card-header">
+              <div style="display: inline;">
+                <img class="pics" src="../static/img_avatar.png" style="height:40%; width:20%" > 
+                <img class="flag" src="../static/Uganda.png" style="height:10%; width:5%"> 
+              </div>
+              <span class="countr">Uganda</span>
+            </div>
+            <div class="card-body">
+             
+              <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Uganda }} <p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.3.2 }} connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{ combined_list_top_in_country.3.3 }}% average negotiation rate</p></div>      
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+      <div class="col-md-3 ">
+        <div class="col ">
+          <div class="card text-center text-black  mb-3 " id="orders-pending">
+            <div id="bbglp1"  class="card-header">
+              <div style="display: inline;">
+                <img class="pics" src="../static/img_avatar.png" style="height:40%; width:20%" > 
+                <img class="flag" src="../static/Uganda.png" style="height:10%; width:5%"> 
+              </div>
+              <span class="countr">Uganda</span>
+            </div>
+            <div class="card-body">
+             
+              <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Uganda }} <p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.3.2 }} connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{ combined_list_top_in_country.3.3 }}% average negotiation rate</p></div>      
+            </div>
+          </div>
+        </div>
+      </div>
+ -->
+
+   <!--   <div class="row  gy-3 bg-secondary pb-2 mt-2"> 
+
+   <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
         <div style="display: inline;">
-          <img class="pics" src="../static/img_avatar.png" style="height:40%; width:20%" > <!-- height="55px" width="55px" -->
-          <img class="flag" src="../static/Uganda.png" style="height:10%; width:5%"><!-- height="15px" width="15px" -->
+          <img class="pics" src="../static/img_avatar.png" style="height:40%; width:20%" > 
+          <img class="flag" src="../static/Uganda.png" style="height:10%; width:5%">
         </div>
         <span class="countr">Uganda</span>
-        <div class="current" style="font-size: 1vw;text-align: center;">{{ first_in_country.Uganda }} <p style="font-size: 0.7vw;text-align: center;">Having {{ combined_list_top_in_country.3.2 }} connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{ combined_list_top_in_country.3.3 }}% average negotiation rate</p></div>
+        <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Uganda }} <p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.3.2 }} connected calls, {{ combined_list_top_in_country.3.4 }} collection, and {{ combined_list_top_in_country.3.3 }}% average negotiation rate</p></div>
       </div>
-    </div style="display: inline;">
+    </div> 
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="third p-3 border bg-light">
         <div style="display: inline;">
@@ -303,7 +551,7 @@
           <img class="flag" src="../static/Flag-Nigeria.webp" style="height:10%; width:5%">
         </div>
         <span class="countr">Nigeria</span>
-        <div class="current" style="font-size: 1vw;text-align: center;">{{ first_in_country.Nigeria }}<p style="font-size: 0.7vw;text-align: center;">Having {{ combined_list_top_in_country.0.2 }} connected calls, {{ combined_list_top_in_country.0.4 }} collection, and {{ combined_list_top_in_country.0.3 }}% average negotiation rate</p></div>
+        <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Nigeria }}<p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.0.2 }} connected calls, {{ combined_list_top_in_country.0.4 }} collection, and {{ combined_list_top_in_country.0.3 }}% average negotiation rate</p></div>
       </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -313,7 +561,8 @@
           <img class="flag" src="../static/kenya.png" style="height:10%; width:5%">
         </div>
         <span class="countr">Kenya</span>
-        <div class="current" style="font-size: 1vw;text-align: center;">{{ first_in_country.Kenya }}<p style="font-size: 0.7vw;text-align: center;">Having {{ combined_list_top_in_country.1.2 }} connected calls, {{ combined_list_top_in_country.1.4 }} collection, and {{ combined_list_top_in_country.1.3 }}% average negotiation rate</p></div>
+        <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Kenya }}<p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.1.2 }} connected calls, {{ combined_list_top_in_country.1.4 }}
+           collection, and {{ combined_list_top_in_country.1.3 }}% average negotiation rate</p></div>
     
       </div>
     </div>
@@ -324,11 +573,13 @@
           <img class="flag" src="../static/Flag_of_Tanzania.svg.png" style="height:10%; width:5%">
         </div>
         <span class="countr">Tanzania</span>
-        <div class="current" style="font-size: 1vw;text-align: center;">{{ first_in_country.Tanzania }}<p style="font-size: 0.7vw;text-align: center;">Having {{ combined_list_top_in_country.2.2 }} connected calls, {{ combined_list_top_in_country.2.4 }} collection, and {{ combined_list_top_in_country.2.3 }}% average negotiation rate</p></div>
+        <div class="current" style="font-size: 2vh;text-align: center;">{{ first_in_country.Tanzania }}<p style="font-size: 1.3vh;text-align: center;">Having {{ combined_list_top_in_country.2.2 }} connected calls,
+           {{ combined_list_top_in_country.2.4 }} collection, and {{ combined_list_top_in_country.2.3 }}% average negotiation rate</p></div>
       </div>
     </div>
-  </div>
-</div>
+    -->
+  <!-- </div>
+</div> -->
 
 </div>
 

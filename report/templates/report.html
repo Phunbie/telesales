@@ -42,6 +42,15 @@
         height: 25vh;
         line-height: 1.8vh;
     }
+
+    .labl{
+      font-size: 2vh;
+    }
+
+    .imp{
+      height:4vh;
+      font-size: 2vh;
+    }
 </style>
 
 <script>
@@ -99,24 +108,24 @@ function selectchart(cla,acla){
             <form class="row g-3" autocomplete="off" method="post">
               {% csrf_token %}
                 <div class="col-3">
-                    <label for="date" class="">Date compare From</label>
-                    <input type="date" name="from"  class="form-control" id="datefrom" required>
+                    <label for="date" class="labl">Date compare From</label>
+                    <input type="date" name="from"  class="form-control imp" id="datefrom" required>
                 </div>
                 <div class="col-3">
-                    <label for="date" class="">Date compare To</label>
-                    <input type="date" name="to"  class="form-control" id="dateto" required>
+                    <label for="date" class="labl">Date compare To</label>
+                    <input type="date" name="to"  class="form-control imp" id="dateto" required>
                 </div>
                 <div class="col-3">
-                  <label for="sel" class="">KPI</label>
-                  <select class="form-select" name="kpis" id="sel">
+                  <label for="sel" class="labl">KPI</label>
+                  <select class="form-select imp" name="kpis" id="sel" style="font-size: 2vh;padding-top: 0;padding-bottom: 0;">
                     <option value="calls" selected>Connected calls</option>
                     <option value="collection">Collection</option>
                     <option value="Negotiation">Negotiation</option>      
                   </select>
                 </div>
                 <div class="col-3 autocomplete">
-                    <label for="sel2" class="">Compare with</label>
-                    <input type="text" class="form-control" placeholder="Agent" list="list-timezone" id="input-datalist" name="compare" required>
+                    <label for="sel2" class="labl">Compare with</label>
+                    <input type="text" class="form-control imp" placeholder="Agent" list="list-timezone" id="input-datalist" name="compare" required>
                     <datalist id="list-timezone">
                       {% for x in name_list %}
                       <option>{{ x }}</option>
@@ -137,8 +146,9 @@ function selectchart(cla,acla){
 
                 <div class="col-12">
                    <!-- <p style="margin-bottom: 0;">Features</p> -->
-                    <input type="checkbox" id="coc" name="coc" value="report">
-                    <label for="coc">Download Report</label>
+                    <input type="checkbox" id="coc" name="coc" value="report" class="imp" style="height: 2vh;">
+                  
+                    <label for="coc" style="font-size: 1.7vh;">Download Report</label>
                     <!--
                     <input type="checkbox" id="coll" name="coll" value="Car" checked>
                     <label for="coll">Collection</label>
@@ -155,7 +165,7 @@ function selectchart(cla,acla){
                 </div>
 
                 <div class="col-auto">
-                  <button type="submit" id="submitx" class="btn btn-primary btn-sm mb-3">Apply Filter</button>
+                  <button type="submit" id="submitx" class="btn btn-primary btn-sm mb-3" style="height: 4vh; font-size: 2vh;">Apply Filter</button>
                 </div>
               </form>
 

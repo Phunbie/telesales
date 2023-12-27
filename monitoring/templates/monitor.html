@@ -11,9 +11,9 @@
 
 <style>
 .first{
-    height: 14vh;
+    height: 15vh;
     border-radius: 2vw;
-    line-height: 2.7vh;
+    line-height: 1vh;
    
 }
 .second{
@@ -132,25 +132,25 @@ tr:nth-child(even) {
 }
 
 
-/*
-.chip {
+
+
+.chip2 {
   display: inline-block;
-  padding: 0 25px;
-  height: 50px;
-  font-size: 16px;
-  line-height: 50px;
-  border-radius: 25px;
+  padding: 0 2.5vh;
+  height: 3.5vh;
+  font-size: 1.5vh;
+  line-height: 3vh;
+  border-radius: 3vh;
   background-color: #f1f1f1;
 }
-.chip img {
+
+.chip2 img {
   float: left;
-  margin: 0 10px 0 -25px;
-  height: 50px;
-  width: 50px;
+  margin: 0 1vh 0 -2.5vh;
+  height: 3.5vh;
+  width: 3.5vh;
   border-radius: 50%;
 }
-
-*/
 
 .chip {
   display: inline-block;
@@ -289,31 +289,19 @@ function toggleFunction() {
 <div id="testing"></div> 
 <div style="margin-top: 3vh;" class="container overflow-hidden">
     <div class="row gy-3 gx-3">
-      <div class="col-sm-12 col-lg-7 d-none d-lg-block">
+      <!-- col-sm-12 col-lg-7 d-none d-lg-block -->
+      <div class="col-sm-12 col-md-7 d-none d-lg-block">
         <div class="first">
-          <div class="chip" style="font-family: Audiowide, sans-serif;">
-            <img src="{% static 'img_avatar.png' %}" alt="Person" width="96" height="96">
-            {{ input_list.first_name }}  {{ input_list.last_name }}
+          <!-- width="96" height="96" -->
+         <!-- <div class="chip" style="font-family: Audiowide, sans-serif;"> -->  
+            <img src="{% static 'img_avatar.png' %}" alt="Person" style="border-radius: 50%;width: 6vh;height: 6vh;">
+            <!-- {{ input_list.first_name }}  {{ input_list.last_name }}
             {% if input_list.user_is_supervisor %}
              <a  href="#" onclick="toggleFunction()">Filter</a>
-             {% endif %}
-          </div> 
-
+             {% endif %} -->
+          <!-- </div>  -->
          
-  <!--
-          <form method="post" autocomplete="off"  style="position:absolute;left:45vw;top: 6vh;">
-            {% csrf_token %}
-            <p style="padding-bottom: 0;margin-bottom: 0;">{{ input_list.agent_name }}</p>
-          
-              <input id="agentInput" type="text" name="Agents" placeholder="Agent name" style="z-index: 3;">
-          
-            <button style="background-color: #ffea00;">Filter</button>
-          </form>
  
-        <p style="padding-bottom: 0;margin-bottom: 0;position:absolute;right:40vw;top: 2vh;">{{ input_list.agent_name }}</p>
-        <button style="background-color: #ffea00; position:absolute;right:40vw;top: 6vh;" onclick="toggleFunction()">Filter</button>
-         -->
-         
 
           <h2 style="padding-top:0;font-size: 4vh;">Monitoring Dashboard</h2>
 
@@ -323,14 +311,13 @@ function toggleFunction() {
             <div class="row">
              <div class="form-group col-md-2" style="font-size: 0.8em;">
                   <!--<label class="drop" for="inputState">Duration</label>-->
-                  <select id="inputState" class="form-control" name="date-range" style="padding-bottom: 0;padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;">
-                  <!--  <option selected>Today Status</option> -->
+                  <select id="inputState" class="form-control" name="date-range" style="padding-bottom: 0;padding-top: 0; font-size: 0.7vw;padding-left: 3px;padding-right: 2px;margin-top: 2vh;">
                     <option value="MTD" selected>MTD Status</option>
                     <option value="WTD" >WTD Status</option>
                   </select>
              </div>
              <div class="form-group col-md-1 col-sm-2">
-              <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.7vw;">Filter</button>
+              <button id="form-button" type="submit" class="btn btn-primary" style="font-size: 0.7vw;margin-top: 2.9vh;">Filter</button>
             </div>
            </div>
           </div>
@@ -338,15 +325,42 @@ function toggleFunction() {
 
         </div>
       </div>
-      <div class="col-sm-12 col-lg-5">
+      <!-- col-sm-12 col-lg-5 -->
+       <!-- <div class=" col-md-5">    
         <div class="first p-3 border bg-light card">
         
-              <div style="text-align: center;" >
-               <!-- <p id="available" class="good" style="font-size: 1vw;">Online</p> 1.6,0.9vw-->
-                       <p style="font-size: 3vh;">{{ input_list.country }}</p>
-                <p id="datetime" style="font-size: 1.6vh;"></p> 
+              <div style="text-align: center;" class="card-body">
+              
+               
+                   <p style="font-size: 2.6vh;margin-top: 0;padding-top: 0;">{{ input_list.country }}</p>
+                   <p id="datetime" style="font-size: 1.2vh;"></p>
+                   <div class="chip2">
+                    <img src="{% static 'img_avatar.png' %}" alt="Person" width="60" height="60">
+                    {{ input_list.first_name }}  {{ input_list.last_name }}
+                    {% if input_list.user_is_supervisor %}
+                     <a  href="#" onclick="toggleFunction()">Filter</a>
+                     {% endif %}
+                    </div> 
               </div>
 
+        </div>
+      </div>  -->
+
+
+      <div class="col-md-5 ">
+        <div class="col">
+          <div class="card first text-center text-black  mb-3 bg-light" style="border-radius: 7vh;">
+            <div class="card-body">
+               <p style="font-size: 2.6vh;margin-top: 0;padding-top: 0;">{{ input_list.country }}</p>
+                   <p id="datetime" style="font-size: 1.3vh;"></p>
+                    <p style="font-size: 1.5vh;">
+                    {{ input_list.first_name }}  {{ input_list.last_name }}
+                    {% if input_list.user_is_supervisor %}
+                     <a  href="#" onclick="toggleFunction()">Filter</a>
+                     {% endif %}
+                    </p>    
+            </div>
+          </div>
         </div>
       </div>
 

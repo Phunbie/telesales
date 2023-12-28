@@ -156,9 +156,15 @@ def home(request):
     scan_country=""
     date_range = "MTD"
     curr = ""
+    curr_sign = ""
     if request.method == 'POST':
         scan_country  = request.POST.get('country')
         date_range = request.POST.get('date-range')
+        currency = request.POST.get('currency')
+        if currency == "USD":
+            curr_sign = "($)"
+        curr = currency
+        
         redirect(home)
 
         
@@ -647,6 +653,7 @@ def home(request):
                    "scan_country":scan_country,
                    "date_range":date_range,
                    "combined_list_top_in_country":combined_list_top_in_country,
+                   "curr_sign": curr_sign
                    }
         
         return render(request, 'index.html',context )

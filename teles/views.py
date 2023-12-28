@@ -10,6 +10,36 @@ from . import vicidata
 import boto3
 import json
 import pandas as pd
+import requests
+
+
+
+def get_exchange_rate(base_currency):
+    endpoint = f"https://open.er-api.com/v6/latest/{base_currency}"
+    params = {"apikey":'f09ec53586559752b8c0d7c5' }
+    response = requests.get(endpoint, params=params)
+    response.raise_for_status()  # Raise an HTTPError for bad responses
+    data = response.json()
+    rate = data["rates"].get("USD")
+    return rate
+#exchange rates
+Nigeria_rate = get_exchange_rate("NGN")
+Uganda_rate= get_exchange_rate("UGX")
+Tanzania_rate= get_exchange_rate("TZS")
+Kenya_rate= get_exchange_rate("KES")
+Togo_rate= get_exchange_rate("XOF")
+Malawi_rate= get_exchange_rate("MWK")
+
+def convert_df_rate(df):
+    df.loc[df["Country"] == "Tanzania", "Sum Total Paid"] = df.loc[df["Country"] == "Tanzania", "Sum Total Paid"] *Tanzania_rate
+    df.loc[df["Country"] == "Nigeria", "Sum Total Paid"] = df.loc[df["Country"] == "Nigeria", "Sum Total Paid"] * Nigeria_rate
+    df.loc[df["Country"] == "Uganda", "Sum Total Paid"] = df.loc[df["Country"] == "Uganda", "Sum Total Paid"] * Uganda_rate
+    df.loc[df["Country"] == "Kenya", "Sum Total Paid"] = df.loc[df["Country"] == "Kenya", "Sum Total Paid"] * Kenya_rate
+    df.loc[df["Country"] == "Togo", "Sum Total Paid"] = df.loc[df["Country"] == "Togo", "Sum Total Paid"] * Togo_rate
+    df.loc[df["Country"] == "Malawi", "Sum Total Paid"] = df.loc[df["Country"] == "Malawi", "Sum Total Paid"] * Malawi_rate
+    df["Sum Total Paid"] = df["Sum Total Paid"].round(2)
+    return df
+
 
 
 def up_down_indicator(list):
@@ -125,6 +155,7 @@ def home(request):
     #post conditional filter list by country
     scan_country=""
     date_range = "MTD"
+    curr = ""
     if request.method == 'POST':
         scan_country  = request.POST.get('country')
         date_range = request.POST.get('date-range')
@@ -249,47 +280,85 @@ def home(request):
 
 
    
-
+        country_lis = collection['Country'].unique().tolist()
+        df_scored_list= []
         # dataframe per country score added
-        Nigeria_df = merged_df[merged_df['Country']=="Nigeria"]
-        Nigeria_df_scored = create_score_df(Nigeria_calls_target_daily, Nigeria_collection_target_daily,Nigeria_Negotiation_target_daily, Nigeria_df)
-        Nigeria_first = position_list(Nigeria_df_scored)[-1]
-        Kenya_df = merged_df[merged_df['Country']=="Kenya"]
-        Kenya_df_scored = create_score_df(Kenya_calls_target_daily, Kenya_collection_target_daily,Kenya_Negotiation_target_daily,  Kenya_df)
-        Kenya_first = position_list(Kenya_df_scored)[-1]
-        Tanzania_df = merged_df[merged_df['Country']=="Tanzania"]
-        Tanzania_df_scored = create_score_df( Tanzania_calls_target_daily, Tanzania_collection_target_daily, Tanzania_Negotiation_target_daily, Tanzania_df)
-        Tanzania_first = position_list(Tanzania_df_scored)[-1]
-        Uganda_df = merged_df[merged_df['Country']=="Uganda"] 
-        Uganda_df_scored = create_score_df(Uganda_calls_target_daily, Uganda_collection_target_daily,Uganda_Negotiation_target_daily, Uganda_df ) 
-        Uganda_first = position_list(Uganda_df_scored)[-1]
-        Togo_df = merged_df[merged_df['Country']=="Togo"] 
-        Togo_df_scored = create_score_df(Togo_calls_target_daily, Togo_collection_target_daily,Togo_Negotiation_target_daily, Togo_df ) 
-        Togo_first = position_list(Togo_df_scored)[-1]
-        Malawi_df = merged_df[merged_df['Country']=="Malawi"] 
-        Malawi_df_scored = create_score_df(Malawi_calls_target_daily, Malawi_collection_target_daily,Malawi_Negotiation_target_daily, Malawi_df ) 
-        Togo_first = position_list(Malawi_df_scored)[-1]
+        if "Nigeria" in country_lis:
+            Nigeria_df = merged_df[merged_df['Country']=="Nigeria"]
+            Nigeria_df_scored = create_score_df(Nigeria_calls_target_daily, Nigeria_collection_target_daily,Nigeria_Negotiation_target_daily, Nigeria_df)
+            Nigeria_first = position_list(Nigeria_df_scored)[-1]
+            df_scored_list.append(Nigeria_df_scored)
+        else:
+            Nigeria_df = "None"
+            Nigeria_df_scored = 0
+            Nigeria_first = "None"
+        if "Kenya" in country_lis:
+            Kenya_df = merged_df[merged_df['Country']=="Kenya"]
+            Kenya_df_scored = create_score_df(Kenya_calls_target_daily, Kenya_collection_target_daily,Kenya_Negotiation_target_daily,  Kenya_df)
+            Kenya_first = position_list(Kenya_df_scored)[-1]
+            df_scored_list.append(Kenya_df_scored)
+        else:
+            Kenya_df = "None"
+            Kenya_df_scored = 0
+            Kenya_first = "None"
+        
+        if "Tanzania" in country_lis:
+            Tanzania_df = merged_df[merged_df['Country']=="Tanzania"]
+            Tanzania_df_scored = create_score_df( Tanzania_calls_target_daily, Tanzania_collection_target_daily, Tanzania_Negotiation_target_daily, Tanzania_df)
+            Tanzania_first = position_list(Tanzania_df_scored)[-1]
+            df_scored_list.append(Tanzania_df_scored)
+        else:
+            Tanzania_df = "None"
+            Tanzania_df_scored =  0
+            Tanzania_first =  "None"
+        if "Uganda" in country_lis:
+            Uganda_df = merged_df[merged_df['Country']=="Uganda"] 
+            Uganda_df_scored = create_score_df(Uganda_calls_target_daily, Uganda_collection_target_daily,Uganda_Negotiation_target_daily, Uganda_df ) 
+            Uganda_first = position_list(Uganda_df_scored)[-1]
+            df_scored_list.append(Uganda_df_scored)
+        else:
+            Uganda_df =  "None"
+            Uganda_df_scored = 0
+            Uganda_first = "None"
+        if "Togo" in country_lis:
+            Togo_df = merged_df[merged_df['Country']=="Togo"] 
+            Togo_df_scored = create_score_df(Togo_calls_target_daily, Togo_collection_target_daily,Togo_Negotiation_target_daily, Togo_df ) 
+            Togo_first = position_list(Togo_df_scored)[-1]
+            df_scored_list.append(Togo_df_scored)
+        else:
+            Togo_df =  "None"
+            Togo_df_scored = 0
+            Togo_first = "None"
+        if "Malawi" in country_lis:
+            Malawi_df = merged_df[merged_df['Country']=="Malawi"] 
+            Malawi_df_scored = create_score_df(Malawi_calls_target_daily, Malawi_collection_target_daily,Malawi_Negotiation_target_daily, Malawi_df ) 
+            Malawi_first = position_list(Malawi_df_scored)[-1]
+            df_scored_list.append(Malawi_df_scored)
+        else:
+            Malawi_df = "None"
+            Malawi_df_scored = 0
+            Malawi_first = "None"
 
-        #append all the scored country's dfs 
-        scored_joined = pd.concat([Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ,Togo_df_scored, Malawi_df_scored], axis=0)
+        #append all the scored country's dfs   [Nigeria_df_scored, Kenya_df_scored, Tanzania_df_scored, Uganda_df_scored ,Togo_df_scored, Malawi_df_scored]
+        scored_joined = pd.concat(df_scored_list, axis=0)
         dfscore=""
         checker=False
-        if scan_country == "Nigeria":
+        if (scan_country == "Nigeria") and ("Nigeria" in country_lis):
             dfscore = Nigeria_df_scored
             checker=True
-        elif scan_country == "Kenya":
+        elif (scan_country == "Kenya") and ("Kenya" in country_lis):
             dfscore = Kenya_df_scored
             checker=True
-        elif scan_country == "Tanzania":
+        elif (scan_country == "Tanzania") and ("Tanzania" in country_lis):
             dfscore = Tanzania_df_scored
             checker=True
-        elif scan_country == "Uganda":
+        elif (scan_country == "Uganda") and ("Uganda" in country_lis):
             dfscore = Uganda_df_scored
             checker=True
-        elif scan_country == "Togo":
+        elif (scan_country == "Togo") and ("Togo" in country_lis):
             dfscore = Togo_df_scored
             checker=True
-        elif scan_country == "Malawi":
+        elif (scan_country == "Malawi") and ("Malawi" in country_lis):
             dfscore = Malawi_df_scored
             checker=True
         else:
@@ -314,10 +383,16 @@ def home(request):
         list_call = []
         list_ATT = []
         list_negotiation =[]
+        collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(float)
+        if curr=="USD":
+            collection=convert_df_rate(collection)
+
         for i, user_name in enumerate(user_list):
-            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).sum()
+            #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+            #total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).sum()
+            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].sum()
             total_paid_sum = round(total_paid_sum,2)
+
             #calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).sum()
@@ -365,8 +440,9 @@ def home(request):
         list_contact_top_in_country  = []
         list_negotiation_top_in_country  =[]
         for countryx, namex in first_in_country.items():
-            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-            total_paid_sum1 = collection[collection["User Name"] == namex]["Sum Total Paid"].astype(float).sum()
+            #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+            #total_paid_sum1 = collection[collection["User Name"] == namex]["Sum Total Paid"].astype(float).sum()
+            total_paid_sum1 = collection[collection["User Name"] == namex]["Sum Total Paid"].sum()
             total_paid_sum1 = round(total_paid_sum1,2)
             #calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -404,8 +480,9 @@ def home(request):
         
         if  user_name in user_list2:
             #user_name = "Peniel Ezechukwu"
-            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
-            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
+            #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
+            #total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
+            total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].tolist()
             total_paid_sum = [round(num, 2) for num in total_paid_sum]
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).tolist()
@@ -421,7 +498,8 @@ def home(request):
 
             #print("total_paid_sum",total_paid_sum)
         elif (country in country_list) and (user_name not in user_list2):
-            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
+            #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
+            collection["Sum Total Paid"] = collection["Sum Total Paid"].astype(int)
             total_paid_sum = collection[collection["Country"] == country]
             total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
             #dates= total_paid_sum["Call Date"].str.replace('-', '.')
@@ -469,8 +547,9 @@ def home(request):
            # Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
            # Negotiation_r = Negotiation[Negotiation["Country"] == country]["Negotiation Rate"].astype(float).tolist()
         else:
-            country = "Nigeria"
-            collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
+            country = country_list[0]
+            #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
+            collection["Sum Total Paid"] = collection["Sum Total Paid"].astype(int)
             total_paid_sum = collection[collection["Country"] == country]
             total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
             #dates= total_paid_sum["Call Date"].str.replace('-', '.')

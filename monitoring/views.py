@@ -312,7 +312,7 @@ def monitor(request):
         #calls_target_daily
        # Negotiation_target_daily
     else:
-        country = "Nigeria"
+        country = country_list[0]
         dates= calls[calls["Country"] == country]["Call Date"].str.replace('-', '.')
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
         total_paid_sum = collection[collection["Country"] == country]

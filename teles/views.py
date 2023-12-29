@@ -51,7 +51,7 @@ def up_down_indicator(list):
         elif increase < 0:
             res = "fa-caret-down"
         else:
-            res= "fa-stop"
+            res= "" #fa-stop
     return res
 
 
@@ -389,6 +389,7 @@ def home(request):
         list_call = []
         list_ATT = []
         list_negotiation =[]
+        list_country = []
         collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(float)
         if curr=="USD":
             collection=convert_df_rate(collection)
@@ -398,6 +399,9 @@ def home(request):
             #total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).sum()
             total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].sum()
             total_paid_sum = round(total_paid_sum,2)
+
+            the_country = collection[collection["User Name"] == user_name]["Country"].unique()
+            the_country = the_country[0]
 
             #calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -432,9 +436,11 @@ def home(request):
             list_ATT.append(ATT1)
             
             list_negotiation.append(Negotiation_r)
+
+            list_country.append(the_country)
             #if i == 4:
-            combined_list = list(zip(list_name[:5], list_collection[:5], list_call[:5], list_ATT[:5], list_negotiation[:5]))
-            longer_list = list(zip(list_name, list_collection, list_call, list_ATT, list_negotiation))
+            combined_list = list(zip(list_name[:5], list_collection[:5], list_call[:5], list_ATT[:5], list_negotiation[:5], list_country[:5]))
+            longer_list = list(zip(list_name, list_collection, list_call, list_ATT, list_negotiation,list_country))
             #break
     
 #kpis for a list of first in four countries
@@ -449,6 +455,7 @@ def home(request):
             #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
             #total_paid_sum1 = collection[collection["User Name"] == namex]["Sum Total Paid"].astype(float).sum()
             total_paid_sum1 = collection[collection["User Name"] == namex]["Sum Total Paid"].sum()
+            total_paid_avg1 = collection[collection["User Name"] == namex]["Sum Total Paid"].mean()
             total_paid_sum1 = round(total_paid_sum1,2)
             #calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
@@ -483,48 +490,58 @@ def home(request):
         country_list = [i for i in country_list if i is not None]
         
         user_name = first_name.strip() + " " + last_name.strip() 
-        
+        is_country = ""
         if  user_name in user_list2:
             #user_name = "Peniel Ezechukwu"
             #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
             #total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].astype(float).tolist()
             total_paid_sum = collection[collection["User Name"] == user_name]["Sum Total Paid"].tolist()
             total_paid_sum = [round(num, 2) for num in total_paid_sum]
+            total_paid_sum2 = total_paid_sum
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(float).tolist()
             total_calls = [round(num, 2) for num in  total_calls]
+            total_calls2 = total_calls 
             ATT['Average Talk Time'] = ATT['Average Talk Time'].fillna(0).astype(int)
             ATT2 = ATT[ATT["User Name"] == user_name]['Average Talk Time'].tolist()
+            ATT22 = ATT2
             contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
             contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
             contact = [round(num, 2) for num in contact]
             Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
             Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
             Negotiation_r = [round(num, 2) for num in Negotiation_r]
+            Negotiation_r2 = Negotiation_r
 
             #print("total_paid_sum",total_paid_sum)
         elif (country in country_list) and (user_name not in user_list2):
             #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
             collection["Sum Total Paid"] = collection["Sum Total Paid"].astype(int)
             total_paid_sum = collection[collection["Country"] == country]
+            country_TPS_list= total_paid_sum["Sum Total Paid"].tolist()
             total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
             #dates= total_paid_sum["Call Date"].str.replace('-', '.')
             total_paid_sum = total_paid_sum.sort_values(by='Call Date')
             total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
             total_paid_sum = [round(num, 2) for num in total_paid_sum]
+           
     # calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
             total_calls = calls[calls["Country"] == country]
+            country_TC_list= total_calls["Count Calls Connected"].tolist()
             total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
             total_calls= total_calls.sort_values(by='Call Date')
             total_calls = total_calls["Count Calls Connected"].tolist()
             total_calls = [round(num, 2) for num in  total_calls]
+            
    #average talk time
             ATT['Average Talk Time'] = ATT['Average Talk Time'].fillna(0).astype(int)
             ATT2 = ATT[ATT["Country"] == country]
+            country_ATT_list= ATT2['Average Talk Time'].tolist()
             ATT2 = ATT2.groupby('Call Date')['Average Talk Time'].mean().reset_index()
             ATT2= ATT2.sort_values(by='Call Date')
             ATT2 = ATT2['Average Talk Time'].tolist()
+            
             #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
     # contact
@@ -539,10 +556,12 @@ def home(request):
     #Negotiation
             Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
             Negotiation_r =  Negotiation[Negotiation["Country"] == country]
+            country_NR_list= Negotiation_r["Negotiation Rate"].tolist()
             Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
             Negotiation_r = Negotiation_r.sort_values(by='Call Date')
             Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
             Negotiation_r = [round(num, 2) for num in Negotiation_r]
+            is_country = "yes"
             #print("total_paid_sum2",total_paid_sum)   
            # collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '')
             #total_paid_sum = collection[collection["Country"] == country]["Sum Total Paid"].astype(int).tolist()
@@ -557,24 +576,29 @@ def home(request):
             #collection["Sum Total Paid"] = collection["Sum Total Paid"].str.replace(',', '').astype(int)
             collection["Sum Total Paid"] = collection["Sum Total Paid"].astype(int)
             total_paid_sum = collection[collection["Country"] == country]
+            country_TPS_list= total_paid_sum["Sum Total Paid"].tolist()
             total_paid_sum = total_paid_sum.groupby('Call Date')['Sum Total Paid'].mean().reset_index()
             #dates= total_paid_sum["Call Date"].str.replace('-', '.')
             total_paid_sum = total_paid_sum.sort_values(by='Call Date')
             total_paid_sum = total_paid_sum["Sum Total Paid"].tolist()
             total_paid_sum = [round(num, 2) for num in total_paid_sum]
+            
     # calls
             calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '').astype(int)
             total_calls = calls[calls["Country"] == country]
+            country_TC_list= total_calls["Count Calls Connected"].tolist()
             total_calls = total_calls.groupby('Call Date')['Count Calls Connected'].mean().reset_index()
             total_calls= total_calls.sort_values(by='Call Date')
             total_calls = total_calls["Count Calls Connected"].tolist()
             total_calls = [round(num, 2) for num in  total_calls]
-
+            
             ATT['Average Talk Time'] = ATT['Average Talk Time'].fillna(0).astype(int)
             ATT2 = ATT[ATT["Country"] == country]
+            country_ATT_list= ATT2['Average Talk Time'].tolist()
             ATT2 = ATT2.groupby('Call Date')['Average Talk Time'].mean().reset_index()
             ATT2= ATT2.sort_values(by='Call Date')
             ATT2 = ATT2['Average Talk Time'].tolist()
+            
             #calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
             #total_calls = calls[calls["Country"] == country]["Count Calls Connected"].astype(int).tolist()
     # contact
@@ -589,11 +613,12 @@ def home(request):
     #Negotiation
             Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '').astype(float)
             Negotiation_r =  Negotiation[Negotiation["Country"] == country]
+            country_NR_list= Negotiation_r["Negotiation Rate"].tolist()
             Negotiation_r = Negotiation_r.groupby('Call Date')['Negotiation Rate'].mean().reset_index()
             Negotiation_r = Negotiation_r.sort_values(by='Call Date')
             Negotiation_r = Negotiation_r["Negotiation Rate"].tolist()
             Negotiation_r = [round(num, 2) for num in Negotiation_r]
-           
+            is_country = "yes"
 
 
             #user_name = "Adeola Adebayo"
@@ -603,16 +628,38 @@ def home(request):
         collection_increase = up_down_indicator(total_paid_sum)
         
         total_paid_sum = total_paid_sum[-1]
+ 
+        if is_country == "yes":
+            total_paid_sum_avg = round(sum(country_TPS_list)/len(country_TPS_list),2)
+            total_paid_sum_tot = sum(country_TPS_list)
+        else:
+            total_paid_sum_avg = sum(total_paid_sum2)/len(total_paid_sum2)
+            total_paid_sum_tot = sum(total_paid_sum2)
+
         #print(f"The sum total paid for {user_name} is: {total_paid_sum}")
         #calls
        # calls["Count Calls Connected"] = calls["Count Calls Connected"].str.replace(',', '')
        # total_calls = calls[calls["User Name"] == user_name]["Count Calls Connected"].astype(int).tolist()
         calls_increase = up_down_indicator(total_calls)
         total_calls = total_calls[-1]
+        if is_country == "yes":
+            total_calls_avg= round(sum(country_TC_list)/len(country_TC_list),2)
+            total_calls_tot = sum(country_TC_list)
+        else:
+            total_calls_avg= sum(total_calls2)/len(total_calls2)
+            total_calls_tot = sum(total_calls2)
+
 
 
         ATT_increase =  up_down_indicator(ATT2)
         current_ATT = round(ATT2[-1],2)
+ 
+        if is_country == "yes":
+            current_ATT_avg = round(sum(country_ATT_list)/len(country_ATT_list),2)
+            current_ATT_tot = sum(country_ATT_list)
+        else:
+            current_ATT_avg = sum(ATT22)/len(ATT22)
+            current_ATT_tot = sum(ATT22)
         #contact_rate
        # contact_rate["Contact Rate"] = contact_rate["Contact Rate"].str.replace('%', '')
        # contact = contact_rate[contact_rate["User Name"] == user_name]["Contact Rate"].astype(float).tolist()
@@ -625,13 +672,21 @@ def home(request):
        # Negotiation["Negotiation Rate"] = Negotiation["Negotiation Rate"].str.replace('%', '')
        # Negotiation_r = Negotiation[Negotiation["User Name"] == user_name]["Negotiation Rate"].astype(float).tolist()
         Negotiation_increase = up_down_indicator(Negotiation_r)
+
+        if is_country == "yes":
+            Negotiation_r_avg = round(sum(country_NR_list)/len(country_NR_list),2)
+            Negotiation_r_tot = sum(country_NR_list)
+        else:
+            Negotiation_r_avg = sum(Negotiation_r2)/len(Negotiation_r2)
+            Negotiation_r_tot = sum(Negotiation_r2)
         Negotiation_r = Negotiation_r[-1]
         #length1 = len(Negotiation_r)
         #Negotiation_r =  Negotiation_r.sum()/length1 
         Negotiation_r = round(Negotiation_r, 2)
         #print(f"The sum total rate for {user_name} is: {Negotiation_r}")
         kpi_increment_list = [collection_increase,calls_increase,contact_increase, Negotiation_increase, ATT_increase]
-
+        total_kpi_dic = {"calls":total_calls_tot,"ATT":current_ATT_tot,"paid":total_paid_sum_tot,"negotiation":Negotiation_r_tot}
+        avg_kpi_dic = {"calls":total_calls_avg,"ATT":current_ATT_avg,"paid":total_paid_sum_avg,"negotiation":Negotiation_r_avg}
 
    
          
@@ -653,7 +708,9 @@ def home(request):
                    "scan_country":scan_country,
                    "date_range":date_range,
                    "combined_list_top_in_country":combined_list_top_in_country,
-                   "curr_sign": curr_sign
+                   "curr_sign": curr_sign,
+                   "total_kpi_dic":total_kpi_dic,
+                   "avg_kpi_dic":avg_kpi_dic
                    }
         
         return render(request, 'index.html',context )

@@ -30,6 +30,17 @@ Kenya_rate= get_exchange_rate("KES")
 Togo_rate= get_exchange_rate("XOF")
 Malawi_rate= get_exchange_rate("MWK")
 
+def transforn_merge(df1,df2):
+    df2 = df2.drop(columns=["Sum Variable Pay Amount Earned"])
+
+    # Step 2: Rename the columns
+    df2 = df2.rename(columns={"Call Date Date": "Call Date", "Updated Fullname":"User Name", "Total Amount Paid": "Sum Total Paid"})
+
+    # Step 3: Merge the two DataFrames using an outer join
+    merged_df = pd.concat([df1, df2])
+    merged_df['User Name'] = merged_df['User Name'].str.strip()
+    return merged_df
+
 def convert_df_rate(df):
     df.loc[df["Country"] == "Tanzania", "Sum Total Paid"] = df.loc[df["Country"] == "Tanzania", "Sum Total Paid"] *Tanzania_rate
     df.loc[df["Country"] == "Nigeria", "Sum Total Paid"] = df.loc[df["Country"] == "Nigeria", "Sum Total Paid"] * Nigeria_rate
@@ -252,7 +263,9 @@ def home(request):
             collection_target_weekly  = 3000000
             Negotiation_target_weekly  = 65
 
-        collection = bucket3('amount-collected-per-agent-mtd/')
+        collection1 = bucket3('amount-collected-per-agent-mtd/')
+        collection2 = bucket3('vicidial-mtd/')
+        collection = transforn_merge( collection1,collection2)
         collection = collection.sort_values(by='Call Date')
         calls = bucket3('calls-per-agent-mtd/')
         calls = calls.sort_values(by='Call Date')
@@ -264,7 +277,9 @@ def home(request):
         ATT = ATT.sort_values(by='Call Date')
 
         if date_range == "WTD":
-            collection = bucket3('amount-collected-per-agent/')
+            collection1 = bucket3('amount-collected-per-agent/')
+            collection2 = bucket3('vicidial-data/')
+            collection = transforn_merge( collection1,collection2)
             collection = collection.sort_values(by='Call Date')
             calls = bucket3('calls-per-agent/')
             calls = calls.sort_values(by='Call Date')

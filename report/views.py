@@ -33,6 +33,17 @@ def bucket3(folder):
     data = pd.DataFrame(data)
     return data
 
+def transforn_merge(df1,df2):
+    df2 = df2.drop(columns=["Sum Variable Pay Amount Earned"])
+
+    # Step 2: Rename the columns
+    df2 = df2.rename(columns={"Call Date Date": "Call Date", "Updated Fullname":"User Name", "Total Amount Paid": "Sum Total Paid"})
+
+    # Step 3: Merge the two DataFrames using an outer join
+    merged_df = pd.concat([df1, df2])
+    merged_df['User Name'] = merged_df['User Name'].str.strip()
+    return merged_df
+
 
 def query_date(data,date1,date2,user,data_col):
     data['Call Date'] = pd.to_datetime(data['Call Date'])
@@ -97,7 +108,11 @@ def report(request):
     country = agent.country
     user_name = first_name.strip() + " " + last_name.strip()
 
-    collection = bucket3('amount-collected-per-agent-mtd/')
+    # collection = bucket3('amount-collected-per-agent-mtd/')
+    # collection = collection.sort_values(by='Call Date')
+    collection1 = bucket3('amount-collected-per-agent-mtd/')
+    collection2 = bucket3('vicidial-mtd/')
+    collection = transforn_merge( collection1,collection2)
     collection = collection.sort_values(by='Call Date')
     calls = bucket3('calls-per-agent-mtd/')
     calls = calls.sort_values(by='Call Date')

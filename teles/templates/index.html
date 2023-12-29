@@ -46,7 +46,7 @@
   font-size: 1.2vw;
   color:red;
   position: absolute;
-  top: -1vh;
+  top: -0.6vh;
   left: 7px;
  }
 
@@ -54,7 +54,7 @@
   font-size: 1.2vw;
   color:green;
   position: absolute;
-  top: -1vh;
+  top: -0.6vh;
   left: 7px;
 }
 
@@ -62,7 +62,7 @@
   font-size: 1.2vw;
   /*color:green; */
   position: absolute;
-  top: -20px;
+  top: -0.6vh;
   left: 7px;
 }
 
@@ -188,11 +188,11 @@
 }
 
 .tileh{
-  font-size: 2vh;
+  font-size: 1.8vh;
 }
 
 .tilev{
-   font-size: 3vh;
+   font-size: 2vh;
 }
 .tile{
   height: 50px;
@@ -206,7 +206,7 @@
 
 
 <div class="container-fluid overflow-hidden">
-  <h2 style="margin-top: 4vh; font-size: 3vh;padding: 0;">Dashboard</h2>
+  <h2 style="margin-top: 1vh; font-size: 3vh;padding: 0;">Dashboard</h2>
   <p id="today" style="margin-top:0px; margin-bottom: 10px auto; font-size: 1.4vh;"></p>
   
 
@@ -221,8 +221,8 @@
           </div>
           <div class="card-body">
             <h3 class="card-title tilev">{{total_calls}}<i class="arrow fa {{ kpi_increment_list.1 }}"></i></h3>
-            <p style="font-size: 2vh;padding-bottom: 0;margin-bottom: 0;"><small>average: {{avg_kpi_dic.calls}}</small></p>
-            <p style="font-size: 2vh;"><small>Total: {{total_kpi_dic.calls}}</small></p>
+            <p style="font-size: 1.5vh;padding-bottom: 0;margin-bottom: 0;"><small>Average: {{avg_kpi_dic.calls}}</small></p>
+            <p style="font-size: 1.5vh;"><small>Total: {{total_kpi_dic.calls}}</small></p>
           </div>
         </div>
       </div>
@@ -237,8 +237,8 @@
           </div>
           <div class="card-body">
             <h3 class="card-title tilev">{{total_paid_sum}}<i class="arrow fa {{ kpi_increment_list.0 }}"></i></h3>
-            <p style="font-size: 2vh;padding-bottom: 0;margin-bottom: 0;"><small>average: {{avg_kpi_dic.paid}}</small></p>
-            <p style="font-size: 2vh;"><small>Total: {{total_kpi_dic.paid}}</small></p>
+            <p style="font-size: 1.5vh;padding-bottom: 0;margin-bottom: 0;"><small>Average: {{avg_kpi_dic.paid}}</small></p>
+            <p style="font-size: 1.5vh;"><small>Total: {{total_kpi_dic.paid}}</small></p>
           </div>
         </div>
       </div>
@@ -252,8 +252,8 @@
           </div>
           <div class="card-body">
             <h3 class="card-title tilev">{{current_ATT}}<i class="arrow fa {{ kpi_increment_list.4 }}"></i></h3>
-            <p style="font-size: 2vh;padding-bottom: 0;margin-bottom: 0;"><small>average: {{avg_kpi_dic.ATT}}</small></p>
-            <p style="font-size: 2vh;"><small>Total: {{total_kpi_dic.ATT}}</small></p>
+            <p style="font-size: 1.5vh;padding-bottom: 0;margin-bottom: 0;"><small>Average: {{avg_kpi_dic.ATT}}</small></p>
+            <p style="font-size: 1.5vh;"><small>Total: {{total_kpi_dic.ATT}}</small></p>
           </div>
         </div>
       </div>
@@ -267,8 +267,8 @@
           </div>
           <div class="card-body">
             <h3 class="card-title tilev">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.3 }}"></i></h3>
-            <p style="font-size: 2vh;padding-bottom: 0;margin-bottom: 0;"><small>average: {{avg_kpi_dic.negotiation}}</small></p>
-            <p style="font-size: 2vh;"><small>Total: {{total_kpi_dic.negotiation}}</small></p>
+            <p style="font-size: 1.5vh;padding-bottom: 0;margin-bottom: 0;"><small>Average: {{avg_kpi_dic.negotiation}}</small></p>
+            <p style="font-size: 1.5vh;"><small>Total: {{total_kpi_dic.negotiation}}</small></p>
           </div>
         </div>
       </div>
@@ -372,7 +372,7 @@
     <div class="col-md-5">
       <div class="second p-3 border bg-light" style="text-align:center;">        
         <h3 style="font-size: 1.7vw;">&#127881; Current winner &#127881;</h3>
-        <img src="../static/img_avatar.png"  style="border-radius: 35px; display: block; margin-left: auto; margin-right: auto;height: 35%;width: 40%;"><!--height="120px" width="160px" -->
+        <img src="../static/img_avatar.png"  style="border-radius: 3.5vh; display: block; margin-left: auto; margin-right: auto;height: 35%;width: 30%;"><!--height="120px" width="160px" -->
       <div style="font-size: 1.1vw;">Congratulations {{ combined_list.0.0 }} on your outstanding achievement leading the pack. Your determination is admirable!</div>
       </div>
     </div>

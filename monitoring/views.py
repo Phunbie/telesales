@@ -25,6 +25,20 @@ def percentage_grader(score):
     return star
 
 
+
+def transforn_merge(df1,df2):
+    df2 = df2.drop(columns=["Sum Variable Pay Amount Earned"])
+
+    # Step 2: Rename the columns
+    df2 = df2.rename(columns={"Call Date Date": "Call Date", "Updated Fullname":"User Name", "Total Amount Paid": "Sum Total Paid"})
+
+    # Step 3: Merge the two DataFrames using an outer join
+    merged_df = pd.concat([df1, df2])
+    merged_df['User Name'] = merged_df['User Name'].str.strip()
+    return merged_df
+
+
+
 def general_average_grader(first,second,third):
     if first>100:
         first = 100
@@ -195,7 +209,11 @@ def monitor(request):
 
 
     
-    collection = bucket3('amount-collected-per-agent-mtd/')
+    # collection = bucket3('amount-collected-per-agent-mtd/')
+    # collection = collection.sort_values(by='Call Date')
+    collection1 = bucket3('amount-collected-per-agent-mtd/')
+    collection2 = bucket3('vicidial-mtd/')
+    collection = transforn_merge( collection1,collection2)
     collection = collection.sort_values(by='Call Date')
     calls = bucket3('calls-per-agent-mtd/')
     calls = calls.sort_values(by='Call Date')
@@ -208,7 +226,11 @@ def monitor(request):
     country_list = [i for i in country_list if i is not None]
 
     if date_range == "WTD":
-        collection = bucket3('amount-collected-per-agent/')
+        # collection = bucket3('amount-collected-per-agent/')
+        # collection = collection.sort_values(by='Call Date')
+        collection1 = bucket3('amount-collected-per-agent/')
+        collection2 = bucket3('vicidial-data/')
+        collection = transforn_merge( collection1,collection2)
         collection = collection.sort_values(by='Call Date')
         calls = bucket3('calls-per-agent/')
         calls = calls.sort_values(by='Call Date')

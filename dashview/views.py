@@ -141,21 +141,17 @@ def dashview(request):
     collection_year = collection_year.sort_values(by='Call Date')
     calls_year = bucket3('calls-per-agent-mtd/')
     calls_year = calls_year.sort_values(by='Call Date')
-    contact_rate_year = bucket3('contact-rate-per-agent-mtd/')
-    contact_rate_year = contact_rate_year.sort_values(by='Call Date')
     Negotiation_year = bucket3('negotiation-rate-individual-mtd/')
     Negotiation_year = Negotiation_year.sort_values(by='Call Date')
-    ATT_year = bucket3('calls-per-agent-mtd/')
-    ATT_year = ATT_year.sort_values(by='Call Date')
+
 
     
-    collection1 = bucket3('amount-collected-per-agent-mtd/')
-    collection2 = bucket3('vicidial-mtd/')
-    collection = transforn_merge(collection1,collection2)
-    collection = collection.sort_values(by='Call Date')
+    
+    collection = get_latest_month_data(collection_year )
+    
     #collection = bucket3('amount-collected-per-agent-mtd/')
     name_list = collection['User Name'].unique().tolist()
-    calls = bucket3('calls-per-agent-mtd/')
+    calls = get_latest_month_data(calls_year)
     is_agent = agent_username in  name_list
 
     if request.method == 'POST':
@@ -176,16 +172,14 @@ def dashview(request):
     
 
   
-    Negotiation = bucket3('negotiation-rate-individual-mtd/')
+    Negotiation =  get_latest_month_data(Negotiation_year)
     if country_data_range == 'WTD':
-        collection1 = bucket3('amount-collected-per-agent/')
-        collection2 = bucket3('vicidial-data/')
-        collection = transforn_merge( collection1,collection2)
-        collection = collection.sort_values(by='Call Date')
+        collection = get_latest_week_data(collection_year)
+        
         #collection = bucket3('amount-collected-per-agent/')
-        calls = bucket3('calls-per-agent/')
+        calls = get_latest_week_data(calls_year)
         #contact_rate = bucket3('contact-rate-per-agent/')
-        Negotiation = bucket3('negotiation-rate-individual/')
+        Negotiation = get_latest_week_data(Negotiation_year)
 
 
 

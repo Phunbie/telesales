@@ -570,18 +570,7 @@ function toggleFunction() {
 
 
   <script>
-  /*  var linec1 = [];
-    var barc1 = [];
-    var linec2 = [];
-    var barc2 = [];
-    var linec3 = [];
-    var barc3 = [];
-      //ajax call   
-    $.get("{% url 'monitorapi' %}", function(data, status){
-         barc1 = data.calls;
-         //$('#s3charts').load(location.href + ' #s3charts');
-         //alert(barc1);
-      }); */
+ 
      var calls = "{{ input_list.total_calls }}";
      calls = JSON.parse(calls);
      var Negotiation = "{{ input_list.Negotiation }}";

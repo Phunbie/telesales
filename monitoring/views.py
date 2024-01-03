@@ -28,7 +28,6 @@ def get_latest_week_data(df):
   # Calculate the start and end dates of the previous week
   start_of_previous_week = start_of_current_week - timedelta(weeks=1)
   end_of_previous_week = end_of_current_week - timedelta(weeks=1)
-  print(start_of_previous_week)
   latest_week_data = df[(df['Call Date'] >= start_of_current_week) & (df['Call Date'] <= end_of_current_week)]
   if len(latest_week_data) >= 1:
       return latest_week_data
@@ -235,22 +234,17 @@ def monitor(request):
     contact_rate_year = contact_rate_year.sort_values(by='Call Date')
     Negotiation_year = bucket3('negotiation-rate-individual-mtd/')
     Negotiation_year = Negotiation_year.sort_values(by='Call Date')
-    ATT_year = bucket3('calls-per-agent-mtd/')
-    ATT_year = ATT_year.sort_values(by='Call Date')
+    # ATT_year = bucket3('calls-per-agent-mtd/')
+    # ATT_year = ATT_year.sort_values(by='Call Date')
 
     
     # collection = bucket3('amount-collected-per-agent-mtd/')
     # collection = collection.sort_values(by='Call Date')
-    collection1 = bucket3('amount-collected-per-agent-mtd/')
-    collection2 = bucket3('vicidial-mtd/')
-    collection = transforn_merge( collection1,collection2)
-    collection = collection.sort_values(by='Call Date')
-    calls = bucket3('calls-per-agent-mtd/')
-    calls = calls.sort_values(by='Call Date')
-    contact_rate = bucket3('contact-rate-per-agent-mtd/')
-    contact_rate = contact_rate.sort_values(by='Call Date')
-    Negotiation = bucket3('negotiation-rate-individual-mtd/')
-    Negotiation = Negotiation.sort_values(by='Call Date')
+    
+    collection = get_latest_month_data(collection_year)
+    calls = get_latest_month_data(calls_year)
+    contact_rate = get_latest_month_data(contact_rate_year)
+    Negotiation = get_latest_month_data(Negotiation_year)
     user_list= collection['User Name'].unique().tolist()
     country_list = collection['Country'].unique().tolist()
     country_list = [i for i in country_list if i is not None]
@@ -258,19 +252,19 @@ def monitor(request):
     if date_range == "WTD":
         # collection = bucket3('amount-collected-per-agent/')
         # collection = collection.sort_values(by='Call Date')
-        collection1 = bucket3('amount-collected-per-agent/')
-        collection2 = bucket3('vicidial-data/')
-        collection = transforn_merge( collection1,collection2)
-        collection = collection.sort_values(by='Call Date')
-        calls = bucket3('calls-per-agent/')
-        calls = calls.sort_values(by='Call Date')
-        contact_rate = bucket3('contact-rate-per-agent/')
-        contact_rate = contact_rate.sort_values(by='Call Date')
-        Negotiation = bucket3('negotiation-rate-individual/')
-        Negotiation = Negotiation.sort_values(by='Call Date')
+        collection = get_latest_week_data(collection_year)
+        calls = get_latest_week_data(calls_year)
+        contact_rate = get_latest_week_data(contact_rate_year)
+        Negotiation = get_latest_week_data(Negotiation_year)
         user_list= collection['User Name'].unique().tolist()
         country_list = collection['Country'].unique().tolist()
         country_list = [i for i in country_list if i is not None]
+
+    calls["Call Date"] = calls["Call Date"].dt.strftime('%Y-%m-%d')
+    collection["Call Date"] = collection["Call Date"].dt.strftime('%Y-%m-%d')
+    Negotiation["Call Date"] = Negotiation["Call Date"].dt.strftime('%Y-%m-%d')
+    contact_rate["Call Date"] = contact_rate ["Call Date"].dt.strftime('%Y-%m-%d')
+
 
     user_name = first_name.strip() + " " + last_name.strip()
     merged_kpi_df = mergedf(collection,Negotiation,calls)

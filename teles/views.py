@@ -243,19 +243,26 @@ def home(request):
         country = agent.country
         #daily, weekly & monthly kpi target per country
       
-
+        print("start")
         collection1_year = bucket3('amount-collected-per-agent-mtd/')
+        print("read1")
         collection2_year = bucket3('vicidial-mtd/')
+        print("read2")
         collection_year = transforn_merge( collection1_year,collection2_year)
         collection_year = collection_year.sort_values(by='Call Date')
+        print("read4")
         calls_year = bucket3('calls-per-agent-mtd/')
         calls_year = calls_year.sort_values(by='Call Date')
+        print("read6")
         # contact_rate_year = bucket3('contact-rate-per-agent-mtd/')
         # contact_rate_year = contact_rate_year.sort_values(by='Call Date')
         Negotiation_year = bucket3('negotiation-rate-individual-mtd/')
         Negotiation_year = Negotiation_year.sort_values(by='Call Date')
-        ATT_year = bucket3('calls-per-agent-mtd/')
-        ATT_year = ATT_year.sort_values(by='Call Date')
+        print("read8")
+        # ATT_year = bucket3('calls-per-agent-mtd/')
+        # ATT_year = ATT_year.sort_values(by='Call Date')
+        ATT_year = calls_year
+        print("finish")
 
         
         collection = get_latest_month_data(collection_year)
@@ -283,8 +290,8 @@ def home(request):
 
 
    
-        #country_lis = collection['Country'].unique().tolist()
-        country_lis =  Negotiation['Country'].unique().tolist()
+        country_lis = collection['Country'].unique().tolist()
+        #country_lis =  Negotiation['Country'].unique().tolist()
         df_scored_list= []
         # dataframe per country score added
         if "Nigeria" in country_lis:

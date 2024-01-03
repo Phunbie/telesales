@@ -251,7 +251,7 @@
             <h5 class="card-title tileh">Average Talk Time</h5>
           </div>
           <div class="card-body">
-            <h3 class="card-title tilev">{{current_ATT}}<i class="arrow fa {{ kpi_increment_list.4 }}"></i></h3>
+            <h3 class="card-title tilev">{{current_ATT}}<i class="arrow fa {{ kpi_increment_list.3 }}"></i></h3>
             <p style="font-size: 1.5vh;padding-bottom: 0;margin-bottom: 0;"><small>Average: {{avg_kpi_dic.ATT}}</small></p>
             <p style="font-size: 1.5vh;"><small>Total: {{total_kpi_dic.ATT}}</small></p>
           </div>
@@ -266,7 +266,7 @@
             <h5 class="card-title tileh">Negotiation Rate</h5>
           </div>
           <div class="card-body">
-            <h3 class="card-title tilev">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.3 }}"></i></h3>
+            <h3 class="card-title tilev">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.2 }}"></i></h3>
             <p style="font-size: 1.5vh;padding-bottom: 0;margin-bottom: 0;"><small>Average: {{avg_kpi_dic.negotiation}}</small></p>
             <p style="font-size: 1.5vh;"><small>Total: {{total_kpi_dic.negotiation}}</small></p>
           </div>
@@ -274,30 +274,7 @@
       </div>
     </div>
 
-    <!-- <div class="col-lg-3 col-md-6 col-sm-6">
-      <div class="first p-1 border bg-light">
-        <img class="trend" src="../static/down.jpeg"> <img class="trend" src="../static/up.jpeg"> -->
-        <!-- <p class="word1">Calls Counted</p><p class="num">{{total_calls}}<i class="arrow fa {{ kpi_increment_list.1 }}"></i></p>
-      </div> -->
-    <!-- </div> --> 
-<!-- 
-    <div class="col-md-3">
-      <div class="first p-1 border bg-light card">
-        <p class="word1">Agent Collection</p><p class="num">{{total_paid_sum}}<i class="arrow fa {{ kpi_increment_list.0 }}"></i></p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="first p-1 border bg-light">
-        <p class="word1">Average Talk Time</p><p class="num">{{current_ATT}}<i class="arrow fa {{ kpi_increment_list.4 }}"></i></p>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="first p-1 border bg-light">
-        <p class="word1">Negotiation Rate</p><p class="num">{{negotiation_r}}%<i class="arrow fa {{ kpi_increment_list.3 }}"></i></p>
-      </div>
-    </div> 
-  -->
-
+ 
   </div>
   
     <div class="row gx-5 gy-3 mt-3 mb-1  pb-2 " style="background-color: #ffea00;"> <!--bg-secondary-->
@@ -365,7 +342,7 @@
   </tr>
   {% endfor %}
 </table>
-<a href=# class="{% url 'leaderboard' %}" data-bs-toggle="modal" data-bs-target="#myModal" style="font-size: 1vw;">See the whole Leaderboard</a>
+<a href=# class="" data-bs-toggle="modal" data-bs-target="#myModal" style="font-size: 1vw;">See the whole Leaderboard</a>
 
       </div>
     </div>

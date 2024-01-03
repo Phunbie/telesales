@@ -127,9 +127,7 @@ def dashview(request):
     firstname = agents.first_name.strip()
     lastname = agents.last_name.strip()
     agent_username = firstname + " " + lastname
-    #print(firstname,lastname, agent_username)
-    #general_feedback = Feedbacknew.objects.filter(agent="all").order_by('-date')
-    #agent_feedback = Feedbacknew.objects.filter(agent=agent_username).order_by('-date')
+   
     agent_feedback = Feedbacknew.objects.filter(Q(agent=agent_username) | Q(agent='all')).order_by('-date')
     username = user.username
     Country_features=[]
@@ -177,10 +175,7 @@ def dashview(request):
     
     
 
-    #collection = bucket3('amount-collected-per-agent-mtd/')
-    #name_list = collection['User Name'].unique().tolist()
-    #calls = bucket3('calls-per-agent-mtd/')
-    #contact_rate = bucket3('contact-rate-per-agent-mtd/')
+  
     Negotiation = bucket3('negotiation-rate-individual-mtd/')
     if country_data_range == 'WTD':
         collection1 = bucket3('amount-collected-per-agent/')
@@ -223,28 +218,6 @@ def feedback_comment(request,f_id):
 
 
 
-"""
 
-def upvote(request,uid):
-    vote= Vote.objects.get(id=uid)
-    feedbackid = vote.feedback.id
-    feedback = Feedback.objects.get(id=feedbackid)
-    if vote.value == True:
-        vote.value = False
-        feedback.totalvote = feedback.totalvote - 1
-        vote.save()
-        feedback.save()
-    else:
-        vote.value = True
-        feedback.totalvote = feedback.totalvote + 1
-        vote.save()
-        feedback.save()
-    data = 'success'
-    return HttpResponse(status=204)
-
-    #data = {'data':'success'}
-    #response = JsonResponse(data,status=200)
-    #return response
-  """      
 
     

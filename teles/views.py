@@ -11,6 +11,56 @@ import boto3
 import json
 import pandas as pd
 import requests
+from datetime import datetime, timedelta
+
+  
+
+
+def get_latest_week_data(df):
+  # Ensure "Call Date" is in datetime format
+  df['Call Date'] = pd.to_datetime(df['Call Date'])
+
+  # Get the current date
+  current_date = datetime.now()
+
+  # Calculate the start and end dates of the current week
+  start_of_current_week = current_date - timedelta(days=current_date.weekday())
+  end_of_current_week = start_of_current_week + timedelta(days=6)
+  print(start_of_current_week)
+
+  # Calculate the start and end dates of the previous week
+  start_of_previous_week = start_of_current_week - timedelta(weeks=1)
+  end_of_previous_week = end_of_current_week - timedelta(weeks=1)
+  print(start_of_previous_week)
+  latest_week_data = df[(df['Call Date'] >= start_of_current_week) & (df['Call Date'] <= end_of_current_week)]
+  if len(latest_week_data) >= 1:
+      return latest_week_data
+  else:
+      # If there is no data for the current week, get the previous week's data
+      previous_week_data = df[(df['Call Date'] >= start_of_previous_week) & (df['Call Date'] <= end_of_previous_week)]
+      return previous_week_data
+
+def get_latest_month_data(df):
+   # Ensure "Call Date" is in datetime format
+   df['Call Date'] = pd.to_datetime(df['Call Date'])
+
+   # Get the current year and month
+   current_year = datetime.now().year
+   current_month = datetime.now().month
+
+   # Calculate the previous year and month
+   previous_year = current_year if current_month > 1 else current_year - 1
+   previous_month = current_month - 1 if current_month > 1 else 12
+
+   # Try to get the current month's data
+   try:
+       latest_month_data = df[(df['Call Date'].dt.year == current_year) & (df['Call Date'].dt.month == current_month)]
+       return latest_month_data
+   except:
+       # If there is no data for the current month, get the previous month's data
+       previous_month_data = df[(df['Call Date'].dt.year == previous_year) & (df['Call Date'].dt.month == previous_month)]
+       return previous_month_data
+
 
 
 
@@ -263,6 +313,19 @@ def home(request):
             collection_target_weekly  = 3000000
             Negotiation_target_weekly  = 65
 
+        collection1_year = bucket3('amount-collected-per-agent-mtd/')
+        collection2_year = bucket3('vicidial-mtd/')
+        collection_year = transforn_merge( collection1_year,collection2_year)
+        collection_year = collection_year.sort_values(by='Call Date')
+        calls_year = bucket3('calls-per-agent-mtd/')
+        calls_year = calls_year.sort_values(by='Call Date')
+        contact_rate_year = bucket3('contact-rate-per-agent-mtd/')
+        contact_rate_year = contact_rate_year.sort_values(by='Call Date')
+        Negotiation_year = bucket3('negotiation-rate-individual-mtd/')
+        Negotiation_year = Negotiation_year.sort_values(by='Call Date')
+        ATT_year = bucket3('calls-per-agent-mtd/')
+        ATT_year = ATT_year.sort_values(by='Call Date')
+
         collection1 = bucket3('amount-collected-per-agent-mtd/')
         collection2 = bucket3('vicidial-mtd/')
         collection = transforn_merge( collection1,collection2)
@@ -307,6 +370,7 @@ def home(request):
         if "Nigeria" in country_lis:
             Nigeria_df = merged_df[merged_df['Country']=="Nigeria"]
             Nigeria_df_scored = create_score_df(Nigeria_calls_target_daily, Nigeria_collection_target_daily,Nigeria_Negotiation_target_daily, Nigeria_df)
+            print(" Nigeria_df_scored1", merged_df)
             Nigeria_first = position_list(Nigeria_df_scored)[-1]
             df_scored_list.append(Nigeria_df_scored)
         else:

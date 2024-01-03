@@ -326,32 +326,20 @@ def home(request):
         ATT_year = bucket3('calls-per-agent-mtd/')
         ATT_year = ATT_year.sort_values(by='Call Date')
 
-        collection1 = bucket3('amount-collected-per-agent-mtd/')
-        collection2 = bucket3('vicidial-mtd/')
-        collection = transforn_merge( collection1,collection2)
-        collection = collection.sort_values(by='Call Date')
-        calls = bucket3('calls-per-agent-mtd/')
-        calls = calls.sort_values(by='Call Date')
-        contact_rate = bucket3('contact-rate-per-agent-mtd/')
-        contact_rate = contact_rate.sort_values(by='Call Date')
-        Negotiation = bucket3('negotiation-rate-individual-mtd/')
-        Negotiation = Negotiation.sort_values(by='Call Date')
-        ATT = bucket3('calls-per-agent-mtd/')
-        ATT = ATT.sort_values(by='Call Date')
+        
+        collection = get_latest_month_data(collection_year)
+        calls = get_latest_month_data(calls_year)
+        contact_rate = get_latest_month_data(contact_rate_year)
+        Negotiation = get_latest_month_data(Negotiation_year)
+        ATT = get_latest_month_data(ATT_year)
 
         if date_range == "WTD":
-            collection1 = bucket3('amount-collected-per-agent/')
-            collection2 = bucket3('vicidial-data/')
-            collection = transforn_merge( collection1,collection2)
-            collection = collection.sort_values(by='Call Date')
-            calls = bucket3('calls-per-agent/')
-            calls = calls.sort_values(by='Call Date')
-            contact_rate = bucket3('contact-rate-per-agent/')
-            contact_rate = contact_rate.sort_values(by='Call Date')
-            Negotiation = bucket3('negotiation-rate-individual/')
-            Negotiation = Negotiation.sort_values(by='Call Date')
-            ATT =  bucket3('calls-per-agent/')
-            ATT = ATT.sort_values(by='Call Date')
+            collection = get_latest_week_data(collection_year)
+            calls = get_latest_week_data(calls_year)
+            contact_rate = get_latest_week_data(contact_rate_year)
+            Negotiation = get_latest_week_data(Negotiation_year)
+            ATT =  get_latest_week_data(ATT_year)
+            
         
     
    
@@ -414,6 +402,7 @@ def home(request):
             Togo_df =  "None"
             Togo_df_scored = 0
             Togo_first = "None"
+
         if "Malawi" in country_lis:
             Malawi_df = merged_df[merged_df['Country']=="Malawi"] 
             Malawi_df_scored = create_score_df(Malawi_calls_target_daily, Malawi_collection_target_daily,Malawi_Negotiation_target_daily, Malawi_df ) 

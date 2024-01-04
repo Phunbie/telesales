@@ -659,13 +659,13 @@ def home(request):
         if is_country == "yes":
             try:
                 Negotiation_r_avg = round(sum(country_NR_list)/len(country_NR_list),2)
-                Negotiation_r_tot = sum(country_NR_list)
+                Negotiation_r_tot = round(sum(country_NR_list),2)
             except:
                 Negotiation_r_avg = 0
                 Negotiation_r_tot = 0
         else:
             Negotiation_r_avg = sum(Negotiation_r2)/len(Negotiation_r2)
-            Negotiation_r_tot = sum(Negotiation_r2)
+            Negotiation_r_tot = round(sum(Negotiation_r2),2)
         try:
             Negotiation_r = Negotiation_r[-1]
         except:

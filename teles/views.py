@@ -103,7 +103,7 @@ def convert_df_rate(df):
 
 
 def up_down_indicator(list):
-    res= "fa-stop"
+    res= ""
     if len(list) > 1:
         increase = list[-1] - list[-2]
         if increase > 0:
